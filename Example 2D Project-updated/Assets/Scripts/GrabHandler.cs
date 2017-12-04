@@ -52,7 +52,11 @@ public class GrabHandler : MonoBehaviour {
                 heldObject.collider.isTrigger = !heldObject.collider.isTrigger;
             }
         }
-        else if (col.gameObject.tag.Substring(0, 4) == "Door" && heldObject != null) // need to find a better way of mapping a door to a key!
+    }
+
+    private void OnCollisionStay2D(Collision2D col)
+    {
+        if (col.gameObject.tag.Substring(0, 4) == "Door" && heldObject != null) // need to find a better way of mapping a door to a key!
         {
             if (heldObject.gameObject.tag[3] == col.gameObject.tag[4]) // blue key + blue door collition
             {
