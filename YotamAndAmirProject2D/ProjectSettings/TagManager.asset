@@ -3,7 +3,21 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Dangerous
+  - KeyBlue
+  - KeyPurple
+  - DoorGreen
+  - DoorBlue
+  - KeyGreen
+  - KeyRed
+  - DoorRed
+  - DoorPurple
+  - KeyCyan
+  - KeyOrange
+  - DoorOrange
+  - DoorCyan
+  - DoorYellow
   layers:
   - Default
   - TransparentFX

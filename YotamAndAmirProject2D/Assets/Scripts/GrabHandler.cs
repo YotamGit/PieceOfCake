@@ -74,4 +74,9 @@ public class GrabHandler : MonoBehaviour {
         grabbed = false;
         heldObject = null;
     }
+
+    private static void ColorChange(Material Mat, float Alpha)
+    {
+
+    }
 }
