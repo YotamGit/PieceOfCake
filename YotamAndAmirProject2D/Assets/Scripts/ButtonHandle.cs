@@ -52,8 +52,7 @@ public class ButtonHandle : MonoBehaviour {
         else // button released
         {
             objectTransform.position = new Vector3(objectTransform.position.x + changeX, objectTransform.position.y + changeY, objectTransform.position.z);
-            doorMaterial.color = new Color(1, 1, 1, 1
-                F);
+            doorMaterial.color = new Color(1, 1, 1, 1);
             doorCol.isTrigger = !doorCol.isTrigger;
         }
     }

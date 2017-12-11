@@ -56,6 +56,17 @@ public class GrabHandler : MonoBehaviour {
 
     private void OnCollisionStay2D(Collision2D col)
     {
+        if(col.gameObject.tag == "Cube" && Input.GetKey(KeyCode.F))
+        {
+            if (!grabbed)
+            {
+                grabbed = true;
+                col.transform.position = holdpoint.position;
+                heldObject = col;
+                heldObject.collider.isTrigger = !heldObject.collider.isTrigger;
+            }
+        }
+
         if (col.gameObject.tag.Substring(0, 4) == "Door" && heldObject != null) // need to find a better way of mapping a door to a key!
         {
             if (heldObject.gameObject.tag[3] == col.gameObject.tag[4]) // blue key + blue door collition

@@ -18,6 +18,7 @@ TagManager:
   - DoorOrange
   - DoorCyan
   - DoorYellow
+  - Cube
   layers:
   - Default
   - TransparentFX
