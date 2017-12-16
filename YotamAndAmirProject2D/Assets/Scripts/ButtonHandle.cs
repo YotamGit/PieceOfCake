@@ -5,23 +5,27 @@ using UnityEngine;
 public class ButtonHandle : MonoBehaviour {
 
     [SerializeField]
-    private string doorTag;
-    //public int numOfDoor;
+    private GameObject[] doors;
 
     [SerializeField]
-    private float changeX;
+    private float offsetX;
 
     [SerializeField]
-    private float changeY;
+    private float offsetY;
 
-    private GameObject door;
+    //private Transform objectTransform;
 
-    private Transform objectTransform;
+    /*[SerializeField]
+    private float cooldown;
+
+    private float nextPressAllowed;*/
+
+    private Collider2D objectCollider2D;
 
     // Use this for initialization
     void Start () {
-        objectTransform = gameObject.transform;
-        door = GameObject.FindGameObjectsWithTag(doorTag)[0];
+        objectCollider2D = GetComponent<Collider2D>();
+        //objectTransform = gameObject.transform;
     }
 	
 	// Update is called once per frame
@@ -30,28 +34,57 @@ public class ButtonHandle : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        PressOrReleasHandle(true);
+        /*if (Time.time > nextPressAllowed)
+        {*/
+            PressOrReleasHandle(true);
+            /*StartCoroutine("WaitaBit");
+            nextPressAllowed = Time.time + cooldown;
+        }*/
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
         PressOrReleasHandle(false);
+        //nextPressAllowed = Time.time;
     }
+
+    /*IEnumerator WaitaBit()
+    {
+        yield return new WaitForSecondsRealtime(4);
+    }*/
 
     private void PressOrReleasHandle(bool pressed) // pressed (to new pos) == true, back to first pos == false
     {
-        Collider2D doorCol = door.GetComponent<Collider2D>();
-        Material doorMaterial = door.GetComponent<Renderer>().material;
+        for (int i = 0; i < doors.Length; i++)
+        {
+            Collider2D doorCol = doors[i].GetComponent<Collider2D>();
+            Material doorMaterial = doors[i].GetComponent<Renderer>().material;
+            ChangeDoorState(pressed, doorCol, doorMaterial);
+        }
 
+        if(pressed)
+        {
+            objectCollider2D.offset = new Vector2(objectCollider2D.offset.x + offsetX, objectCollider2D.offset.y + offsetY);
+        }
+        else
+        {
+            objectCollider2D.offset = new Vector2(objectCollider2D.offset.x + offsetX, objectCollider2D.offset.y - offsetY);
+        }
+    }
+
+    private void ChangeDoorState(bool pressed, Collider2D doorCol, Material doorMaterial)
+    {
         if (pressed) // button pressed
         {
-            objectTransform.position = new Vector3(objectTransform.position.x - changeX, objectTransform.position.y - changeY, objectTransform.position.z);
+            //objectTransform.position = new Vector3(objectTransform.position.x - changeX, objectTransform.position.y - changeY, objectTransform.position.z);
+            doorCol.offset = new Vector2(doorCol.offset.x + offsetX, doorCol.offset.y + offsetY);
             doorMaterial.color = new Color(1, 1, 1, 0.4F);
             doorCol.isTrigger = !doorCol.isTrigger;
         }
         else // button released
         {
-            objectTransform.position = new Vector3(objectTransform.position.x + changeX, objectTransform.position.y + changeY, objectTransform.position.z);
+            //objectTransform.position = new Vector3(objectTransform.position.x + changeX, objectTransform.position.y + changeY, objectTransform.position.z);
+            doorCol.offset = new Vector2(doorCol.offset.x + offsetX, doorCol.offset.y - offsetY);
             doorMaterial.color = new Color(1, 1, 1, 1);
             doorCol.isTrigger = !doorCol.isTrigger;
         }
