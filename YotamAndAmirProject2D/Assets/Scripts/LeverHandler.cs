@@ -5,21 +5,16 @@ using UnityEngine;
 public class LeverHandler : MonoBehaviour {
 
     [SerializeField]
-    private Sprite turnedOff;
+    private Sprite turnedOff, turnedOn;
 
     [SerializeField]
-    private Sprite turnedOn;
-
-    [SerializeField]
-    private string doorTag;
-    //public int numOfDoor;
-
     private GameObject door;
+
+    private SpriteRenderer leverSpriteRend;
 
     // Use this for initialization
     void Start () {
-        gameObject.GetComponent<SpriteRenderer>().sprite = turnedOff;
-        door = GameObject.FindGameObjectsWithTag(doorTag)[0];
+        leverSpriteRend = gameObject.GetComponent<SpriteRenderer>();
     }
 	
 	// Update is called once per frame
@@ -33,18 +28,17 @@ public class LeverHandler : MonoBehaviour {
             Collider2D doorCol = door.GetComponent<Collider2D>();
             Material doorMaterial = door.GetComponent<Renderer>().material;
 
-            if (gameObject.GetComponent<SpriteRenderer>().sprite == turnedOff)
+            if (leverSpriteRend.sprite == turnedOff)
             {
-                gameObject.GetComponent<SpriteRenderer>().sprite = turnedOn;
+                leverSpriteRend.sprite = turnedOn;
                 doorMaterial.color = new Color(1, 1, 1, 0.4F);
-                doorCol.isTrigger = !doorCol.isTrigger;
             }
             else
             {
-                gameObject.GetComponent<SpriteRenderer>().sprite = turnedOff;
+                leverSpriteRend.sprite = turnedOff;
                 doorMaterial.color = new Color(1, 1, 1, 1F);
-                doorCol.isTrigger = !doorCol.isTrigger;
             }
+            doorCol.enabled = !doorCol.enabled;
         }
     }
 }

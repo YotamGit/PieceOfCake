@@ -1,92 +1,67 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ButtonHandle : MonoBehaviour {
 
     [SerializeField]
     private GameObject[] doors;
 
-    [SerializeField]
-    private float offsetX;
+    private bool isPressed;
+
+    private SpriteRenderer buttonSpriteRend;
 
     [SerializeField]
-    private float offsetY;
+    private Sprite turnedOff, turnedOn;
 
-    //private Transform objectTransform;
+    /*private List<Collider2D> doorCols;
 
-    /*[SerializeField]
-    private float cooldown;
-
-    private float nextPressAllowed;*/
-
-    private Collider2D objectCollider2D;
+    private List<Material> doorMaterials;*/
 
     // Use this for initialization
     void Start () {
-        objectCollider2D = GetComponent<Collider2D>();
-        //objectTransform = gameObject.transform;
+        buttonSpriteRend = gameObject.GetComponent<SpriteRenderer>();
+        isPressed = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
-	}
+    }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerStay2D(Collider2D collision)
     {
-        /*if (Time.time > nextPressAllowed)
-        {*/
-            PressOrReleasHandle(true);
-            /*StartCoroutine("WaitaBit");
-            nextPressAllowed = Time.time + cooldown;
-        }*/
+        if (!isPressed)
+        {
+            isPressed = true;
+            PressOrReleasHandle(isPressed);
+            buttonSpriteRend.sprite = turnedOn;
+        }
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        PressOrReleasHandle(false);
-        //nextPressAllowed = Time.time;
+        if(isPressed)
+        {
+            isPressed = false;
+            PressOrReleasHandle(isPressed);
+            buttonSpriteRend.sprite = turnedOff;
+        }
     }
-
-    /*IEnumerator WaitaBit()
-    {
-        yield return new WaitForSecondsRealtime(4);
-    }*/
-
+    
     private void PressOrReleasHandle(bool pressed) // pressed (to new pos) == true, back to first pos == false
     {
         for (int i = 0; i < doors.Length; i++)
         {
-            Collider2D doorCol = doors[i].GetComponent<Collider2D>();
-            Material doorMaterial = doors[i].GetComponent<Renderer>().material;
-            ChangeDoorState(pressed, doorCol, doorMaterial);
-        }
-
-        if(pressed)
-        {
-            objectCollider2D.offset = new Vector2(objectCollider2D.offset.x + offsetX, objectCollider2D.offset.y + offsetY);
-        }
-        else
-        {
-            objectCollider2D.offset = new Vector2(objectCollider2D.offset.x + offsetX, objectCollider2D.offset.y - offsetY);
-        }
-    }
-
-    private void ChangeDoorState(bool pressed, Collider2D doorCol, Material doorMaterial)
-    {
-        if (pressed) // button pressed
-        {
-            //objectTransform.position = new Vector3(objectTransform.position.x - changeX, objectTransform.position.y - changeY, objectTransform.position.z);
-            doorCol.offset = new Vector2(doorCol.offset.x + offsetX, doorCol.offset.y + offsetY);
-            doorMaterial.color = new Color(1, 1, 1, 0.4F);
-            doorCol.isTrigger = !doorCol.isTrigger;
-        }
-        else // button released
-        {
-            //objectTransform.position = new Vector3(objectTransform.position.x + changeX, objectTransform.position.y + changeY, objectTransform.position.z);
-            doorCol.offset = new Vector2(doorCol.offset.x + offsetX, doorCol.offset.y - offsetY);
-            doorMaterial.color = new Color(1, 1, 1, 1);
-            doorCol.isTrigger = !doorCol.isTrigger;
+            if (pressed) // button pressed
+            {
+                doors[i].GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.4F);
+            }
+            else // button released
+            {
+                doors[i].GetComponent<Renderer>().material.color = new Color(1, 1, 1, 1);
+            }
+            doors[i].GetComponent<Collider2D>().enabled = !doors[i].GetComponent<Collider2D>().enabled;
         }
     }
 }

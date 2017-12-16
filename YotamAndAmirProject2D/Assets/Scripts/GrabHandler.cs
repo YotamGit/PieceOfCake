@@ -2,40 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrabHandler : MonoBehaviour {
+public class GrabHandler : MonoBehaviour
+{
 
     [SerializeField]
-    private bool grabbed;
+    private bool grabbedKey, grabbedCube;
 
     [SerializeField]
-    private float throwforce;
+    private float throwForce;
 
     [SerializeField]
-    private Transform holdpoint;
+    private Transform keyHoldPoint, cubeHoldPoint;
 
-    private Collision2D heldObject;
+
+    private Collision2D heldKey, heldCube;
 
 
     // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    void Start()
     {
-        if (grabbed)
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (grabbedKey)
         {
-            heldObject.transform.position = holdpoint.position;
+            heldKey.transform.position = keyHoldPoint.position;
         }
+        if (grabbedCube)
+        {
+            heldCube.transform.position = cubeHoldPoint.position;
+        }
+
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (grabbed)
+            if (grabbedKey)
             {
-                grabbed = false;
-                heldObject.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x * throwforce, 1 * throwforce);
-                heldObject.collider.isTrigger = !heldObject.collider.isTrigger;
-                heldObject = null;
+                grabbedKey = false;
+                heldKey.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x * throwForce, 1 * throwForce);
+                heldKey.collider.enabled = !heldKey.collider.enabled;
+                heldKey = null;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (grabbedCube)
+            {
+                grabbedCube = false;
+                heldCube.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+                heldCube.collider.enabled = !heldCube.collider.enabled;
+                heldCube = null;
             }
         }
     }
@@ -44,32 +62,32 @@ public class GrabHandler : MonoBehaviour {
     {
         if (col.gameObject.tag.Substring(0, 3) == "Key")
         {
-            if (!grabbed)
+            if (!grabbedKey)
             {
-                grabbed = true;
-                col.transform.position = holdpoint.position;
-                heldObject = col;
-                heldObject.collider.isTrigger = !heldObject.collider.isTrigger;
+                grabbedKey = true;
+                col.transform.position = keyHoldPoint.position;
+                heldKey = col;
+                heldKey.collider.enabled = !heldKey.collider.enabled;
             }
         }
     }
 
     private void OnCollisionStay2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Cube" && Input.GetKey(KeyCode.F))
+        if (col.gameObject.tag == "Cube" && Input.GetKey(KeyCode.Space))
         {
-            if (!grabbed)
+            if (!grabbedCube)
             {
-                grabbed = true;
-                col.transform.position = holdpoint.position;
-                heldObject = col;
-                heldObject.collider.isTrigger = !heldObject.collider.isTrigger;
+                grabbedCube = true;
+                col.transform.position = cubeHoldPoint.position;
+                heldCube = col;
+                heldCube.collider.enabled = !heldCube.collider.enabled;
             }
         }
 
-        if (col.gameObject.tag.Substring(0, 4) == "Door" && heldObject != null) // need to find a better way of mapping a door to a key!
+        if (col.gameObject.tag.Substring(0, 4) == "Door" && heldKey != null) // need to find a better way of mapping a door to a key!
         {
-            if (heldObject.gameObject.tag[3] == col.gameObject.tag[4]) // blue key + blue door collition
+            if (heldKey.gameObject.tag[3] == col.gameObject.tag[4]) // blue key + blue door collition
             {
                 CancelObject(col);
             }
@@ -79,11 +97,11 @@ public class GrabHandler : MonoBehaviour {
 
     private void CancelObject(Collision2D col)
     {
-        heldObject.gameObject.SetActive(false);
+        heldKey.gameObject.SetActive(false);
         col.gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.4F);
-        col.collider.isTrigger = !col.collider.isTrigger;
-        grabbed = false;
-        heldObject = null;
+        col.collider.enabled = !col.collider.enabled;
+        grabbedKey = false;
+        heldKey = null;
     }
 
     private static void ColorChange(Material Mat, float Alpha)
