@@ -12,11 +12,14 @@ public class GrabHandler : MonoBehaviour
     private float throwForce;
 
     [SerializeField]
-    private Transform keyHoldPoint, cubeHoldPoint;
+    private Transform keyHoldPoint;
+    private Transform cubeHoldPoint;
 
 
     private Collision2D heldKey, heldCube;
 
+    public AudioClip pickUpSound;
+    public AudioClip doorSound;
 
     // Use this for initialization
     void Start()
@@ -64,6 +67,7 @@ public class GrabHandler : MonoBehaviour
         {
             if (!grabbedKey)
             {
+                SoundManager.instance.PlaySingle1(pickUpSound);
                 grabbedKey = true;
                 col.transform.position = keyHoldPoint.position;
                 heldKey = col;
@@ -72,8 +76,17 @@ public class GrabHandler : MonoBehaviour
         }
     }
 
+
     private void OnCollisionStay2D(Collision2D col)
     {
+        if (col.gameObject.tag.Substring(0, 4) == "Door" && heldKey != null) // need to find a better way of mapping a door to a key!
+        {
+            if (heldKey.gameObject.tag[3] == col.gameObject.tag[4]) // blue key + blue door collition
+            {
+                SoundManager.instance.PlaySingle2(doorSound);
+                CancelObject(col);
+            }
+        }
         if (col.gameObject.tag == "Cube" && Input.GetKey(KeyCode.Space))
         {
             if (!grabbedCube)
@@ -85,13 +98,6 @@ public class GrabHandler : MonoBehaviour
             }
         }
 
-        if (col.gameObject.tag.Substring(0, 4) == "Door" && heldKey != null) // need to find a better way of mapping a door to a key!
-        {
-            if (heldKey.gameObject.tag[3] == col.gameObject.tag[4]) // blue key + blue door collition
-            {
-                CancelObject(col);
-            }
-        }
     }
 
 
@@ -102,10 +108,5 @@ public class GrabHandler : MonoBehaviour
         col.collider.enabled = !col.collider.enabled;
         grabbedKey = false;
         heldKey = null;
-    }
-
-    private static void ColorChange(Material Mat, float Alpha)
-    {
-
     }
 }

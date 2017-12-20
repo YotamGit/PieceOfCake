@@ -13,7 +13,8 @@ public class LeverHandler : MonoBehaviour {
     private SpriteRenderer leverSpriteRend;
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         leverSpriteRend = gameObject.GetComponent<SpriteRenderer>();
     }
 	
@@ -25,6 +26,7 @@ public class LeverHandler : MonoBehaviour {
     {
         if(col.gameObject.tag == "Player")
         {
+
             Collider2D doorCol = door.GetComponent<Collider2D>();
             Material doorMaterial = door.GetComponent<Renderer>().material;
 

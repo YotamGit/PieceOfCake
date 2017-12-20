@@ -13,7 +13,8 @@ public class ButtonHandle : MonoBehaviour {
     private SpriteRenderer buttonSpriteRend;
 
     [SerializeField]
-    private Sprite turnedOff, turnedOn;
+    private Sprite turnedOff;
+    private Sprite turnedOn;
 
     /*private List<Collider2D> doorCols;
 
