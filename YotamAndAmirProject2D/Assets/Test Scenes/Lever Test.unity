@@ -762,6 +762,7 @@ MonoBehaviour:
   - {fileID: 575136821}
   - {fileID: 822554499}
   turnedOff: {fileID: 0}
+  turnedOn: {fileID: 0}
 --- !u!61 &426958398
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21804,6 +21805,7 @@ MonoBehaviour:
   - {fileID: 822554499}
   - {fileID: 575136821}
   turnedOff: {fileID: 21300000, guid: 3c79faa76c816604494bbfa831cfd6a6, type: 3}
+  turnedOn: {fileID: 21300000, guid: 1f13cf4813bcfb34e81710ec265890e2, type: 3}
 --- !u!61 &497484187
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22029,6 +22031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnedOff: {fileID: 21300000, guid: df93e855398e4cf45a835b048fd14c4f, type: 3}
   turnedOn: {fileID: 21300000, guid: a6559d794490fed40a105257dff013f1, type: 3}
+  LeverSound: {fileID: 8300000, guid: 0157666d3827eca4f91fbfc1f2545ce7, type: 3}
   door: {fileID: 901010721}
 --- !u!61 &617865671
 BoxCollider2D:
@@ -22526,7 +22529,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 332978e6552a5244e9e0ae96db0e109b, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.15
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -22698,8 +22701,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -22778,8 +22781,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_PlayOnAwake: 0
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -44195,6 +44198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnedOff: {fileID: 21300000, guid: df93e855398e4cf45a835b048fd14c4f, type: 3}
   turnedOn: {fileID: 21300000, guid: a6559d794490fed40a105257dff013f1, type: 3}
+  LeverSound: {fileID: 8300000, guid: 0157666d3827eca4f91fbfc1f2545ce7, type: 3}
   door: {fileID: 1259596600}
 --- !u!61 &1055771137
 BoxCollider2D:
@@ -44310,6 +44314,7 @@ MonoBehaviour:
   doors:
   - {fileID: 971148377}
   turnedOff: {fileID: 21300000, guid: 3c79faa76c816604494bbfa831cfd6a6, type: 3}
+  turnedOn: {fileID: 21300000, guid: 1f13cf4813bcfb34e81710ec265890e2, type: 3}
 --- !u!61 &1076469058
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -44782,6 +44787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnedOff: {fileID: 21300000, guid: df93e855398e4cf45a835b048fd14c4f, type: 3}
   turnedOn: {fileID: 21300000, guid: a6559d794490fed40a105257dff013f1, type: 3}
+  LeverSound: {fileID: 8300000, guid: 0157666d3827eca4f91fbfc1f2545ce7, type: 3}
   door: {fileID: 1466432373}
 --- !u!1 &1338972261
 GameObject:
@@ -65633,6 +65639,7 @@ MonoBehaviour:
   doors:
   - {fileID: 971148377}
   turnedOff: {fileID: 0}
+  turnedOn: {fileID: 0}
 --- !u!61 &1439205618
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -86846,8 +86853,12 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 4294967295
-  moveSound: {fileID: 8300000, guid: 06b83d6e023de55488eed278509ba16b, type: 3}
-  deathSound: {fileID: 8300000, guid: dc5bb54cab95e464e855b8fe1b922b79, type: 3}
+  BackGround1: {fileID: 8300000, guid: 70c1d0930df867049a8b3ed0bd85a48d, type: 3}
+  BackGround2: {fileID: 8300000, guid: 29bb73c25d6faf244a8a6db617136ee7, type: 3}
+  BackGround3: {fileID: 8300000, guid: 332978e6552a5244e9e0ae96db0e109b, type: 3}
+  moveSound1: {fileID: 8300000, guid: 45b2adef7d3f8b8489b8f0c5ba397c0b, type: 3}
+  moveSound2: {fileID: 8300000, guid: cc6ade3340be3d74889403aab78bca36, type: 3}
+  deathSound: {fileID: 8300000, guid: 996920b2613f24f44ae47f3f7228a81b, type: 3}
   deathDelayTime: 7
 --- !u!61 &1696998568
 BoxCollider2D:
@@ -86945,7 +86956,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1696998565}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.98, y: 3.31, z: -1}
+  m_LocalPosition: {x: 3.89, y: -0.89, z: -1}
   m_LocalScale: {x: 0.4184857, y: 0.4184857, z: 1.2081176}
   m_Children:
   - {fileID: 1744791341}
@@ -86975,6 +86986,7 @@ MonoBehaviour:
   grabbedCube: 0
   throwForce: 7
   keyHoldPoint: {fileID: 475555114}
+  cubeHoldPoint: {fileID: 2121167609}
   pickUpSound: {fileID: 8300000, guid: 06b83d6e023de55488eed278509ba16b, type: 3}
   doorSound: {fileID: 8300000, guid: a7a949eefc409134194a8075a629fc10, type: 3}
 --- !u!1 &1709810056

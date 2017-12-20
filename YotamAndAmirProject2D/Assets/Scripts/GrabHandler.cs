@@ -11,12 +11,12 @@ public class GrabHandler : MonoBehaviour
     [SerializeField]
     private float throwForce;
 
-    [SerializeField]
-    private Transform keyHoldPoint;
-    private Transform cubeHoldPoint;
+    public Transform keyHoldPoint;
+    public Transform cubeHoldPoint;
 
 
-    private Collision2D heldKey, heldCube;
+    private Collision2D heldKey;
+    private Collision2D heldCube;
 
     public AudioClip pickUpSound;
     public AudioClip doorSound;

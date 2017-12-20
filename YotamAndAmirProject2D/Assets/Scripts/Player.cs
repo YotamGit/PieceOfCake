@@ -23,7 +23,12 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private LayerMask whatIsGround; // indication for what is considered ground
 
-    public AudioClip moveSound;
+    public AudioClip BackGround1;
+    public AudioClip BackGround2;
+    public AudioClip BackGround3;
+
+    public AudioClip moveSound1;
+    public AudioClip moveSound2;
     public AudioClip deathSound;
 
     public float deathDelayTime;
@@ -45,30 +50,13 @@ public class Player : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        SoundManager.instance.musicSource.Play();// PlaySingle(deathSound);
+        SoundManager.instance.RandomizeSfx(BackGround1,BackGround2,BackGround3);// PlaySingle(deathSound);
         facingRight = true;
         rigidBody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         gameObject.SetActive (true);
 	}
 
-    IEnumerator deathDelay()
-    {
-        //print(Time.time);
-        SoundManager.instance.PlaySingle3(deathSound);
-        //yield return new WaitWhile(() => SoundManager.instance.efxSource3.isPlaying);
-        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        while (SoundManager.instance.efxSource3.isPlaying)
-        {
-            yield return new WaitForSeconds(1);//deathDelayTime);
-        }
-        //yield return new WaitForSeconds(7);//deathDelayTime);
-                                           //SoundManager.instance.PlaySingle3(deathSound);
-
-        ReturnToCheckPoint();
-        damaged = false;
-        //print(Time.time);
-    }
    
 // Update is called once per frame
     void Update ()
@@ -77,23 +65,21 @@ public class Player : MonoBehaviour {
         if (damaged)
         {
             SoundManager.instance.efxSource1.Stop();
-            SoundManager.instance.efxSource2.Stop();
+            //SoundManager.instance.efxSource2.Stop();
             SoundManager.instance.efxSource3.Stop();
             SoundManager.instance.musicSource.Stop();
-            StartCoroutine(deathDelay());
-            //SoundManager.instance.PlaySingle3(deathSound);
-            //yield return new WaitWhile(() => SoundManager.instance.efxSource3.isPlaying);
-            //gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            Time.timeScale = 0f;
+            if(!SoundManager.instance.efxSource2.isPlaying)
+            {
+                Time.timeScale = 1;
+                damaged = false;
+                ReturnToCheckPoint();
 
-            //SoundManager.instance.PlaySingle3(deathSound);
-            //yield return new WaitForSeconds(7);//deathDelayTime);
-
-           
-            //damaged = false;
-            //ReturnToCheckPoint();
+            }
         }
         // checking if the object is mid air, and moving him according to the key he pressed
         isGroundedVar = IsGrounded();
+
         float horizontal = Input.GetAxis("Horizontal");
         HandleMovement(horizontal);
         Flip(horizontal);
@@ -105,6 +91,9 @@ public class Player : MonoBehaviour {
         //SoundManager.instance.efxSource.Stop();
         if (col.gameObject.tag == "Dangerous")
         {
+            gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            SoundManager.instance.efxSource2.volume = 0.5f;
+            SoundManager.instance.PlaySingle2(deathSound);
             damaged = true;
         }
     }
@@ -129,48 +118,66 @@ public class Player : MonoBehaviour {
     private void HandleMovement(float Horizontal)
     {
 
-        //SoundManager.instance.PlaySingle3(moveSound);
+        if (Horizontal != 0 && !SoundManager.instance.efxSource3.isPlaying)
+        {
+            SoundManager.instance.PlaySingle3(moveSound1);
+        }
+        else if (rigidBody.velocity.y > 0 && rigidBody.velocity.y < 10) 
+        {
+            //making sure to not cancel the jump sound
+        }
+        else if(Horizontal == 0 && SoundManager.instance.efxSource3.isPlaying)
+        {
+            SoundManager.instance.efxSource3.Stop();
+        }
+
         rigidBody.velocity = new Vector2(Horizontal * movementSpeed, rigidBody.velocity.y); // adds speed to the right/left according to the player's input
         myAnimator.SetFloat("speed", Mathf.Abs(Horizontal));
-        //SoundManager.instance.efxSource3.Stop();
             
         if (Input.GetKeyDown(KeyCode.R)) // returns to check point
         {
             ReturnToCheckPoint();
         }
-        myAnimator.SetBool("boostDown", false);
+        myAnimator.SetBool("boostDown", false);//canceling the boost down animation
         // checking if the grounded variable is true. if it is, the player is allowed to jump
         if (isGroundedVar)
         {
             isGroundedVar = false;
             if (Input.GetKeyDown(KeyCode.W))
             {
-                //SoundManager.instance.PlaySingle(moveSound);
+                SoundManager.instance.PlaySingle3(moveSound1);
 
                 rigidBody.AddForce(new Vector2(0, jumpForce));
                 myAnimator.SetBool("jump", true);
-                //SoundManager.instance.efxSource.Stop();
+              
             }
         }
         // force fall (amazing name for the ability - By Amir Weinfeld)
         else if (!isGroundedVar)
         {
-            if (rigidBody.velocity.y < 1.5)
+            if (rigidBody.velocity.y < 1.5 && rigidBody.velocity.y > 0 && rigidBody.velocity.x !=0)
             {
+                myAnimator.SetBool("jump", false);
+            }
+            else if (rigidBody.velocity.y < 1.5 && rigidBody.velocity.y > 0)
+            {
+                SoundManager.instance.efxSource3.Stop();
                 myAnimator.SetBool("jump", false);
             }
 
             myAnimator.SetFloat("speedy", rigidBody.velocity.y);
             myAnimator.SetBool("boostDown", false);
-
             if (Input.GetKey(KeyCode.S))
             {
-                //SoundManager.instance.PlaySingle(moveSound);
-
+                if(!SoundManager.instance.efxSource3.isPlaying)
+                {
+                    SoundManager.instance.PlaySingle3(moveSound1);
+                }
+                
                 rigidBody.AddForce(new Vector2(0, -jumpForce / 10));
                 myAnimator.SetBool("boostDown", true);
-                //SoundManager.instance.efxSource.Stop();
             }
+
         }
         
     }

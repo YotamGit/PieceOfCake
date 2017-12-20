@@ -7,6 +7,8 @@ public class LeverHandler : MonoBehaviour {
     [SerializeField]
     private Sprite turnedOff, turnedOn;
 
+    public AudioClip LeverSound;
+
     [SerializeField]
     private GameObject door;
 
@@ -32,11 +34,13 @@ public class LeverHandler : MonoBehaviour {
 
             if (leverSpriteRend.sprite == turnedOff)
             {
+                SoundManager.instance.PlaySingle2(LeverSound);
                 leverSpriteRend.sprite = turnedOn;
                 doorMaterial.color = new Color(1, 1, 1, 0.4F);
             }
             else
             {
+                SoundManager.instance.PlaySingle2(LeverSound);
                 leverSpriteRend.sprite = turnedOff;
                 doorMaterial.color = new Color(1, 1, 1, 1F);
             }
