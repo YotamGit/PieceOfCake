@@ -4,11 +4,12 @@ using System.Collections.Generic;
 
 public class SoundManager : MonoBehaviour {
 
-    public AudioSource efxSource1;                   //Drag a reference to the audio source which will play the sound effects.
-    public AudioSource efxSource2;
-    public AudioSource efxSource3;
+    public AudioSource efxSource;//key channel                   //Drag a reference to the audio source which will play the sound effects.
+    public AudioSource moveEfxSource;//move channel
+    public AudioSource deathEfxSource;
     public AudioSource musicSource;                 //Drag a reference to the audio source which will play the music.
-    public static SoundManager instance = null;     //Allows other scripts to call functions from SoundManager.             
+    public static SoundManager instance = null;     //Allows other scripts to call functions from SoundManager.   
+    
     public float lowPitchRange = .95f;              //The lowest a sound effect will be randomly pitched.
     public float highPitchRange = 1.05f;            //The highest a sound effect will be randomly pitched.
     
@@ -31,33 +32,31 @@ public class SoundManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-
     //Used to play single sound clips.
-    public void PlaySingle1(AudioClip clip)
+    public void PlayEffect(AudioClip clip)
     {
         //Set the clip of our efxSource audio source to the clip passed in as a parameter.
-        efxSource1.clip = clip;
+        efxSource.clip = clip;
 
         //Play the clip.
-        efxSource1.PlayDelayed(0);
+        efxSource.PlayDelayed(0);
     }
-    public void PlaySingle2(AudioClip clip)
+    public void PlayMove(AudioClip clip)
     {
         //Set the clip of our efxSource audio source to the clip passed in as a parameter.
-        efxSource2.clip = clip;
+        moveEfxSource.clip = clip;
 
         //Play the clip.
-        efxSource2.PlayDelayed(0);
+        moveEfxSource.PlayDelayed(0);
     }
-    public void PlaySingle3(AudioClip clip)
+
+    public void PlayDeathEffect(AudioClip clip)
     {
-        //Set the clip of our efxSource audio source to the clip passed in as a parameter.
-        efxSource3.clip = clip;
+        deathEfxSource.clip = clip;
 
         //Play the clip.
-        efxSource3.PlayDelayed(0);
+        deathEfxSource.PlayDelayed(0);
     }
-
 
     //RandomizeSfx chooses randomly between various audio clips and slightly changes their pitch.
     public void RandomizeSfx(params AudioClip[] clips)
@@ -78,4 +77,3 @@ public class SoundManager : MonoBehaviour {
         musicSource.PlayDelayed(0);
     }
 }
-

@@ -763,6 +763,8 @@ MonoBehaviour:
   - {fileID: 822554499}
   turnedOff: {fileID: 0}
   turnedOn: {fileID: 0}
+  clicked: {fileID: 0}
+  released: {fileID: 0}
 --- !u!61 &426958398
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21806,6 +21808,8 @@ MonoBehaviour:
   - {fileID: 575136821}
   turnedOff: {fileID: 21300000, guid: 3c79faa76c816604494bbfa831cfd6a6, type: 3}
   turnedOn: {fileID: 21300000, guid: 1f13cf4813bcfb34e81710ec265890e2, type: 3}
+  clicked: {fileID: 8300000, guid: 7f9e9156f74b6e94f952e78d149edbfb, type: 3}
+  released: {fileID: 8300000, guid: 6003122717660e74fb467af3da0af0d3, type: 3}
 --- !u!61 &497484187
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21882,7 +21886,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 497484185}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.620214, y: -5.156917, z: -5.625}
+  m_LocalPosition: {x: -3.13, y: -5.156917, z: -5.625}
   m_LocalScale: {x: 6, y: 6, z: 1}
   m_Children: []
   m_Father: {fileID: 768521563}
@@ -22346,7 +22350,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 640367642}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.06, y: -4.27, z: -6.703125}
+  m_LocalPosition: {x: 4, y: -4.27, z: -6.703125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1709810057}
@@ -22512,9 +22516,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a11e416372730f4db735b2a2f7339b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  efxSource1: {fileID: 799920520}
-  efxSource2: {fileID: 799920523}
-  efxSource3: {fileID: 799920522}
+  efxSource: {fileID: 799920520}
+  moveEfxSource: {fileID: 799920523}
+  deathEfxSource: {fileID: 799920522}
   musicSource: {fileID: 799920519}
   lowPitchRange: 0.95
   highPitchRange: 1.05
@@ -22529,7 +22533,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 332978e6552a5244e9e0ae96db0e109b, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -22610,7 +22614,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.3
-  m_Pitch: 1
+  m_Pitch: 1.8
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -22665,7 +22669,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 0
+    m_RotationOrder: 4
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -22684,8 +22688,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 799920517}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3432927, y: -0.027977884, z: -0.1296551}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.3432927, y: -0.027977884, z: -0.12965488}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -22702,7 +22706,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -22782,7 +22786,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -44315,6 +44319,8 @@ MonoBehaviour:
   - {fileID: 971148377}
   turnedOff: {fileID: 21300000, guid: 3c79faa76c816604494bbfa831cfd6a6, type: 3}
   turnedOn: {fileID: 21300000, guid: 1f13cf4813bcfb34e81710ec265890e2, type: 3}
+  clicked: {fileID: 8300000, guid: 7f9e9156f74b6e94f952e78d149edbfb, type: 3}
+  released: {fileID: 8300000, guid: 6003122717660e74fb467af3da0af0d3, type: 3}
 --- !u!61 &1076469058
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -44391,7 +44397,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1076469056}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.119785726, y: -5.156917, z: -5.625}
+  m_LocalPosition: {x: 1.9, y: -5.156917, z: -5.625}
   m_LocalScale: {x: 6, y: 6, z: 1}
   m_Children: []
   m_Father: {fileID: 768521563}
@@ -44803,7 +44809,7 @@ GameObject:
   - component: {fileID: 1338972263}
   m_Layer: 0
   m_Name: Bounce
-  m_TagString: Untagged
+  m_TagString: Bounce
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65640,6 +65646,8 @@ MonoBehaviour:
   - {fileID: 971148377}
   turnedOff: {fileID: 0}
   turnedOn: {fileID: 0}
+  clicked: {fileID: 0}
+  released: {fileID: 0}
 --- !u!61 &1439205618
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -86850,16 +86858,19 @@ MonoBehaviour:
   - {fileID: 860125854}
   - {fileID: 1919434141}
   groundRadius: 0.2
-  whatIsGround:
+  whatIsGroundMusic:
     serializedVersion: 2
     m_Bits: 4294967295
-  BackGround1: {fileID: 8300000, guid: 70c1d0930df867049a8b3ed0bd85a48d, type: 3}
-  BackGround2: {fileID: 8300000, guid: 29bb73c25d6faf244a8a6db617136ee7, type: 3}
-  BackGround3: {fileID: 8300000, guid: 332978e6552a5244e9e0ae96db0e109b, type: 3}
+  BackGroundMusic:
+  - {fileID: 8300000, guid: 70c1d0930df867049a8b3ed0bd85a48d, type: 3}
+  - {fileID: 8300000, guid: 29bb73c25d6faf244a8a6db617136ee7, type: 3}
+  - {fileID: 8300000, guid: 332978e6552a5244e9e0ae96db0e109b, type: 3}
+  - {fileID: 8300000, guid: 9b83f06a0c7a30041a989e499de55ded, type: 3}
+  - {fileID: 8300000, guid: 26ff12b6a8b48b7458d5ddc7efbe6bd5, type: 3}
   moveSound1: {fileID: 8300000, guid: 45b2adef7d3f8b8489b8f0c5ba397c0b, type: 3}
   moveSound2: {fileID: 8300000, guid: cc6ade3340be3d74889403aab78bca36, type: 3}
-  deathSound: {fileID: 8300000, guid: 996920b2613f24f44ae47f3f7228a81b, type: 3}
-  deathDelayTime: 7
+  deathSound: {fileID: 8300000, guid: 6350a61b67a600447977b2ac9ef5d2b5, type: 3}
+  bounceSound: {fileID: 8300000, guid: 65425ccbc5a68c14b82893020a20bb47, type: 3}
 --- !u!61 &1696998568
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -86956,7 +86967,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1696998565}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.89, y: -0.89, z: -1}
+  m_LocalPosition: {x: 2.5, y: -0.5, z: -1}
   m_LocalScale: {x: 0.4184857, y: 0.4184857, z: 1.2081176}
   m_Children:
   - {fileID: 1744791341}
@@ -128779,7 +128790,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

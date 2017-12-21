@@ -21,6 +21,7 @@ TagManager:
   - Cube
   - DoorTurquoise
   - DoorPink
+  - Bounce
   layers:
   - Default
   - TransparentFX

@@ -34,13 +34,15 @@ public class LeverHandler : MonoBehaviour {
 
             if (leverSpriteRend.sprite == turnedOff)
             {
-                SoundManager.instance.PlaySingle2(LeverSound);
+                SoundManager.instance.efxSource.volume = 0.3f;
+                SoundManager.instance.PlayEffect(LeverSound);
                 leverSpriteRend.sprite = turnedOn;
                 doorMaterial.color = new Color(1, 1, 1, 0.4F);
             }
             else
             {
-                SoundManager.instance.PlaySingle2(LeverSound);
+                SoundManager.instance.efxSource.volume = 0.3f;
+                SoundManager.instance.PlayEffect(LeverSound);
                 leverSpriteRend.sprite = turnedOff;
                 doorMaterial.color = new Color(1, 1, 1, 1F);
             }

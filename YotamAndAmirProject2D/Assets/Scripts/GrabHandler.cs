@@ -14,7 +14,6 @@ public class GrabHandler : MonoBehaviour
     public Transform keyHoldPoint;
     public Transform cubeHoldPoint;
 
-
     private Collision2D heldKey;
     private Collision2D heldCube;
 
@@ -23,8 +22,7 @@ public class GrabHandler : MonoBehaviour
 
     // Use this for initialization
     void Start()
-    {
-
+    {        
     }
 
     // Update is called once per frame
@@ -34,14 +32,14 @@ public class GrabHandler : MonoBehaviour
         {
             heldKey.transform.position = keyHoldPoint.position;
         }
-        if (grabbedCube)
+        else if (grabbedCube)
         {
             heldCube.transform.position = cubeHoldPoint.position;
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (grabbedKey)
+            if (grabbedKey && !grabbedCube)
             {
                 grabbedKey = false;
                 heldKey.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x * throwForce, 1 * throwForce);
@@ -49,9 +47,9 @@ public class GrabHandler : MonoBehaviour
                 heldKey = null;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            if (grabbedCube)
+            if (grabbedCube && !grabbedKey)
             {
                 grabbedCube = false;
                 heldCube.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
@@ -65,9 +63,10 @@ public class GrabHandler : MonoBehaviour
     {
         if (col.gameObject.tag.Substring(0, 3) == "Key")
         {
-            if (!grabbedKey)
+            if (!grabbedKey && !grabbedCube)
             {
-                SoundManager.instance.PlaySingle1(pickUpSound);
+                SoundManager.instance.efxSource.volume = 0.3f;
+                SoundManager.instance.PlayEffect(pickUpSound);
                 grabbedKey = true;
                 col.transform.position = keyHoldPoint.position;
                 heldKey = col;
@@ -76,20 +75,20 @@ public class GrabHandler : MonoBehaviour
         }
     }
 
-
-    private void OnCollisionStay2D(Collision2D col)
+    void OnCollisionStay2D(Collision2D col)
     {
         if (col.gameObject.tag.Substring(0, 4) == "Door" && heldKey != null) // need to find a better way of mapping a door to a key!
         {
             if (heldKey.gameObject.tag[3] == col.gameObject.tag[4]) // blue key + blue door collition
             {
-                SoundManager.instance.PlaySingle2(doorSound);
+                SoundManager.instance.efxSource.volume = 0.2f;
+                SoundManager.instance.PlayEffect(doorSound);
                 CancelObject(col);
             }
         }
-        if (col.gameObject.tag == "Cube" && Input.GetKey(KeyCode.Space))
+        else if (col.gameObject.tag == "Cube" && (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.F)))
         {
-            if (!grabbedCube)
+            if (!grabbedCube && !grabbedKey)
             {
                 grabbedCube = true;
                 col.transform.position = cubeHoldPoint.position;
@@ -97,10 +96,8 @@ public class GrabHandler : MonoBehaviour
                 heldCube.collider.enabled = !heldCube.collider.enabled;
             }
         }
-
     }
-
-
+    
     private void CancelObject(Collision2D col)
     {
         heldKey.gameObject.SetActive(false);

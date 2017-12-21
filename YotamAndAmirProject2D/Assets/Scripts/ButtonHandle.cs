@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class ButtonHandle : MonoBehaviour {
 
@@ -14,6 +13,9 @@ public class ButtonHandle : MonoBehaviour {
 
     public Sprite turnedOff;
     public Sprite turnedOn;
+
+    public AudioClip clicked;
+    public AudioClip released;
 
     /*private List<Collider2D> doorCols;
 
@@ -29,23 +31,33 @@ public class ButtonHandle : MonoBehaviour {
 	void Update () {
     }
 
-    void OnTriggerStay2D(Collider2D collision)
+    void OnTriggerStay2D(Collider2D col)
     {
-        if (!isPressed)
+        if (col.gameObject.tag == "Cube" || col.gameObject.tag == "Player")
         {
-            isPressed = true;
-            PressOrReleasHandle(isPressed);
-            buttonSpriteRend.sprite = turnedOn;
+            if (!isPressed)
+            {
+                SoundManager.instance.efxSource.volume = 0.7f;
+                SoundManager.instance.PlayEffect(clicked);
+                isPressed = true;
+                PressOrReleasHandle(isPressed);
+                buttonSpriteRend.sprite = turnedOn;
+            }
         }
     }
 
-    void OnTriggerExit2D(Collider2D collision)
+    void OnTriggerExit2D(Collider2D col)
     {
-        if(isPressed)
+        if (col.gameObject.tag == "Cube" || col.gameObject.tag == "Player")
         {
-            isPressed = false;
-            PressOrReleasHandle(isPressed);
-            buttonSpriteRend.sprite = turnedOff;
+            if (isPressed)
+            {
+                SoundManager.instance.efxSource.volume = 0.7f;
+                SoundManager.instance.PlayEffect(released);
+                isPressed = false;
+                PressOrReleasHandle(isPressed);
+                buttonSpriteRend.sprite = turnedOff;
+            }
         }
     }
     
