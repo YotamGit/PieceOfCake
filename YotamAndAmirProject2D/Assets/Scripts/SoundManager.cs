@@ -4,8 +4,12 @@ using System.Collections.Generic;
 
 public class SoundManager : MonoBehaviour {
 
-    public AudioSource efxSource;//key channel                   //Drag a reference to the audio source which will play the sound effects.
-    public AudioSource moveEfxSource;//move channel
+    public AudioSource efxSource1;//key channel Player1                   //Drag a reference to the audio source which will play the sound effects.
+    public AudioSource moveEfxSource1;//move channel Player1
+
+    public AudioSource efxSource2;//key channel Player2                  //Drag a reference to the audio source which will play the sound effects.
+    public AudioSource moveEfxSource2;//move channel Player2
+
     public AudioSource deathEfxSource;
     public AudioSource musicSource;                 //Drag a reference to the audio source which will play the music.
     public static SoundManager instance = null;     //Allows other scripts to call functions from SoundManager.   
@@ -33,21 +37,40 @@ public class SoundManager : MonoBehaviour {
     }
 
     //Used to play single sound clips.
-    public void PlayEffect(AudioClip clip)
+    public void PlayEffect1(AudioClip clip)
     {
         //Set the clip of our efxSource audio source to the clip passed in as a parameter.
-        efxSource.clip = clip;
+        efxSource1.clip = clip;
 
         //Play the clip.
-        efxSource.PlayDelayed(0);
+        efxSource1.PlayDelayed(0);
     }
-    public void PlayMove(AudioClip clip)
+
+    public void PlayMove1(AudioClip clip)
     {
         //Set the clip of our efxSource audio source to the clip passed in as a parameter.
-        moveEfxSource.clip = clip;
+        moveEfxSource1.clip = clip;
 
         //Play the clip.
-        moveEfxSource.PlayDelayed(0);
+        moveEfxSource1.PlayDelayed(0);
+    }
+
+    public void PlayEffect2(AudioClip clip)
+    {
+        //Set the clip of our efxSource audio source to the clip passed in as a parameter.
+        efxSource2.clip = clip;
+
+        //Play the clip.
+        efxSource2.PlayDelayed(0);
+    }
+
+    public void PlayMove2(AudioClip clip)
+    {
+        //Set the clip of our efxSource audio source to the clip passed in as a parameter.
+        moveEfxSource2.clip = clip;
+
+        //Play the clip.
+        moveEfxSource2.PlayDelayed(0);
     }
 
     public void PlayDeathEffect(AudioClip clip)

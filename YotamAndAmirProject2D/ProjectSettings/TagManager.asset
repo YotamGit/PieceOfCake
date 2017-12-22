@@ -22,6 +22,9 @@ TagManager:
   - DoorTurquoise
   - DoorPink
   - Bounce
+  - Player1
+  - Player2
+  - Cake
   layers:
   - Default
   - TransparentFX

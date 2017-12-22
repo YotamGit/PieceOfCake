@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
+    //public Transform mask;
+
     [SerializeField]
     private string loadScene;
+
+    public string PlayerMovement;
+    public KeyCode restartKey;
+    public KeyCode jumpKey;
+    public KeyCode boostDownKey;
 
     [SerializeField]
     private float movementSpeed;
@@ -25,10 +33,13 @@ public class Player : MonoBehaviour {
 
     // Audio
     public AudioClip[] BackGroundMusic;
+    public AudioClip[] DeathMusic;
 
     public AudioClip moveSound1;
     public AudioClip moveSound2;
-    public AudioClip deathSound;
+    //public AudioClip deathSound1;
+    //public AudioClip deathSound2;
+
     public AudioClip bounceSound;
 
     private Rigidbody2D rigidBody;
@@ -38,33 +49,44 @@ public class Player : MonoBehaviour {
     private bool isGroundedVar;
 
     private bool damaged;
+    private bool currentPlayer = false;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         SoundManager.instance.RandomizeSfx(BackGroundMusic);
         facingRight = true;
         rigidBody = GetComponent<Rigidbody2D>();
+        if(rigidBody.tag == "Player2")
+        {
+            currentPlayer = true;
+        }
         myAnimator = GetComponent<Animator>();
-        gameObject.SetActive (true);
+        gameObject.SetActive(true);
         damaged = false;
     }
-   
+
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) // returns to check point
+        //if(gameObject.tag == "Player2")
+        //{
+        //    mask.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, mask.position.z) ;
+        //}
+
+        if (Input.GetKeyDown(restartKey))//KeyCode.R)) // returns to check point
         {
+            Time.timeScale = 1;
             ReturnToCheckPoint();
         }
-        else if(Input.GetKeyDown(KeyCode.Escape))
+        else if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
 
         if (damaged)
         {
-            if (!SoundManager.instance.deathEfxSource.isPlaying)
+            if (!SoundManager.instance.deathEfxSource.isPlaying)//deathEfxSource.isPlaying)
             {
                 Time.timeScale = 1;
                 ReturnToCheckPoint();
@@ -75,7 +97,9 @@ public class Player : MonoBehaviour {
             // checking if the object is mid air, and moving him according to the key he pressed
             isGroundedVar = IsGrounded();
 
-            float horizontal = Input.GetAxis("Horizontal");
+            float horizontal = Input.GetAxis(PlayerMovement);
+           
+            //Debug.Log(horizontal);
             HandleMovement(horizontal);
             Flip(horizontal);
 
@@ -90,15 +114,21 @@ public class Player : MonoBehaviour {
         if (col.gameObject.tag == "Dangerous")
         {
             gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            SoundManager.instance.moveEfxSource.Stop();
-            SoundManager.instance.efxSource.Stop();
+            SoundManager.instance.moveEfxSource1.Stop();
+            SoundManager.instance.efxSource1.Stop();
+
+            SoundManager.instance.moveEfxSource2.Stop();
+            SoundManager.instance.efxSource2.Stop();
+
             SoundManager.instance.musicSource.Stop();
 
             //SoundManager.instance.musicSource.clip = deathSound;
             //SoundManager.instance.musicSource.volume = 0.5f;
             //SoundManager.instance.efxSource.pitch = 1f;
-            SoundManager.instance.PlayDeathEffect(deathSound);
-            
+            SoundManager.instance.PlayDeathEffect(DeathMusic[0]);
+            //SoundManager.instance.musicSource.loop = false;
+            //SoundManager.instance.RandomizeSfx(DeathMusic);
+
             Time.timeScale = 0f;
             damaged = true;
         }
@@ -108,7 +138,14 @@ public class Player : MonoBehaviour {
     {
         if (col.gameObject.tag == "Bounce")
         {
-            SoundManager.instance.PlayEffect(bounceSound);
+            if(!currentPlayer)
+            {
+                SoundManager.instance.PlayEffect1(bounceSound);
+            }
+            else
+            {
+                SoundManager.instance.PlayEffect2(bounceSound);
+            }
         }
     }
 
@@ -130,18 +167,35 @@ public class Player : MonoBehaviour {
 
     private void HandleMovement(float Horizontal)
     {
-
-        if (Horizontal != 0 && !SoundManager.instance.moveEfxSource.isPlaying)
+        if (!currentPlayer)
         {
-            SoundManager.instance.PlayMove(moveSound1);
+            if (Horizontal != 0 && !SoundManager.instance.moveEfxSource1.isPlaying)
+            {
+                SoundManager.instance.PlayMove1(moveSound1);
+            }
+            else if (rigidBody.velocity.y > 0 && rigidBody.velocity.y < 10)
+            {
+                //making sure to not cancel the jump sound
+            }
+            else if (Horizontal == 0 && SoundManager.instance.moveEfxSource1.isPlaying)
+            {
+                SoundManager.instance.moveEfxSource1.Stop();
+            }
         }
-        else if (rigidBody.velocity.y > 0 && rigidBody.velocity.y < 10) 
+        else
         {
-            //making sure to not cancel the jump sound
-        }
-        else if(Horizontal == 0 && SoundManager.instance.moveEfxSource.isPlaying)
-        {
-            SoundManager.instance.moveEfxSource.Stop();
+            if (Horizontal != 0 && !SoundManager.instance.moveEfxSource2.isPlaying)
+            {
+                SoundManager.instance.PlayMove2(moveSound1);
+            }
+            else if (rigidBody.velocity.y > 0 && rigidBody.velocity.y < 10)
+            {
+                //making sure to not cancel the jump sound
+            }
+            else if (Horizontal == 0 && SoundManager.instance.moveEfxSource2.isPlaying)
+            {
+                SoundManager.instance.moveEfxSource2.Stop();
+            }
         }
 
         rigidBody.velocity = new Vector2(Horizontal * movementSpeed, rigidBody.velocity.y); // adds speed to the right/left according to the player's input
@@ -152,43 +206,66 @@ public class Player : MonoBehaviour {
         if (isGroundedVar)
         {
             isGroundedVar = false;
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(jumpKey))//KeyCode.W))
             {
-                SoundManager.instance.PlayMove(moveSound1);
-
+                if (!currentPlayer)
+                {
+                    SoundManager.instance.PlayMove1(moveSound1);
+                }
+                else
+                {
+                    SoundManager.instance.PlayMove2(moveSound1);
+                }
                 rigidBody.AddForce(new Vector2(0, jumpForce));
                 myAnimator.SetBool("jump", true);
-              
+
             }
         }
         // force fall (amazing name for the ability - By Amir Weinfeld)
         else if (!isGroundedVar)
         {
-            if (rigidBody.velocity.y < 1.5 && rigidBody.velocity.y > 0 && rigidBody.velocity.x !=0)
+            if (rigidBody.velocity.y < 1.5 && rigidBody.velocity.y > 0 && rigidBody.velocity.x != 0)
             {
+
                 myAnimator.SetBool("jump", false);
             }
             else if (rigidBody.velocity.y < 1.5 && rigidBody.velocity.y > 0)
             {
-                SoundManager.instance.moveEfxSource.Stop();
+                if (!currentPlayer)
+                {
+                    SoundManager.instance.moveEfxSource1.Stop();
+                }
+                else
+                {
+                    SoundManager.instance.moveEfxSource2.Stop();
+                }
                 myAnimator.SetBool("jump", false);
             }
 
             myAnimator.SetFloat("speedy", rigidBody.velocity.y);
             myAnimator.SetBool("boostDown", false);
-            if (Input.GetKey(KeyCode.S))
+            if (Input.GetKey(boostDownKey))//KeyCode.S))
             {
-                if(!SoundManager.instance.moveEfxSource.isPlaying)
+                if (!currentPlayer)
                 {
-                    SoundManager.instance.PlayMove(moveSound1);
+                    if (!SoundManager.instance.moveEfxSource1.isPlaying)
+                    {
+                        SoundManager.instance.PlayMove1(moveSound1);
+                    }
                 }
-                
+                else
+                {
+                    if (!SoundManager.instance.moveEfxSource2.isPlaying)
+                    {
+                        SoundManager.instance.PlayMove2(moveSound1);
+                    }
+                }
                 rigidBody.AddForce(new Vector2(0, -jumpForce / 10));
                 myAnimator.SetBool("boostDown", true);
             }
 
         }
-        
+
     }
 
     /*
@@ -199,12 +276,12 @@ public class Player : MonoBehaviour {
     {
         if (rigidBody.velocity.y == 0) // checking that velocity in y == 0 (the player isnt moving)
         {
-            foreach(Transform point in groundPoints)
+            foreach (Transform point in groundPoints)
             {
                 Collider2D[] collider = Physics2D.OverlapCircleAll(point.position, groundRadius, whatIsGroundMusic);
-                for(int i =0; i<collider.Length; i++)
+                for (int i = 0; i < collider.Length; i++)
                 {
-                    if(collider[i].gameObject != gameObject)
+                    if (collider[i].gameObject != gameObject)
                     {
                         return true;
                     }

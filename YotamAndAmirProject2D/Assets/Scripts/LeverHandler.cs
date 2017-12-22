@@ -26,23 +26,38 @@ public class LeverHandler : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag == "Player")
+        if(col.gameObject.tag == "Player1" || col.gameObject.tag == "Player2")
         {
-
             Collider2D doorCol = door.GetComponent<Collider2D>();
             Material doorMaterial = door.GetComponent<Renderer>().material;
 
             if (leverSpriteRend.sprite == turnedOff)
             {
-                SoundManager.instance.efxSource.volume = 0.3f;
-                SoundManager.instance.PlayEffect(LeverSound);
+                if (col.gameObject.tag == "Player1")
+                {
+                    SoundManager.instance.efxSource1.volume = 0.3f;
+                    SoundManager.instance.PlayEffect1(LeverSound);
+                }
+                else
+                {
+                    SoundManager.instance.efxSource2.volume = 0.3f;
+                    SoundManager.instance.PlayEffect2(LeverSound);
+                }
                 leverSpriteRend.sprite = turnedOn;
                 doorMaterial.color = new Color(1, 1, 1, 0.4F);
             }
             else
             {
-                SoundManager.instance.efxSource.volume = 0.3f;
-                SoundManager.instance.PlayEffect(LeverSound);
+                if (col.gameObject.tag == "Player1")
+                {
+                    SoundManager.instance.efxSource1.volume = 0.3f;
+                    SoundManager.instance.PlayEffect1(LeverSound);
+                }
+                else
+                {
+                    SoundManager.instance.efxSource2.volume = 0.3f;
+                    SoundManager.instance.PlayEffect2(LeverSound);
+                }
                 leverSpriteRend.sprite = turnedOff;
                 doorMaterial.color = new Color(1, 1, 1, 1F);
             }

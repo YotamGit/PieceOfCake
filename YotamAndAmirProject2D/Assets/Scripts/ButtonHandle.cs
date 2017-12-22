@@ -33,12 +33,20 @@ public class ButtonHandle : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Cube" || col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Cube" || col.gameObject.tag == "Player1" | col.gameObject.tag == "Player2")
         {
             if (!isPressed)
             {
-                SoundManager.instance.efxSource.volume = 0.7f;
-                SoundManager.instance.PlayEffect(clicked);
+                if(col.gameObject.tag == "Player1")
+                {
+                    SoundManager.instance.efxSource1.volume = 0.7f;
+                    SoundManager.instance.PlayEffect1(clicked);
+                }
+                else
+                {
+                    SoundManager.instance.efxSource2.volume = 0.7f;
+                    SoundManager.instance.PlayEffect2(clicked);
+                }
                 isPressed = true;
                 PressOrReleasHandle(isPressed);
                 buttonSpriteRend.sprite = turnedOn;
@@ -48,12 +56,22 @@ public class ButtonHandle : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Cube" || col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Cube" || col.gameObject.tag == "Player1" | col.gameObject.tag == "Player2")
         {
             if (isPressed)
             {
-                SoundManager.instance.efxSource.volume = 0.7f;
-                SoundManager.instance.PlayEffect(released);
+                if (col.gameObject.tag == "Player1")
+                {
+                    SoundManager.instance.efxSource1.volume = 0.7f;
+                    SoundManager.instance.PlayEffect1(released);
+
+                }
+                else
+                {
+                    SoundManager.instance.efxSource2.volume = 0.7f;
+                    SoundManager.instance.PlayEffect2(released);
+
+                }
                 isPressed = false;
                 PressOrReleasHandle(isPressed);
                 buttonSpriteRend.sprite = turnedOff;
