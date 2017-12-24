@@ -25,6 +25,11 @@ TagManager:
   - Player1
   - Player2
   - Cake
+  - Resize
+  - DamageImmune
+  - Teleport
+  - SpawnCube
+  - Victory
   layers:
   - Default
   - TransparentFX

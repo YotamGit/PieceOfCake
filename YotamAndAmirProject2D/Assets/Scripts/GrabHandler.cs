@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GrabHandler : MonoBehaviour
 {
+    public GameObject VictoryScreen;
+    [Space]
+    [Header("Key Bindings")]
     public KeyCode pickUpKey;
     public KeyCode dropKey;
 
@@ -13,6 +16,9 @@ public class GrabHandler : MonoBehaviour
     [SerializeField]
     private float throwForce;
 
+    [Space]
+
+    [Header("Hold Points")]
     public Transform keyHoldPoint;
     public Transform cubeHoldPoint;
     public Transform otherPlayerKeyPoint;
@@ -21,8 +27,12 @@ public class GrabHandler : MonoBehaviour
     private Collision2D heldKey;
     private Collision2D heldCube;
 
+    [Space]
+
+    [Header("Audio")]
     public AudioClip pickUpSound;
     public AudioClip doorSound;
+    public AudioClip VictoryTheme;
 
     // Use this for initialization
     void Start()
@@ -61,9 +71,26 @@ public class GrabHandler : MonoBehaviour
 
     }
 
+   
+
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag.Substring(0, 3) == "Key")
+        if(col.gameObject.tag == "Victory")
+        {
+            VictoryScreen.SetActive(true);
+            Time.timeScale = 0.0f;
+            gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            SoundManager.instance.moveEfxSource1.Stop();
+            SoundManager.instance.efxSource1.Stop();
+            SoundManager.instance.moveEfxSource2.Stop();
+            SoundManager.instance.efxSource2.Stop();
+            SoundManager.instance.musicSource.Stop();
+
+            SoundManager.instance.musicSource.loop = false;
+            SoundManager.instance.musicSource.clip = VictoryTheme;
+            SoundManager.instance.musicSource.Play();
+        }
+        else if (col.gameObject.tag.Substring(0, 3) == "Key")
         {
             if (!grabbedKey && !grabbedCube)
             {

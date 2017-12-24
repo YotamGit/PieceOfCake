@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour {
 
+    [Header("Properties")]
     public string targetName1;
     //public string targetName2;
 

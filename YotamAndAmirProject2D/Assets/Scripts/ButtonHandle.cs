@@ -7,19 +7,20 @@ public class ButtonHandle : MonoBehaviour {
     [SerializeField]
     private GameObject[] doors;
 
-    private bool isPressed;
+    [Space]
 
+    private bool isPressed;
     private SpriteRenderer buttonSpriteRend;
 
+    [Header("Sprites")]
     public Sprite turnedOff;
     public Sprite turnedOn;
 
+    [Space]
+
+    [Header("Audio")]
     public AudioClip clicked;
     public AudioClip released;
-
-    /*private List<Collider2D> doorCols;
-
-    private List<Material> doorMaterials;*/
 
     // Use this for initialization
     void Start () {

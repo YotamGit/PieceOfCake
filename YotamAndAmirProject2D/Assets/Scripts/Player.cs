@@ -8,12 +8,20 @@ public class Player : MonoBehaviour
     //public Transform mask;
 
     [SerializeField]
+    private GameObject Tutorial;
+    [SerializeField]
     private string loadScene;
-
     public string PlayerMovement;
+
+    [Space]
+
+    [Header("Key Bindings")]
+    public KeyCode ShowTutorial;
     public KeyCode restartKey;
     public KeyCode jumpKey;
     public KeyCode boostDownKey;
+
+    [Header("Settings")]
 
     [SerializeField]
     private float movementSpeed;
@@ -29,18 +37,19 @@ public class Player : MonoBehaviour
     private float groundRadius;
 
     [SerializeField]
-    private LayerMask whatIsGroundMusic; // indication for what is considered ground
+    private LayerMask whatIsGround; // indication for what is considered ground
 
+    [Space]
+
+    [Header("Audio")]
     // Audio
     public AudioClip[] BackGroundMusic;
     public AudioClip[] DeathMusic;
 
     public AudioClip moveSound1;
     public AudioClip moveSound2;
-    //public AudioClip deathSound1;
-    //public AudioClip deathSound2;
-
     public AudioClip bounceSound;
+
 
     private Rigidbody2D rigidBody;
     private Animator myAnimator;
@@ -48,20 +57,25 @@ public class Player : MonoBehaviour
     private bool facingRight;
     private bool isGroundedVar;
 
-    private bool damaged;
+    [Header("Stats")]
+    public bool damaged;
+
+    private bool TutorialIsShown = false;
     private bool currentPlayer = false;
 
     // Use this for initialization
     void Start()
     {
+        SoundManager.instance.musicSource.Stop();
         SoundManager.instance.RandomizeSfx(BackGroundMusic);
-        facingRight = true;
+        Tutorial.SetActive(false);
         rigidBody = GetComponent<Rigidbody2D>();
+        myAnimator = GetComponent<Animator>();
+        facingRight = true;
         if(rigidBody.tag == "Player2")
         {
             currentPlayer = true;
         }
-        myAnimator = GetComponent<Animator>();
         gameObject.SetActive(true);
         damaged = false;
     }
@@ -69,14 +83,26 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(gameObject.tag == "Player2")
-        //{
-        //    mask.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, mask.position.z) ;
-        //}
+        if (Input.GetKeyDown(ShowTutorial))//KeyCode.R)) // returns to check point
+        {
+            if(TutorialIsShown)
+            {
+                Time.timeScale = 1.0f;
+                Tutorial.SetActive(false);
+                TutorialIsShown = false;
 
-        if (Input.GetKeyDown(restartKey))//KeyCode.R)) // returns to check point
+            }
+            else
+            {
+                Time.timeScale = 0.0f;
+                Tutorial.SetActive(true);
+                TutorialIsShown = true;
+            }
+        }
+        else if (Input.GetKeyDown(restartKey))//KeyCode.R)) // returns to check point
         {
             Time.timeScale = 1;
+            gameObject.GetComponent<GrabHandler>().VictoryScreen.SetActive(false);
             ReturnToCheckPoint();
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
@@ -111,7 +137,7 @@ public class Player : MonoBehaviour
     {
         //SoundManager.instance.efxSource.Stop();
         // Checking if the player got damaged. reseting his position if he did
-        if (col.gameObject.tag == "Dangerous")
+        if (col.gameObject.tag == "Dangerous" && gameObject.GetComponent<AbilityManager>().Immune == false)
         {
             gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             SoundManager.instance.moveEfxSource1.Stop();
@@ -131,6 +157,11 @@ public class Player : MonoBehaviour
 
             Time.timeScale = 0f;
             damaged = true;
+        }
+        else if(col.gameObject.tag == "Dangerous" && gameObject.GetComponent<AbilityManager>().Immune == true)
+        {
+            gameObject.GetComponent<AbilityManager>().PowerUps[1].SetActive(false);
+            gameObject.GetComponent<AbilityManager>().Immune = false;
         }
     }
 
@@ -278,7 +309,7 @@ public class Player : MonoBehaviour
         {
             foreach (Transform point in groundPoints)
             {
-                Collider2D[] collider = Physics2D.OverlapCircleAll(point.position, groundRadius, whatIsGroundMusic);
+                Collider2D[] collider = Physics2D.OverlapCircleAll(point.position, groundRadius, whatIsGround);
                 for (int i = 0; i < collider.Length; i++)
                 {
                     if (collider[i].gameObject != gameObject)
