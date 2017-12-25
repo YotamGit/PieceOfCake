@@ -139,6 +139,8 @@ public class Player : MonoBehaviour
         // Checking if the player got damaged. reseting his position if he did
         if (col.gameObject.tag == "Dangerous" && gameObject.GetComponent<AbilityManager>().Immune == false)
         {
+            Time.timeScale = 0f;
+            damaged = true;
             gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             SoundManager.instance.moveEfxSource1.Stop();
             SoundManager.instance.efxSource1.Stop();
@@ -155,8 +157,7 @@ public class Player : MonoBehaviour
             //SoundManager.instance.musicSource.loop = false;
             //SoundManager.instance.RandomizeSfx(DeathMusic);
 
-            Time.timeScale = 0f;
-            damaged = true;
+            
         }
         else if(col.gameObject.tag == "Dangerous" && gameObject.GetComponent<AbilityManager>().Immune == true)
         {
