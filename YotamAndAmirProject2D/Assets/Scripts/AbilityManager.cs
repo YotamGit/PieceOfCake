@@ -35,34 +35,42 @@ public class AbilityManager : MonoBehaviour {
 
     IEnumerator ResizeTimer()
     {
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(2.1f);
         gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.5F);
-        //gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x * 2, gameObject.transform.localScale.y * 2, gameObject.transform.localScale.z);
         yield return new WaitForSeconds(0.25f);
         gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 1F);
-        //gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x / 2, gameObject.transform.localScale.y / 2, gameObject.transform.localScale.z);
         yield return new WaitForSeconds(0.25f);
         gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.5F);
-        //gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x * 2, gameObject.transform.localScale.y * 2, gameObject.transform.localScale.z);
-        yield return new WaitForSeconds(0.15f);
-        gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 1F);
 
+
+        yield return new WaitForSeconds(0.20f);
+        gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 1F);
         yield return new WaitForSeconds(0.15f);
         gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.5F);
-        //gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x * 2, gameObject.transform.localScale.y * 2, gameObject.transform.localScale.z);
+
         yield return new WaitForSeconds(0.1f);
         gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 1F);
-        //gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x / 2, gameObject.transform.localScale.y / 2, gameObject.transform.localScale.z);
         yield return new WaitForSeconds(0.1f);
-        //gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.4F);
+        gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.5F);
+        yield return new WaitForSeconds(0.1f);
+        gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 1F);
+        yield return new WaitForSeconds(0.1f);
+        gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.5F);
+        yield return new WaitForSeconds(0.1f);
+        gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 1F);
+        yield return new WaitForSeconds(0.05f);
+        gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.5F);
+
         gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x * 2, gameObject.transform.localScale.y * 2, gameObject.transform.localScale.z);
 
+        gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 1F);
+
+        //gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x / 2, gameObject.transform.localScale.y / 2, gameObject.transform.localScale.z);
     }
 
     // Update is called once per frame
     void Update ()
     {
-        Debug.Log(Immune);
         if (Resize)
         {
             PowerUps[0].SetActive(true);

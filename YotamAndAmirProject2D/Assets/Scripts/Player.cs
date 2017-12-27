@@ -94,7 +94,13 @@ public class Player : MonoBehaviour
             }
             else
             {
-                Time.timeScale = 0.0f;
+                // stopping sounds while showiong the instructions
+                SoundManager.instance.moveEfxSource1.Stop();
+                SoundManager.instance.efxSource1.Stop();
+                SoundManager.instance.moveEfxSource2.Stop();
+                SoundManager.instance.efxSource2.Stop();
+
+                Time.timeScale = 0;
                 Tutorial.SetActive(true);
                 TutorialIsShown = true;
             }
@@ -124,11 +130,12 @@ public class Player : MonoBehaviour
             isGroundedVar = IsGrounded();
 
             float horizontal = Input.GetAxis(PlayerMovement);
-           
-            //Debug.Log(horizontal);
-            HandleMovement(horizontal);
-            Flip(horizontal);
-
+            
+            if (Time.timeScale == 1) // will not be called if time != normal time
+            {
+                HandleMovement(horizontal);
+                Flip(horizontal);
+            }
         }
     }
 

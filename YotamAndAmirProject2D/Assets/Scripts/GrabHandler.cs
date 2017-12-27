@@ -68,10 +68,7 @@ public class GrabHandler : MonoBehaviour
                 heldCube = null;
             }
         }
-
-    }
-
-   
+    }   
 
     void OnCollisionEnter2D(Collision2D col)
     {
