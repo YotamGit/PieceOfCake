@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
         {
             if(TutorialIsShown)
             {
-                Time.timeScale = 1.0f;
+                //Time.timeScale = 1.0f;
                 Tutorial.SetActive(false);
                 TutorialIsShown = false;
 
@@ -100,17 +100,17 @@ public class Player : MonoBehaviour
                 SoundManager.instance.moveEfxSource2.Stop();
                 SoundManager.instance.efxSource2.Stop();
 
-                Time.timeScale = 0;
+                //Time.timeScale = 0;
                 Tutorial.SetActive(true);
                 TutorialIsShown = true;
             }
         }
-        else if (Input.GetKeyDown(restartKey))//KeyCode.R)) // returns to check point
-        {
-            Time.timeScale = 1;
-            gameObject.GetComponent<GrabHandler>().VictoryScreen.SetActive(false);
-            ReturnToCheckPoint();
-        }
+        //else if (Input.GetKeyDown(restartKey))//KeyCode.R)) // returns to check point
+        //{
+        //    Time.timeScale = 1;
+        //    gameObject.GetComponent<GrabHandler>().VictoryScreen.SetActive(false);
+        //    ReturnToCheckPoint();
+        //}
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
@@ -134,6 +134,7 @@ public class Player : MonoBehaviour
             if (Time.timeScale == 1) // will not be called if time != normal time
             {
                 HandleMovement(horizontal);
+                ///send location and velocity to playert
                 Flip(horizontal);
             }
         }

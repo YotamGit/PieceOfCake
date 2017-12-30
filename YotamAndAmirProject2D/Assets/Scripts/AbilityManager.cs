@@ -74,20 +74,27 @@ public class AbilityManager : MonoBehaviour {
         if (Resize)
         {
             PowerUps[0].SetActive(true);
+            Debug.Log("ActivatePowerUp");
         }
         if (Immune)
         {
             PowerUps[1].SetActive(true);
+            Debug.Log("ActivatePowerUp");
+
         }
         if (Teleport)
         {
             PowerUps[2].SetActive(true);
+            Debug.Log("ActivatePowerUp");
+
         }
-        if(SpawnCube)
+        if (SpawnCube)
         {
             PowerUps[3].SetActive(true);
+            Debug.Log("ActivatePowerUp");
+
         }
-        if(Input.GetKey(Ability1Key))
+        if (Input.GetKey(Ability1Key))
         {
             if (Resize)
             {

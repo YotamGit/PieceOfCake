@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour {
 
     [Header("Properties")]
-    public string targetName1;
+    [SerializeField] private GameObject targetName1;
     //public string targetName2;
 
 
@@ -27,7 +27,7 @@ public class CameraMovement : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        target = GameObject.Find(targetName1).transform;
+        target = targetName1.transform;
 	}
 	
 	// Update is called once per frame
