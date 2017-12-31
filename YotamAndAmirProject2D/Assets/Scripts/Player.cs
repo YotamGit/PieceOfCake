@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
     private Animator myAnimator;
 
     private bool facingRight;
+    [SerializeField]
     private bool isGroundedVar;
 
     [Header("Stats")]

@@ -135,9 +135,9 @@ GameObject:
   - component: {fileID: 114934915380401054}
   - component: {fileID: 114966799381734998}
   - component: {fileID: 95444242114378408}
+  - component: {fileID: 114635482411530596}
   - component: {fileID: 114870154863021586}
   - component: {fileID: 114272152871506696}
-  - component: {fileID: 114635482411530596}
   - component: {fileID: 114225891303001828}
   m_Layer: 0
   m_Name: Player2
@@ -492,9 +492,9 @@ MonoBehaviour:
   m_PositionModel:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
+    TeleportIfDistanceGreaterThan: 1.5
     InterpolateOption: 4
-    InterpolateMoveTowardsSpeed: 1
+    InterpolateMoveTowardsSpeed: 10
     InterpolateLerpSpeed: 10
     InterpolateMoveTowardsAcceleration: 2
     InterpolateMoveTowardsDeceleration: 2
@@ -534,7 +534,7 @@ MonoBehaviour:
     ExtrapolateNumberOfStoredPositions: 1
     DrawErrorGizmo: 1
   m_RotationModel:
-    SynchronizeEnabled: 1
+    SynchronizeEnabled: 0
     InterpolateOption: 1
     InterpolateRotateTowardsSpeed: 180
     InterpolateLerpSpeed: 5
@@ -570,8 +570,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25d0effe1e56f8a46b45b23e3b30f87c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 1625935719530532, guid: c4289d00afeafdb489c6ef2a58c26e49,
+  playerCameraBlue: {fileID: 1625935719530532, guid: c4289d00afeafdb489c6ef2a58c26e49,
     type: 2}
+  playerCameraRed: {fileID: 1111261450236346}
   playerControlScripts:
   - {fileID: 114682318673790810}
   - {fileID: 114934915380401054}
@@ -620,6 +621,7 @@ MonoBehaviour:
   moveSound1: {fileID: 8300000, guid: 45b2adef7d3f8b8489b8f0c5ba397c0b, type: 3}
   moveSound2: {fileID: 8300000, guid: cc6ade3340be3d74889403aab78bca36, type: 3}
   bounceSound: {fileID: 8300000, guid: 65425ccbc5a68c14b82893020a20bb47, type: 3}
+  isGroundedVar: 0
   damaged: 0
 --- !u!114 &114870154863021586
 MonoBehaviour:
@@ -637,15 +639,14 @@ MonoBehaviour:
   OwnerShipWasTransfered: 0
   prefixBackup: -1
   synchronization: 3
-  onSerializeTransformOption: 3
-  onSerializeRigidBodyOption: 2
+  onSerializeTransformOption: 4
+  onSerializeRigidBodyOption: 0
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114682318673790810}
-  - {fileID: 114934915380401054}
-  - {fileID: 114966799381734998}
   - {fileID: 114272152871506696}
   - {fileID: 114225891303001828}
+  - {fileID: 50556442522969502}
+  - {fileID: 114934915380401054}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -700,7 +701,7 @@ MonoBehaviour:
   - {fileID: 1306991333255634, guid: 54a3ef18f537b8148a5c28278ce81f5d, type: 2}
   - {fileID: 1747095605693330, guid: 6a38d4760dc742d478f197c923140ecd, type: 2}
   - {fileID: 1311690116061960, guid: f014124283ad50a49978bcf365524432, type: 2}
-  CubeSprite: {fileID: 21300186, guid: 1eb117beb4af0e84e9f8ba530683022f, type: 3}
+  CubeSprite: {fileID: 21300352, guid: 1eb117beb4af0e84e9f8ba530683022f, type: 3}
   CubeMaterial: {fileID: 6200000, guid: a1706058190a31d4d88dc5f91dde5596, type: 2}
   Ability1Key: 49
   Ability2Key: 50

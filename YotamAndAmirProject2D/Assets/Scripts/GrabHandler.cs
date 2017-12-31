@@ -45,10 +45,12 @@ public class GrabHandler : MonoBehaviour
         if (grabbedKey)
         {
             heldKey.transform.position = keyHoldPoint.position;
+            heldKey.rigidbody.velocity = new Vector2(0, 0);
         }
         else if (grabbedCube)
         {
             heldCube.transform.position = cubeHoldPoint.position;
+            heldCube.rigidbody.velocity = new Vector2(0, 0);
         }
 
         if (Input.GetKeyDown(dropKey))
