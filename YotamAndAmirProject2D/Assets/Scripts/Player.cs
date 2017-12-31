@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Photon.MonoBehaviour
 {
     //public Transform mask;
 
@@ -84,6 +84,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (photonView.isMine == false && PhotonNetwork.connected == true)
+        {
+            return;
+        }
         if (Input.GetKeyDown(ShowTutorial))//KeyCode.R)) // returns to check point
         {
             if(TutorialIsShown)
@@ -203,7 +207,8 @@ public class Player : MonoBehaviour
 
     private void ReturnToCheckPoint()
     {
-        SceneManager.LoadScene(loadScene, LoadSceneMode.Single); // loading a scene
+        PhotonNetwork.LoadLevel(0);
+        //SceneManager.LoadScene(loadScene, LoadSceneMode.Single); // loading a scene
     }
 
     private void HandleMovement(float Horizontal)

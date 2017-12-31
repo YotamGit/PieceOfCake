@@ -34,14 +34,16 @@ public class PhotonNetworkManager : MonoBehaviour
     public virtual void OnJoinedRoom()
     {
         Debug.Log("creating player");
-        if(PhotonNetwork.playerList.Length == 1)
-        {
-            PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
-        }
-        else
-        {
-            PhotonNetwork.Instantiate(player2.name, spawnPoint2.position, spawnPoint2.rotation, 0);
-        }
+        PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
+        //PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
+        //if (PhotonNetwork.playerList.Length == 1)
+        //{
+        //    PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
+        //}
+        //else
+        //{
+        //    PhotonNetwork.Instantiate(player2.name, spawnPoint2.position, spawnPoint2.rotation, 0);
+        //}
         //foreach(GameObject a in powerUps)
         //{
         //    PhotonNetwork.Instantiate(a.name,a.transform.position , a.transform.rotation, 0);

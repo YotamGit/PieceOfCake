@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrabHandler : MonoBehaviour
+public class GrabHandler : Photon.MonoBehaviour
 {
     public GameObject VictoryScreen;
     [Space]
@@ -45,16 +45,32 @@ public class GrabHandler : MonoBehaviour
         if (grabbedKey)
         {
             heldKey.transform.position = keyHoldPoint.position;
-            heldKey.rigidbody.velocity = new Vector2(0, 0);
         }
+        //else if(!grabbedKey && heldKey != null)
+        //{
+        //    grabbedKey = false;
+        //    heldKey.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x * throwForce, 1 * throwForce);
+        //    heldKey.collider.enabled = !heldKey.collider.enabled;
+        //    heldKey = null;
+        //}
         else if (grabbedCube)
         {
             heldCube.transform.position = cubeHoldPoint.position;
-            heldCube.rigidbody.velocity = new Vector2(0, 0);
         }
+        //else if(!grabbedCube && heldCube != null)
+        //{
+        //    grabbedCube = false;
+        //    heldCube.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        //    heldCube.collider.enabled = !heldCube.collider.enabled;
+        //    heldCube = null;
+        //}
 
         if (Input.GetKeyDown(dropKey))
         {
+            if (photonView.isMine == false && PhotonNetwork.connected == true)
+            {
+                return;
+            }
             if (grabbedKey && !grabbedCube)
             {
                 grabbedKey = false;
@@ -136,7 +152,11 @@ public class GrabHandler : MonoBehaviour
                 CancelObject(col);
             }
         }
-        else if (col.gameObject.tag == "Cube" && (Input.GetKey(pickUpKey)))//KeyCode.Space) || Input.GetKey(KeyCode.F)))
+        else if (photonView.isMine == false && PhotonNetwork.connected == true)
+        {
+            return;
+        }
+        else if ((col.gameObject.tag == "Cube" && (Input.GetKey(pickUpKey))))//KeyCode.Space) || Input.GetKey(KeyCode.F)))
         {
             if (!grabbedCube && !grabbedKey)
             {

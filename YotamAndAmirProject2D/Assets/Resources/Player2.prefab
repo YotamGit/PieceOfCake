@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 114870154863021586}
   - component: {fileID: 114272152871506696}
   - component: {fileID: 114225891303001828}
+  - component: {fileID: 114937271050544528}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player2
@@ -575,7 +576,6 @@ MonoBehaviour:
   playerCameraRed: {fileID: 1111261450236346}
   playerControlScripts:
   - {fileID: 114682318673790810}
-  - {fileID: 114934915380401054}
   - {fileID: 114966799381734998}
 --- !u!114 &114682318673790810
 MonoBehaviour:
@@ -645,8 +645,9 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114272152871506696}
   - {fileID: 114225891303001828}
-  - {fileID: 50556442522969502}
+  - {fileID: 114937271050544528}
   - {fileID: 114934915380401054}
+  - {fileID: 114682318673790810}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -663,17 +664,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0cee45ac46ca3c479fe0258113a9c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VictoryScreen: {fileID: 1241686183847698, guid: 293e6c085c54ede48b9a39ab5a9b6658,
+  VictoryScreen: {fileID: 1428032748538090, guid: 293e6c085c54ede48b9a39ab5a9b6658,
     type: 2}
   pickUpKey: 32
   dropKey: 101
   grabbedKey: 0
   grabbedCube: 0
   throwForce: 7
-  keyHoldPoint: {fileID: 4133568843708536, guid: c4289d00afeafdb489c6ef2a58c26e49,
-    type: 2}
-  cubeHoldPoint: {fileID: 4657317673738632, guid: c4289d00afeafdb489c6ef2a58c26e49,
-    type: 2}
+  keyHoldPoint: {fileID: 4476867851684252}
+  cubeHoldPoint: {fileID: 4496797542935024}
   otherPlayerKeyPoint: {fileID: 4133568843708536, guid: c4289d00afeafdb489c6ef2a58c26e49,
     type: 2}
   otherPlayerCubePoint: {fileID: 4657317673738632, guid: c4289d00afeafdb489c6ef2a58c26e49,
@@ -681,6 +680,19 @@ MonoBehaviour:
   pickUpSound: {fileID: 8300000, guid: 06b83d6e023de55488eed278509ba16b, type: 3}
   doorSound: {fileID: 8300000, guid: a7a949eefc409134194a8075a629fc10, type: 3}
   VictoryTheme: {fileID: 8300000, guid: a7ad015585cc8d24b9ef650345784d1b, type: 3}
+--- !u!114 &114937271050544528
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1656095304312948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
 --- !u!114 &114966799381734998
 MonoBehaviour:
   m_ObjectHideFlags: 1
