@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrabHandler : Photon.MonoBehaviour
+public class GrabHandler : Photon.MonoBehaviour , IPunObservable
 {
     public GameObject VictoryScreen;
     [Space]
@@ -42,35 +42,36 @@ public class GrabHandler : Photon.MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (grabbedKey)
         {
             heldKey.transform.position = keyHoldPoint.position;
         }
-        //else if(!grabbedKey && heldKey != null)
-        //{
-        //    grabbedKey = false;
-        //    heldKey.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x * throwForce, 1 * throwForce);
-        //    heldKey.collider.enabled = !heldKey.collider.enabled;
-        //    heldKey = null;
-        //}
         else if (grabbedCube)
         {
             heldCube.transform.position = cubeHoldPoint.position;
         }
-        //else if(!grabbedCube && heldCube != null)
-        //{
-        //    grabbedCube = false;
-        //    heldCube.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-        //    heldCube.collider.enabled = !heldCube.collider.enabled;
-        //    heldCube = null;
-        //}
+        else if(!grabbedKey && heldKey != null)
+        {
+            grabbedKey = false;
+            heldKey.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x * throwForce, 1 * throwForce);
+            heldKey.collider.enabled = !heldKey.collider.enabled;
+            heldKey = null;
+        }
+        else if(!grabbedCube && heldCube != null)
+        {
+            grabbedCube = false;
+            heldCube.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            heldCube.collider.enabled = !heldCube.collider.enabled;
+            heldCube = null;
+        }
+        if (photonView.isMine == false && PhotonNetwork.connected == true)
+        {
+            return;
+        }
 
         if (Input.GetKeyDown(dropKey))
         {
-            if (photonView.isMine == false && PhotonNetwork.connected == true)
-            {
-                return;
-            }
             if (grabbedKey && !grabbedCube)
             {
                 grabbedKey = false;
@@ -86,7 +87,27 @@ public class GrabHandler : Photon.MonoBehaviour
                 heldCube = null;
             }
         }
-    }   
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (photonView.isMine)
+        {
+            if (stream.isWriting)
+            {
+                    // We own this player: send the others our data
+                stream.SendNext(grabbedKey);
+                stream.SendNext(grabbedCube);
+            }
+        }
+        else
+        {
+            // Network player, receive data
+            grabbedKey = (bool)stream.ReceiveNext();
+            grabbedCube = (bool)stream.ReceiveNext();
+
+        }
+    }
 
     void OnCollisionEnter2D(Collision2D col)
     {

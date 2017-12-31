@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-public class Player : Photon.MonoBehaviour
+public class Player : Photon.MonoBehaviour , IPunObservable
 {
     //public Transform mask;
 
@@ -144,6 +144,20 @@ public class Player : Photon.MonoBehaviour
             }
         }
     }
+
+    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //{
+    //    if (stream.isWriting)
+    //    {
+    //        Vector3 pos = transform.localPosition;
+    //        stream.Serialize(ref pos);
+    //    }
+    //    else
+    //    {
+    //        Vector3 pos = Vector3.zero;
+    //        stream.Serialize(ref pos);  // pos gets filled-in. must be used somewhere
+    //    }
+    //}
 
     // This function is called when this object touches a different object
     void OnTriggerEnter2D(Collider2D col)
@@ -335,5 +349,25 @@ public class Player : Photon.MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        //if (photonView.isMine)
+        //{
+        //    if (stream.isWriting)
+        //    {
+        //        // We own this player: send the others our data
+        //        stream.SendNext(isGroundedVar);
+        //        stream.SendNext(damaged);
+        //    }
+        //}
+        //else
+        //{
+        //    // Network player, receive data
+        //    isGroundedVar = (bool)stream.ReceiveNext();
+        //    damaged = (bool)stream.ReceiveNext();
+
+        //}
     }
 }

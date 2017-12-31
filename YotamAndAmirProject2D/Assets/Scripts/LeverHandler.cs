@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeverHandler : MonoBehaviour {
+public class LeverHandler : Photon.MonoBehaviour ,IPunObservable
+{
 
     [SerializeField]
     private Sprite turnedOff, turnedOn;
+
+    [SerializeField] private bool isActivated = false;
 
     public AudioClip LeverSound;
 
@@ -24,6 +27,23 @@ public class LeverHandler : MonoBehaviour {
 	void Update (){
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        //if (photonView.isMine)
+        //{
+        //    if (stream.isWriting)
+        //    {
+        //        // We own this player: send the others our data
+        //        stream.SendNext(isActivated);
+        //    }
+        //}
+        //else
+        //{
+        //    // Network player, receive data
+        //    isActivated = (bool)stream.ReceiveNext();
+        //}
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if(col.gameObject.tag == "Player1" || col.gameObject.tag == "Player2")
@@ -31,7 +51,7 @@ public class LeverHandler : MonoBehaviour {
             Collider2D doorCol = door.GetComponent<Collider2D>();
             Material doorMaterial = door.GetComponent<Renderer>().material;
 
-            if (leverSpriteRend.sprite == turnedOff)
+            if (leverSpriteRend.sprite == turnedOff && !isActivated)
             {
                 if (col.gameObject.tag == "Player1")
                 {
@@ -44,6 +64,7 @@ public class LeverHandler : MonoBehaviour {
                     SoundManager.instance.PlayEffect2(LeverSound);
                 }
                 leverSpriteRend.sprite = turnedOn;
+                isActivated = true;
                 doorMaterial.color = new Color(1, 1, 1, 0.4F);
             }
             else
@@ -59,6 +80,7 @@ public class LeverHandler : MonoBehaviour {
                     SoundManager.instance.PlayEffect2(LeverSound);
                 }
                 leverSpriteRend.sprite = turnedOff;
+                isActivated = false;
                 doorMaterial.color = new Color(1, 1, 1, 1F);
             }
             doorCol.enabled = !doorCol.enabled;

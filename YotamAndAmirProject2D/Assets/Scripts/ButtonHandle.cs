@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonHandle : MonoBehaviour {
+public class ButtonHandle : Photon.MonoBehaviour , IPunObservable
+{
 
     [SerializeField]
     private GameObject[] doors;
@@ -23,7 +24,8 @@ public class ButtonHandle : MonoBehaviour {
     public AudioClip released;
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         buttonSpriteRend = gameObject.GetComponent<SpriteRenderer>();
         isPressed = false;
     }
@@ -32,6 +34,22 @@ public class ButtonHandle : MonoBehaviour {
 	void Update () {
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        //if (photonView.isMine)
+        //{
+        //    if (stream.isWriting)
+        //    {
+        //        // We own this player: send the others our data
+        //        stream.SendNext(isPressed);
+        //    }
+        //}
+        //else
+        //{
+        //    // Network player, receive data
+        //    isPressed = (bool)stream.ReceiveNext();
+        //}
+    }
     void OnTriggerStay2D(Collider2D col)
     {
         if (col.gameObject.tag == "Cube" || col.gameObject.tag == "Player1" | col.gameObject.tag == "Player2")
@@ -55,6 +73,7 @@ public class ButtonHandle : MonoBehaviour {
         }
     }
 
+ 
     void OnTriggerExit2D(Collider2D col)
     {
         if (col.gameObject.tag == "Cube" || col.gameObject.tag == "Player1" | col.gameObject.tag == "Player2")

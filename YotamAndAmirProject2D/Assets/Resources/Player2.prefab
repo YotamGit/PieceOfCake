@@ -29,7 +29,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1150153341283046
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,11 +135,11 @@ GameObject:
   - component: {fileID: 114934915380401054}
   - component: {fileID: 114966799381734998}
   - component: {fileID: 95444242114378408}
-  - component: {fileID: 114635482411530596}
   - component: {fileID: 114870154863021586}
+  - component: {fileID: 114635482411530596}
+  - component: {fileID: 114937271050544528}
   - component: {fileID: 114272152871506696}
   - component: {fileID: 114225891303001828}
-  - component: {fileID: 114937271050544528}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player2
@@ -476,6 +476,9 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 2
     Name: speedy
+  - Type: 1
+    SynchronizeType: 0
+    Name: Blend
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
@@ -575,7 +578,6 @@ MonoBehaviour:
     type: 2}
   playerCameraRed: {fileID: 1111261450236346}
   playerControlScripts:
-  - {fileID: 114682318673790810}
   - {fileID: 114966799381734998}
 --- !u!114 &114682318673790810
 MonoBehaviour:
