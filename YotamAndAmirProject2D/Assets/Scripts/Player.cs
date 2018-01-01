@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-public class Player : Photon.MonoBehaviour , IPunObservable
+public class Player : Photon.PunBehaviour , IPunObservable
 {
     //public Transform mask;
 
@@ -144,6 +144,7 @@ public class Player : Photon.MonoBehaviour , IPunObservable
             }
         }
     }
+
 
     //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     //{

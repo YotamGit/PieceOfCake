@@ -11,10 +11,15 @@ public class PhotonNetworkManager : MonoBehaviour
     [SerializeField] private GameObject lobbyCamera;
     [SerializeField] private Transform spawnPoint1;
     [SerializeField] private Transform spawnPoint2;
+
     //[SerializeField] private GameObject[] powerUps;
 
 
     // Use this for initialization
+    //private void Update()
+    //{
+    //    Debug.Log(PhotonNetwork.connectionState.ToString());///ONLY FOR DEBUGGING
+    //}
     private void Start ()
     {
         Debug.Log("start");

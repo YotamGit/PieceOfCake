@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class FPSDisplay : MonoBehaviour
+public class FPSDisplay : Photon.MonoBehaviour
 {
     float deltaTime = 0.0f;
 
@@ -22,9 +22,9 @@ public class FPSDisplay : MonoBehaviour
         style.alignment = TextAnchor.UpperRight;
         style.fontSize = h * 2 / 100;
         style.normal.textColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-        float msec = deltaTime * 1000.0f;
+        //float msec = deltaTime * 1000.0f;
         float fps = 1.0f / deltaTime;
-        string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
+        string text = string.Format("({1:0.} ping) ({1:0.} fps)", PhotonNetwork.GetPing()*1.0f, fps);
         GUI.Label(rect, text, style);
     }
 }

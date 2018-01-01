@@ -42,12 +42,12 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
     // Update is called once per frame
     void Update()
     {
-        
-        if (grabbedKey)
+
+        if (grabbedKey && heldKey != null) 
         {
             heldKey.transform.position = keyHoldPoint.position;
         }
-        else if (grabbedCube)
+        else if (grabbedCube && heldCube != null)
         {
             heldCube.transform.position = cubeHoldPoint.position;
         }
@@ -55,14 +55,14 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
         {
             grabbedKey = false;
             heldKey.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x * throwForce, 1 * throwForce);
-            heldKey.collider.enabled = !heldKey.collider.enabled;
+            heldKey.collider.enabled = true;
             heldKey = null;
         }
         else if(!grabbedCube && heldCube != null)
         {
             grabbedCube = false;
             heldCube.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            heldCube.collider.enabled = !heldCube.collider.enabled;
+            heldCube.collider.enabled = true;
             heldCube = null;
         }
         if (photonView.isMine == false && PhotonNetwork.connected == true)
@@ -97,14 +97,31 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
             {
                     // We own this player: send the others our data
                 stream.SendNext(grabbedKey);
+                //if(heldKey != null)
+                //{
+                //    stream.SendNext(heldKey.transform.position);
+                //}
                 stream.SendNext(grabbedCube);
+                //if(heldCube != null)
+                //{
+                //    stream.SendNext(heldCube.transform.position);
+                //}
+
             }
         }
         else
         {
             // Network player, receive data
             grabbedKey = (bool)stream.ReceiveNext();
+            //if (heldKey != null)
+            //{
+            //    heldKey.transform.position = (Vector3)stream.ReceiveNext();
+            //}
             grabbedCube = (bool)stream.ReceiveNext();
+            //if (heldCube != null)
+            //{
+            //    heldCube.transform.position = (Vector3)stream.ReceiveNext();
+            //}
 
         }
     }
