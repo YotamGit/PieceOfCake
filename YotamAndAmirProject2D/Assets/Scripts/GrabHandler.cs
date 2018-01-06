@@ -25,6 +25,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
     public Transform otherPlayerCubePoint;
 
     private Collision2D heldKey;
+    //public string heldKeyTag;
     private Collision2D heldCube;
 
     [Space]
@@ -36,24 +37,32 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
 
     // Use this for initialization
     void Start()
-    {        
+    {
+        //heldKeyTag = "";
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (grabbedKey && heldKey != null) 
+        //Debug.Log(heldKey);
+        if (grabbedKey && heldKey != null)
         {
+            /*if (heldKey == null)
+            {
+                heldKey = GameObject.FindGameObjectsWithTag(heldKeyTag)[0].GetComponent<Collision2D>();
+            }*/
             heldKey.transform.position = keyHoldPoint.position;
+            heldKey.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
         else if (grabbedCube && heldCube != null)
         {
             heldCube.transform.position = cubeHoldPoint.position;
+            heldCube.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
         else if(!grabbedKey && heldKey != null)
         {
             grabbedKey = false;
+            //heldKeyTag = "";
             heldKey.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x * throwForce, 1 * throwForce);
             heldKey.collider.enabled = true;
             heldKey = null;
@@ -75,6 +84,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
             if (grabbedKey && !grabbedCube)
             {
                 grabbedKey = false;
+                //heldKeyTag = "";
                 heldKey.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x * throwForce, 1 * throwForce);
                 heldKey.collider.enabled = !heldKey.collider.enabled;
                 heldKey = null;
@@ -95,33 +105,42 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
         {
             if (stream.isWriting)
             {
-                    // We own this player: send the others our data
+                // We own this player: send the others our data
                 stream.SendNext(grabbedKey);
-                //if(heldKey != null)
-                //{
-                //    stream.SendNext(heldKey.transform.position);
-                //}
-                stream.SendNext(grabbedCube);
-                //if(heldCube != null)
-                //{
-                //    stream.SendNext(heldCube.transform.position);
-                //}
-
+                if(heldKey != null)
+                {
+                    stream.SendNext(heldKey.collider.enabled);
+                    //stream.SendNext(heldKey.transform.position);
+                }
+                //stream.SendNext(heldKeyTag);
+                /*stream.SendNext(grabbedCube);
+                if(heldCube != null)
+                {
+                    stream.SendNext(heldCube.enabled);
+                    //stream.SendNext(heldCube.transform.position);
+                }*/
             }
         }
         else
         {
             // Network player, receive data
             grabbedKey = (bool)stream.ReceiveNext();
-            //if (heldKey != null)
-            //{
-            //    heldKey.transform.position = (Vector3)stream.ReceiveNext();
-            //}
-            grabbedCube = (bool)stream.ReceiveNext();
-            //if (heldCube != null)
-            //{
-            //    heldCube.transform.position = (Vector3)stream.ReceiveNext();
-            //}
+            if (heldKey != null)
+            {
+                heldKey.collider.enabled = (bool)stream.ReceiveNext();
+                //heldKey.transform.position = (Vector3)stream.ReceiveNext();
+            }
+            /*heldKeyTag = (string)stream.ReceiveNext();
+            if(heldKeyTag != "" && heldKeyTag == null)
+            {
+                heldKey = GameObject.FindGameObjectsWithTag(heldKeyTag)[0].GetComponent<Collision2D>();
+            }*/
+            /*grabbedCube = (bool)stream.ReceiveNext();
+            if (heldCube != null)
+            {
+                heldCube.collider.enabled = (bool)stream.ReceiveNext();
+                //heldCube.transform.position = (Vector3)stream.ReceiveNext();
+            }*/
 
         }
     }
@@ -161,6 +180,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
                         SoundManager.instance.efxSource2.volume = 0.3f;
                         SoundManager.instance.PlayEffect2(pickUpSound);
                     }
+                    //heldKeyTag = col.gameObject.tag;
                     grabbedKey = true;
                     col.transform.position = keyHoldPoint.position;
                     heldKey = col;
