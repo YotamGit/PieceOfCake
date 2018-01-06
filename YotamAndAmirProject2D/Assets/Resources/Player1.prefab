@@ -704,10 +704,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetName1: {fileID: 1984280513756392}
-  xMax: 20.5
-  xMin: -20.5
-  yMax: 22.5
-  yMin: -25.5
+  xMax: 999
+  xMin: -999
+  yMax: 999
+  yMin: -999
 --- !u!114 &114783425601059302
 MonoBehaviour:
   m_ObjectHideFlags: 1
