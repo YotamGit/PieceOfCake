@@ -12,6 +12,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
 
     [SerializeField]
     private bool grabbedKey, grabbedCube;
+    public string heldKeyTag;
 
     [SerializeField]
     private float throwForce;
@@ -25,7 +26,6 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
     public Transform otherPlayerCubePoint;
 
     private Collision2D heldKey;
-    //public string heldKeyTag;
     private Collision2D heldCube;
 
     [Space]
@@ -35,16 +35,30 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
     public AudioClip doorSound;
     public AudioClip VictoryTheme;
 
+
+
     // Use this for initialization
     void Start()
     {
-        //heldKeyTag = "";
+        heldKeyTag = "";
     }
 
     // Update is called once per frame
     void Update()
     {
         //Debug.Log(heldKey);
+        if(heldKey != null )
+        {
+            
+            if (grabbedKey)
+            {
+                Debug.Log("Grabbed True:" + heldKey.gameObject.tag);
+            }
+            else
+            {
+                Debug.Log("Grabbed False:" + heldKey.gameObject.tag);
+            }
+        }
         if (grabbedKey && heldKey != null)
         {
             /*if (heldKey == null)
@@ -84,7 +98,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
             if (grabbedKey && !grabbedCube)
             {
                 grabbedKey = false;
-                //heldKeyTag = "";
+                heldKeyTag = "";
                 heldKey.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x * throwForce, 1 * throwForce);
                 heldKey.collider.enabled = !heldKey.collider.enabled;
                 heldKey = null;
@@ -107,8 +121,19 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
             {
                 // We own this player: send the others our data
                 stream.SendNext(grabbedKey);
-                if(heldKey != null)
+                //if(heldKey!=null)
+                //{
+                //    stream.SendNext(heldKey.gameObject.tag);
+                //}
+                //else
+                //{
+                //    stream.SendNext("");
+                //}
+                //stream.SendNext(heldKey.gameObject.tag);
+                
+                if (heldKey != null && grabbedKey)
                 {
+                    //stream.SendNext(heldKey.gameObject.tag);
                     stream.SendNext(heldKey.collider.enabled);
                     //stream.SendNext(heldKey.transform.position);
                 }
@@ -125,11 +150,30 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
         {
             // Network player, receive data
             grabbedKey = (bool)stream.ReceiveNext();
-            if (heldKey != null)
+            //heldKeyTag = (string)stream.ReceiveNext();
+            //if (heldKeyTag != "")
+            //{
+                //heldKey = GameObject.FindGameObjectsWithTag(heldKeyTag)[0].GetComponent<Collision2D>();
+            //}
+            
+            if (heldKey != null && grabbedKey)
             {
+                //heldKeyTag = (string)stream.ReceiveNext();
+                //if(!heldKey.gameObject.tag.Equals(heldKeyTag))
+                //{
+                //    heldKey = GameObject.FindGameObjectsWithTag(heldKeyTag)[0].GetComponent<Collision2D>();
+                //}
+                //else
+                //{
+                //    grabbedKey = false;
+                //    heldKey = null;
+                //}
                 heldKey.collider.enabled = (bool)stream.ReceiveNext();
                 //heldKey.transform.position = (Vector3)stream.ReceiveNext();
             }
+
+
+
             /*heldKeyTag = (string)stream.ReceiveNext();
             if(heldKeyTag != "" && heldKeyTag == null)
             {

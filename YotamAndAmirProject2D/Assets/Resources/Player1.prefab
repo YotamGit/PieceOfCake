@@ -608,7 +608,7 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 2
+  synchronization: 3
   onSerializeTransformOption: 4
   onSerializeRigidBodyOption: 0
   ownershipTransfer: 0
@@ -666,6 +666,7 @@ MonoBehaviour:
   dropKey: 101
   grabbedKey: 0
   grabbedCube: 0
+  heldKeyTag: 
   throwForce: 7
   keyHoldPoint: {fileID: 4133568843708536}
   cubeHoldPoint: {fileID: 4657317673738632}
