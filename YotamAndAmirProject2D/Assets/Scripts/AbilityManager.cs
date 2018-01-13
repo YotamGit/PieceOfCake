@@ -24,6 +24,8 @@ public class AbilityManager : MonoBehaviour {
     public KeyCode Ability3Key;
     public KeyCode Ability4Key;
 
+    private GameObject otherPlayer;
+
     // Use this for initialization
     void Start ()
     {
@@ -156,14 +158,28 @@ public class AbilityManager : MonoBehaviour {
     void TeleportPowerUp()
     {
         PowerUps[2].SetActive(false);
-        if (gameObject.tag == "Player1")
+
+        if (otherPlayer == null)
         {
-            gameObject.transform.position = GameObject.Find("Player2").transform.position;
+            if (this.tag == "Player1")
+            {
+                otherPlayer = GameObject.Find("Player2(Clone)");
+            }
+            else
+            {
+                otherPlayer = GameObject.Find("Player1(Clone)");
+            }
+        }
+        gameObject.transform.position = otherPlayer.transform.position;
+
+        /*if (gameObject.tag == "Player1(Clone)")
+        {
+            gameObject.transform.position = GameObject.Find("Player2(Clone)").transform.position;
         }
         else
         {
-            gameObject.transform.position = GameObject.Find("Player1").transform.position;
-        }
+            gameObject.transform.position = GameObject.Find("Player1(Clone)").transform.position;
+        }*/
     }
 
     void SpawnCubePowerUp()

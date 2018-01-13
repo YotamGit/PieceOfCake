@@ -649,6 +649,7 @@ MonoBehaviour:
   Ability2Key: 50
   Ability3Key: 51
   Ability4Key: 52
+  otherPlayer: {fileID: 0}
 --- !u!114 &114427712555281450
 MonoBehaviour:
   m_ObjectHideFlags: 1

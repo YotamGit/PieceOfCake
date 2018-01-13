@@ -47,6 +47,7 @@ public class LeverHandler : Photon.MonoBehaviour ,IPunObservable
         {
             // Network player, receive data
             isActivated = (bool)stream.ReceiveNext();
+
             if(isActivated)
             {
                 if(leverSpriteRend.sprite != turnedOn)

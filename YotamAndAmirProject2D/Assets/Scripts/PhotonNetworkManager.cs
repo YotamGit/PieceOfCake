@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class PhotonNetworkManager : MonoBehaviour
 {
-
     [SerializeField] private GameObject player1;
     [SerializeField] private GameObject player2;
     [SerializeField] private GameObject lobbyCamera;
     [SerializeField] private Transform spawnPoint1;
     [SerializeField] private Transform spawnPoint2;
+
+    private bool gameStarted;
 
     //[SerializeField] private GameObject[] powerUps;
 
@@ -23,16 +24,40 @@ public class PhotonNetworkManager : MonoBehaviour
     private void Start ()
     {
         Debug.Log("start");
-        PhotonNetwork.ConnectUsingSettings("gameAmir");
+        PhotonNetwork.ConnectUsingSettings("gameAmir1");
         Debug.Log("connected");
+
+        gameStarted = false;
     }
 
-    public virtual void OnJoinedLobby()
+    private void Update()
+    {
+        if (!gameStarted)
+        {
+            if (PhotonNetwork.playerList.Length == 1)
+            {
+                Time.timeScale = 0;
+            }
+            else
+            {
+                gameStarted = true;
+                Time.timeScale = 1;
+                //StartCoroutine(WaitTwoSeconds());
+            }
+        }
+    }
+
+    /*IEnumerator WaitTwoSeconds()
+    {
+        yield return new WaitForSeconds(2);
+    }*/
+
+public virtual void OnJoinedLobby()
     {
         Debug.Log("joining lobby");
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 2;
-        PhotonNetwork.JoinOrCreateRoom("1Room", null, null);
+        PhotonNetwork.JoinOrCreateRoom("1Room", roomOptions, null);
         Debug.Log("joined");
     }
 
@@ -48,7 +73,7 @@ public class PhotonNetworkManager : MonoBehaviour
         }
         else
         {
-            PhotonNetwork.Instantiate(player1.name, spawnPoint2.position, spawnPoint2.rotation, 0);
+            PhotonNetwork.Instantiate(player2.name, spawnPoint2.position, spawnPoint2.rotation, 0);
         }
 
         //foreach(GameObject a in powerUps)
