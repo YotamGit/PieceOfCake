@@ -17,10 +17,16 @@ public class LeverHandler : Photon.MonoBehaviour ,IPunObservable
 
     private SpriteRenderer leverSpriteRend;
 
+    private Material doorMaterial;
+
+    private Collider2D doorCol;
+
     // Use this for initialization
     void Start ()
     {
         leverSpriteRend = gameObject.GetComponent<SpriteRenderer>();
+        doorMaterial = door.GetComponent<Renderer>().material;
+        doorCol = door.GetComponent<Collider2D>();
     }
 	
 	// Update is called once per frame
@@ -29,28 +35,47 @@ public class LeverHandler : Photon.MonoBehaviour ,IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        //if (photonView.isMine)
-        //{
-        //    if (stream.isWriting)
-        //    {
-        //        // We own this player: send the others our data
-        //        stream.SendNext(isActivated);
-        //    }
-        //}
-        //else
-        //{
-        //    // Network player, receive data
-        //    isActivated = (bool)stream.ReceiveNext();
-        //}
+        if (photonView.isMine)
+        {
+            if (stream.isWriting)
+            {
+                // We own this player: send the others our data
+                stream.SendNext(isActivated);
+            }
+        }
+        else
+        {
+            // Network player, receive data
+            isActivated = (bool)stream.ReceiveNext();
+            if(isActivated)
+            {
+                if(leverSpriteRend.sprite != turnedOn)
+                {
+                    leverSpriteRend.sprite = turnedOn;
+                }
+                if(doorMaterial.color.a != 0.4f)
+                {
+                    doorMaterial.color = new Color(1, 1, 1, 0.4F);
+                }
+            }
+            else
+            {
+                if (leverSpriteRend.sprite != turnedOff)
+                {
+                    leverSpriteRend.sprite = turnedOff;
+                }
+                if (doorMaterial.color.a != 1f)
+                {
+                    doorMaterial.color = new Color(1, 1, 1, 1F);
+                }
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if(col.gameObject.tag == "Player1" || col.gameObject.tag == "Player2")
         {
-            Collider2D doorCol = door.GetComponent<Collider2D>();
-            Material doorMaterial = door.GetComponent<Renderer>().material;
-
             if (leverSpriteRend.sprite == turnedOff && !isActivated)
             {
                 if (col.gameObject.tag == "Player1")
@@ -63,8 +88,8 @@ public class LeverHandler : Photon.MonoBehaviour ,IPunObservable
                     SoundManager.instance.efxSource2.volume = 0.3f;
                     SoundManager.instance.PlayEffect2(LeverSound);
                 }
-                leverSpriteRend.sprite = turnedOn;
                 isActivated = true;
+                leverSpriteRend.sprite = turnedOn;
                 doorMaterial.color = new Color(1, 1, 1, 0.4F);
             }
             else
@@ -79,8 +104,8 @@ public class LeverHandler : Photon.MonoBehaviour ,IPunObservable
                     SoundManager.instance.efxSource2.volume = 0.3f;
                     SoundManager.instance.PlayEffect2(LeverSound);
                 }
-                leverSpriteRend.sprite = turnedOff;
                 isActivated = false;
+                leverSpriteRend.sprite = turnedOff;
                 doorMaterial.color = new Color(1, 1, 1, 1F);
             }
             doorCol.enabled = !doorCol.enabled;

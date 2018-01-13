@@ -23,7 +23,7 @@ public class PhotonNetworkManager : MonoBehaviour
     private void Start ()
     {
         Debug.Log("start");
-        PhotonNetwork.ConnectUsingSettings("game");
+        PhotonNetwork.ConnectUsingSettings("gameAmir");
         Debug.Log("connected");
     }
 
@@ -40,16 +40,16 @@ public class PhotonNetworkManager : MonoBehaviour
     {
         Debug.Log("creating player");
         //PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
-        PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
+        //PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
 
-        //if (PhotonNetwork.playerList.Length == 1)
-        //{
-        //    PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
-        //}
-        //else
-        //{
-        //    PhotonNetwork.Instantiate(player2.name, spawnPoint2.position, spawnPoint2.rotation, 0);
-        //}
+        if (PhotonNetwork.playerList.Length == 1)
+        {
+            PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
+        }
+        else
+        {
+            PhotonNetwork.Instantiate(player1.name, spawnPoint2.position, spawnPoint2.rotation, 0);
+        }
 
         //foreach(GameObject a in powerUps)
         //{
