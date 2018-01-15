@@ -77,11 +77,11 @@ public class LeverHandler : Photon.MonoBehaviour ,IPunObservable
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag == "Player1" || col.gameObject.tag == "Player2")
+        if(photonView.isMine && (col.gameObject.tag == "Player1" || col.gameObject.tag == "Player2"))
         {
             if (leverSpriteRend.sprite == turnedOff && !isActivated)
             {
-                if (col.gameObject.tag == "Player1")
+                if (col.gameObject.tag == "Player1") // sound effects
                 {
                     SoundManager.instance.efxSource1.volume = 0.3f;
                     SoundManager.instance.PlayEffect1(LeverSound);
@@ -98,7 +98,7 @@ public class LeverHandler : Photon.MonoBehaviour ,IPunObservable
             }
             else
             {
-                if (col.gameObject.tag == "Player1")
+                if (col.gameObject.tag == "Player1")// sound effects
                 {
                     SoundManager.instance.efxSource1.volume = 0.3f;
                     SoundManager.instance.PlayEffect1(LeverSound);
