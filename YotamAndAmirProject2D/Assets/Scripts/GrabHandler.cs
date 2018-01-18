@@ -47,17 +47,21 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
     void Update()
     {
         //Debug.Log(heldKey);
-        if(heldKey != null )
+        if(grabbedKey)
         {
             
-            if (grabbedKey)
+            if (heldKey != null)
             {
-                Debug.Log("Grabbed True:" + heldKey.gameObject.tag);
+                Debug.Log("True Grabbed: key GOOD");
             }
             else
             {
-                Debug.Log("Grabbed False:" + heldKey.gameObject.tag);
+                Debug.Log("True Grabbed: Key False");
             }
+        }
+        if(heldKey != null && grabbedKey)
+        {
+            Debug.Log("FALSE Grabbed: Key True");
         }
         if (grabbedKey && heldKey != null)
         {
