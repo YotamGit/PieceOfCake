@@ -30,6 +30,8 @@ TagManager:
   - Teleport
   - SpawnCube
   - Victory
+  - KeyYellow
+  - KeyWhite
   layers:
   - Default
   - TransparentFX

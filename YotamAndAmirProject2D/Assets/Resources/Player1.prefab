@@ -649,7 +649,6 @@ MonoBehaviour:
   Ability2Key: 50
   Ability3Key: 51
   Ability4Key: 52
-  otherPlayer: {fileID: 0}
 --- !u!114 &114427712555281450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -678,6 +677,8 @@ MonoBehaviour:
   pickUpSound: {fileID: 8300000, guid: 06b83d6e023de55488eed278509ba16b, type: 3}
   doorSound: {fileID: 8300000, guid: a7a949eefc409134194a8075a629fc10, type: 3}
   VictoryTheme: {fileID: 8300000, guid: a7ad015585cc8d24b9ef650345784d1b, type: 3}
+  keys:
+  - {fileID: 1214553011968346, guid: 3a9c13f79a324ad448e480681793bc20, type: 2}
 --- !u!114 &114432680137260502
 MonoBehaviour:
   m_ObjectHideFlags: 1
