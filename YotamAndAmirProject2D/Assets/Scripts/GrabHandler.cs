@@ -150,18 +150,18 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
             }
             heldKey = null;
         }
-        /*if (grabbedCube && heldCube != null)
+        if (grabbedCube && heldCube != null)
         {
             heldCube.transform.position = cubeHoldPoint.position;
             heldCube.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-        }*/
-        /*else if(!grabbedCube && heldCube != null)
+        }
+        else if(!grabbedCube && heldCube != null)
         {
             grabbedCube = false;
             heldCube.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             heldCube.collider.enabled = true;
             heldCube = null;
-        }*/
+        }
 
         if (!photonView.isMine && PhotonNetwork.connected == true) // stopping the script so the other player won't throw the key when you click on drop
         {
@@ -236,8 +236,8 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
 
                 //Second Way (BEST):
                 //stream.SendNext(grabbedKey);
-
-                if (heldKey != null)
+                stream.SendNext(grabbedCube);
+                if (heldKey != null )
                 {
                     //Debug.Log("sending: " + heldKey.gameObject.tag);
                     stream.SendNext(heldKey.gameObject.tag);
@@ -282,7 +282,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
 
             //Second Way (BEST):
             //grabbedKey = (bool)stream.ReceiveNext();
-
+            grabbedCube = (bool)stream.ReceiveNext();
             heldKeyTag = (string)stream.ReceiveNext();
             //Debug.Log("Recieved Tag: " + heldKeyTag);
 

@@ -29,6 +29,7 @@ public class AbilityManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        
         for (int i = 0;i<PowerUps.Length;i++)
         {
             PowerUps[i].SetActive(false);
@@ -185,18 +186,19 @@ public class AbilityManager : MonoBehaviour {
     void SpawnCubePowerUp()
     {
         PowerUps[3].SetActive(false);
-        CubeToSpawn = new GameObject("Cube")
-        {
-            //Add Components
-            tag = "Cube"
-        };
-        CubeToSpawn.transform.position = gameObject.transform.position;
-        CubeToSpawn.AddComponent<Rigidbody2D>();
-        CubeToSpawn.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-        CubeToSpawn.AddComponent<SpriteRenderer>();
-        CubeToSpawn.GetComponent<SpriteRenderer>().sprite = CubeSprite;
-        CubeToSpawn.AddComponent<BoxCollider2D>();
-        CubeToSpawn.GetComponent<BoxCollider2D>().sharedMaterial = CubeMaterial;
+        //CubeToSpawn = new GameObject("Cube")
+        //{
+        //    //Add Components
+        //    tag = "Cube"
+        //};
+        //CubeToSpawn.transform.position = gameObject.transform.position;
+        //CubeToSpawn.AddComponent<Rigidbody2D>();
+        //CubeToSpawn.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        //CubeToSpawn.AddComponent<SpriteRenderer>();
+        //CubeToSpawn.GetComponent<SpriteRenderer>().sprite = CubeSprite;
+        //CubeToSpawn.AddComponent<BoxCollider2D>();
+        //CubeToSpawn.GetComponent<BoxCollider2D>().sharedMaterial = CubeMaterial;
+        PhotonNetwork.Instantiate("Cube", gameObject.transform.position, Quaternion.identity, 0);
     }
 
 }

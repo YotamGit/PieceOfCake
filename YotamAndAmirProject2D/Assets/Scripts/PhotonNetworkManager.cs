@@ -36,7 +36,7 @@ public class PhotonNetworkManager : MonoBehaviour
         {
             if (PhotonNetwork.playerList.Length == 1)
             {
-                Time.timeScale = 0;
+                //Time.timeScale = 0;
             }
             else
             {
