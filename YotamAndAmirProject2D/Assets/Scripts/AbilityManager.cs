@@ -198,7 +198,7 @@ public class AbilityManager : MonoBehaviour {
         //CubeToSpawn.GetComponent<SpriteRenderer>().sprite = CubeSprite;
         //CubeToSpawn.AddComponent<BoxCollider2D>();
         //CubeToSpawn.GetComponent<BoxCollider2D>().sharedMaterial = CubeMaterial;
-        PhotonNetwork.Instantiate("Cube", gameObject.transform.position, Quaternion.identity, 0);
+        PhotonNetwork.InstantiateSceneObject("Cube", gameObject.transform.position, Quaternion.identity, 0,null);
     }
 
 }

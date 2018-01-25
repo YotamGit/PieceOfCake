@@ -36,7 +36,7 @@ public class PhotonNetworkManager : MonoBehaviour
         {
             if (PhotonNetwork.playerList.Length == 1)
             {
-                //Time.timeScale = 0;
+                Time.timeScale = 0;
             }
             else
             {
@@ -71,9 +71,13 @@ public virtual void OnJoinedLobby()
         {
             PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
         }
-        else
+        else if(PhotonNetwork.playerList.Length == 2)
         {
             PhotonNetwork.Instantiate(player2.name, spawnPoint2.position, spawnPoint2.rotation, 0);
+        }
+        else
+        {
+            Application.Quit();
         }
 
         //foreach(GameObject a in powerUps)

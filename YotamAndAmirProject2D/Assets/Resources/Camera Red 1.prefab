@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114162991964709886}
   m_Layer: 0
   m_Name: Camera Red 1
-  m_TagString: MainCamera
+  m_TagString: SpawnCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

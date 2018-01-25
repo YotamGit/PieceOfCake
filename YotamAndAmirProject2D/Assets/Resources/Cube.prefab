@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114784072622556394}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Cube
+  m_TagString: SpawnCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,7 +105,7 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 3
+  synchronization: 2
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
