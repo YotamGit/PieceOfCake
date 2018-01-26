@@ -13,9 +13,9 @@ public class AbilityManager : MonoBehaviour {
     [Header("PowerUps Assets")]
     public GameObject[] PowerUps;
 
-    public Sprite CubeSprite;
-    public PhysicsMaterial2D CubeMaterial;
-    private GameObject CubeToSpawn;
+    /*public Sprite CubeSprite;
+    public PhysicsMaterial2D CubeMaterial;*/
+    [SerializeField] private GameObject CubeToSpawn;
 
     [Space]
     [Header("Key Bindings")]
@@ -198,7 +198,7 @@ public class AbilityManager : MonoBehaviour {
         //CubeToSpawn.GetComponent<SpriteRenderer>().sprite = CubeSprite;
         //CubeToSpawn.AddComponent<BoxCollider2D>();
         //CubeToSpawn.GetComponent<BoxCollider2D>().sharedMaterial = CubeMaterial;
-        PhotonNetwork.InstantiateSceneObject("Cube", gameObject.transform.position, Quaternion.identity, 0,null);
+        PhotonNetwork.InstantiateSceneObject(CubeToSpawn.name, gameObject.transform.position, Quaternion.identity, 0, null); // spawning a cube to the scene
     }
 
 }

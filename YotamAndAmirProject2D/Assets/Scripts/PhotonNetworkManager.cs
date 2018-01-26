@@ -71,13 +71,9 @@ public virtual void OnJoinedLobby()
         {
             PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
         }
-        else if(PhotonNetwork.playerList.Length == 2)
-        {
-            PhotonNetwork.Instantiate(player2.name, spawnPoint2.position, spawnPoint2.rotation, 0);
-        }
         else
         {
-            Application.Quit();
+            PhotonNetwork.Instantiate(player2.name, spawnPoint2.position, spawnPoint2.rotation, 0);
         }
 
         //foreach(GameObject a in powerUps)
