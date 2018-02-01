@@ -448,7 +448,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
         {
             return;
         }
-        else if ((col.gameObject.tag == "SpawnCube" && (Input.GetKey(pickUpKey))))//KeyCode.Space) || Input.GetKey(KeyCode.F)))
+        else if ((col.gameObject.tag == "Cube" && (Input.GetKey(pickUpKey))))//KeyCode.Space) || Input.GetKey(KeyCode.F)))
         {
             if (!grabbedCube && !grabbedKey)
             {

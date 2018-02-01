@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ButtonHandle : Photon.MonoBehaviour , IPunObservable
 {
-
     [SerializeField]
     private GameObject[] doors;
 

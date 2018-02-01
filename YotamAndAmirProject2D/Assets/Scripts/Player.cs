@@ -209,6 +209,14 @@ public class Player : Photon.PunBehaviour , IPunObservable
         }
     }
 
+    /*void OnCollisionStay2D(Collision2D collision) // Doesn't work on the wall...
+    {
+        if(collision.gameObject.tag == "Friction")
+        {
+            isGroundedVar = true;
+        }
+    }*/
+
     private void Flip(float horizontal)
     {
         if (horizontal > 0 && !facingRight || horizontal < 0 && facingRight)
