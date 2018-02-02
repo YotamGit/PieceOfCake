@@ -38,6 +38,9 @@ public class Player : Photon.PunBehaviour , IPunObservable
 
     [SerializeField]
     private LayerMask whatIsGround; // indication for what is considered ground
+    
+    [SerializeField]
+    private Transform spawnPoint1, spawnPoint2;
 
     [Space]
 
@@ -230,7 +233,9 @@ public class Player : Photon.PunBehaviour , IPunObservable
 
     private void ReturnToCheckPoint()
     {
-        PhotonNetwork.LoadLevel(0);
+        //SceneManager.LoadScene(loadScene);
+        PhotonNetwork.LoadLevel(loadScene); // doesn't yet work
+
         //SceneManager.LoadScene(loadScene, LoadSceneMode.Single); // loading a scene
     }
 

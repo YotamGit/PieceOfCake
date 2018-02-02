@@ -51,7 +51,7 @@ public class ButtonHandle : Photon.MonoBehaviour , IPunObservable
     }
     void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Cube" || col.gameObject.tag == "Player1" | col.gameObject.tag == "Player2")
+        if (col.gameObject.tag.Substring(0, 4) == "Cube" || col.gameObject.tag == "Player1" | col.gameObject.tag == "Player2")
         {
             if (!isPressed)
             {

@@ -527,7 +527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tutorial: {fileID: 1571235086352034, guid: 9d65b3d1157f1274db4448166ca42628, type: 2}
-  loadScene: Lever Test
+  loadScene: TutorialTest
   PlayerMovement: Horizontal1
   ShowTutorial: 109
   restartKey: 112
@@ -547,6 +547,10 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 4294967295
+  spawnPoint1: {fileID: 4355074969783756, guid: 176b64cebff04374fa695aaf8ae34ae7,
+    type: 2}
+  spawnPoint2: {fileID: 4814148867672740, guid: 176b64cebff04374fa695aaf8ae34ae7,
+    type: 2}
   BackGroundMusic:
   - {fileID: 8300000, guid: 70c1d0930df867049a8b3ed0bd85a48d, type: 3}
   - {fileID: 8300000, guid: 29bb73c25d6faf244a8a6db617136ee7, type: 3}
@@ -643,8 +647,7 @@ MonoBehaviour:
   - {fileID: 1306991333255634, guid: 54a3ef18f537b8148a5c28278ce81f5d, type: 2}
   - {fileID: 1747095605693330, guid: 6a38d4760dc742d478f197c923140ecd, type: 2}
   - {fileID: 1311690116061960, guid: f014124283ad50a49978bcf365524432, type: 2}
-  CubeSprite: {fileID: 21300352, guid: 1eb117beb4af0e84e9f8ba530683022f, type: 3}
-  CubeMaterial: {fileID: 6200000, guid: a1706058190a31d4d88dc5f91dde5596, type: 2}
+  CubeToSpawn: {fileID: 0}
   Ability1Key: 49
   Ability2Key: 50
   Ability3Key: 51
@@ -666,7 +669,6 @@ MonoBehaviour:
   dropKey: 101
   grabbedKey: 0
   grabbedCube: 0
-  heldKeyTag: 
   throwForce: 7
   keyHoldPoint: {fileID: 4133568843708536}
   cubeHoldPoint: {fileID: 4657317673738632}
@@ -675,6 +677,7 @@ MonoBehaviour:
   otherPlayerCubePoint: {fileID: 4496797542935024, guid: 6ced179575a35734e86945252b02814d,
     type: 2}
   heldKey: {fileID: 0}
+  heldCube: {fileID: 0}
   pickUpSound: {fileID: 8300000, guid: 06b83d6e023de55488eed278509ba16b, type: 3}
   doorSound: {fileID: 8300000, guid: a7a949eefc409134194a8075a629fc10, type: 3}
   VictoryTheme: {fileID: 8300000, guid: a7ad015585cc8d24b9ef650345784d1b, type: 3}

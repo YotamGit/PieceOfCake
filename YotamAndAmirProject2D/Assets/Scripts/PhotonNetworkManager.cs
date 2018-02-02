@@ -21,11 +21,12 @@ public class PhotonNetworkManager : MonoBehaviour
     //{
     //    Debug.Log(PhotonNetwork.connectionState.ToString());///ONLY FOR DEBUGGING
     //}
-    private void Start ()
+    private void Start()
     {
         Debug.Log("start");
         PhotonNetwork.ConnectUsingSettings("gameAmir1");
         Debug.Log("connected");
+        PhotonNetwork.automaticallySyncScene = true;
 
         gameStarted = false;
     }
