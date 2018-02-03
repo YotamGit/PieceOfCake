@@ -12,6 +12,7 @@ public class Player : Photon.PunBehaviour , IPunObservable
     [SerializeField]
     private string loadScene;
     public string PlayerMovement;
+    public GameObject[] FlameLights;
 
     [Space]
 
@@ -271,9 +272,19 @@ public class Player : Photon.PunBehaviour , IPunObservable
         }
 
         rigidBody.velocity = new Vector2(Horizontal * movementSpeed, rigidBody.velocity.y); // adds speed to the right/left according to the player's input
+        if (rigidBody.velocity.x > 0.01 || rigidBody.velocity.x < -0.01) 
+        {
+            FlameLights[0].SetActive(true);
+        }
+        else
+        {
+            FlameLights[0].SetActive(false);
+        }
+
         myAnimator.SetFloat("speed", Mathf.Abs(Horizontal));
 
         myAnimator.SetBool("boostDown", false);//canceling the boost down animation
+        FlameLights[1].SetActive(false);
         // checking if the grounded variable is true. if it is, the player is allowed to jump
         if (isGroundedVar)
         {
@@ -290,6 +301,7 @@ public class Player : Photon.PunBehaviour , IPunObservable
                 }
                 rigidBody.AddForce(new Vector2(0, jumpForce));
                 myAnimator.SetBool("jump", true);
+                FlameLights[2].SetActive(true);
 
             }
         }
@@ -300,6 +312,7 @@ public class Player : Photon.PunBehaviour , IPunObservable
             {
 
                 myAnimator.SetBool("jump", false);
+                FlameLights[2].SetActive(false);
             }
             else if (rigidBody.velocity.y < 1.5 && rigidBody.velocity.y > 0)
             {
@@ -312,10 +325,12 @@ public class Player : Photon.PunBehaviour , IPunObservable
                     SoundManager.instance.moveEfxSource2.Stop();
                 }
                 myAnimator.SetBool("jump", false);
+                FlameLights[2].SetActive(false);
             }
 
             myAnimator.SetFloat("speedy", rigidBody.velocity.y);
             myAnimator.SetBool("boostDown", false);
+            FlameLights[1].SetActive(false);
             if (Input.GetKey(boostDownKey))//KeyCode.S))
             {
                 if (!currentPlayer)
@@ -334,6 +349,7 @@ public class Player : Photon.PunBehaviour , IPunObservable
                 }
                 rigidBody.AddForce(new Vector2(0, -jumpForce / 10));
                 myAnimator.SetBool("boostDown", true);
+                FlameLights[1].SetActive(true);
             }
 
         }
