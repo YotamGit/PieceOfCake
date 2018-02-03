@@ -638,20 +638,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c64d4bfbef865147b9cdc81192705df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Resize: 0
+  Shrink: 0
   Immune: 0
   Teleport: 0
   SpawnCube: 0
   PowerUps:
-  - {fileID: 1609187345332930, guid: 40d2c8d5550559d4594e4b75f9edab33, type: 2}
-  - {fileID: 1306991333255634, guid: 54a3ef18f537b8148a5c28278ce81f5d, type: 2}
-  - {fileID: 1747095605693330, guid: 6a38d4760dc742d478f197c923140ecd, type: 2}
-  - {fileID: 1311690116061960, guid: f014124283ad50a49978bcf365524432, type: 2}
-  CubeToSpawn: {fileID: 0}
-  Ability1Key: 49
-  Ability2Key: 50
-  Ability3Key: 51
-  Ability4Key: 52
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  CubeToSpawn: {fileID: 1112725349033000, guid: e15ba178e96a09a4ca295603880cbe28,
+    type: 2}
+  AbilityUI: {fileID: 1404011444583984, guid: 0b24dce116dac1941a3f5c6226dcd561, type: 2}
+  ShrinkKey: 49
+  TeleportKey: 50
+  AddcubeKey: 51
 --- !u!114 &114427712555281450
 MonoBehaviour:
   m_ObjectHideFlags: 1

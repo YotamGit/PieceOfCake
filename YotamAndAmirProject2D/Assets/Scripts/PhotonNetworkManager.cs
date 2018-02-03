@@ -26,7 +26,7 @@ public class PhotonNetworkManager : MonoBehaviour
         Debug.Log("start");
         PhotonNetwork.ConnectUsingSettings("gameAmir1");
         Debug.Log("connected");
-        PhotonNetwork.automaticallySyncScene = true;
+        //PhotonNetwork.automaticallySyncScene = true;
 
         gameStarted = false;
     }
@@ -37,7 +37,7 @@ public class PhotonNetworkManager : MonoBehaviour
         {
             if (PhotonNetwork.playerList.Length == 1)
             {
-                Time.timeScale = 0;
+                //Time.timeScale = 0;
             }
             else
             {

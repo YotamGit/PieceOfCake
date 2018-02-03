@@ -187,12 +187,10 @@ public class Player : Photon.PunBehaviour , IPunObservable
             SoundManager.instance.PlayDeathEffect(DeathMusic[0]);
             //SoundManager.instance.musicSource.loop = false;
             //SoundManager.instance.RandomizeSfx(DeathMusic);
-
-            
         }
         else if(col.gameObject.tag == "Dangerous" && gameObject.GetComponent<AbilityManager>().Immune == true)
         {
-            gameObject.GetComponent<AbilityManager>().PowerUps[1].SetActive(false);
+            gameObject.GetComponent<AbilityManager>().PowerUps[3].SetActive(false); //PowerUps[1].SetActive(false);
             gameObject.GetComponent<AbilityManager>().Immune = false;
         }
     }

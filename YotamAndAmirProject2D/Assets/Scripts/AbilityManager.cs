@@ -5,7 +5,7 @@ using UnityEngine;
 public class AbilityManager : MonoBehaviour {
 
     [Header("Stats")]
-    public bool Resize = false;
+    public bool Shrink = false;
     public bool Immune = false;
     public bool Teleport = false;
     public bool SpawnCube = false;
@@ -16,22 +16,31 @@ public class AbilityManager : MonoBehaviour {
     /*public Sprite CubeSprite;
     public PhysicsMaterial2D CubeMaterial;*/
     [SerializeField] private GameObject CubeToSpawn;
+    public GameObject AbilityUI;
 
     [Space]
     [Header("Key Bindings")]
-    public KeyCode Ability1Key;
-    public KeyCode Ability2Key;
-    public KeyCode Ability3Key;
-    public KeyCode Ability4Key;
+    public KeyCode ShrinkKey;
+    public KeyCode TeleportKey;
+    public KeyCode AddcubeKey;
+    //public KeyCode Ability4Key;
 
     private GameObject otherPlayer;
 
     // Use this for initialization
     void Start ()
     {
-        
-        for (int i = 0;i<PowerUps.Length;i++)
+        //Transform T1 = AbilityUI.transform;
+        AbilityUI = Instantiate(AbilityUI);
+        //AbilityUI.SetActive(true);
+        AbilityUI.transform.parent = GameObject.Find("Canvas").transform;
+        //AbilityUI.transform.position = T1.position;
+        for (int i = 0; i <= 3; i++)
         {
+            //PowerUps[i].SetActive(false);
+            PowerUps[i] = AbilityUI.transform.GetChild(i).gameObject;
+            //Debug.Log(tempObj);
+            //PowerUps[i] = tempObj;
             PowerUps[i].SetActive(false);
         }
     }
@@ -74,39 +83,42 @@ public class AbilityManager : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        if (Resize)
+        if (Shrink)
         {
             PowerUps[0].SetActive(true);
+            //AbilityUI.transform.GetChild(0).gameObject.SetActive(true);
             Debug.Log("ActivatePowerUp");
-        }
-        if (Immune)
-        {
-            PowerUps[1].SetActive(true);
-            Debug.Log("ActivatePowerUp");
-
         }
         if (Teleport)
         {
-            PowerUps[2].SetActive(true);
+            PowerUps[1].SetActive(true);
+            //AbilityUI.transform.GetChild(1).gameObject.SetActive(true);
             Debug.Log("ActivatePowerUp");
-
         }
         if (SpawnCube)
         {
-            PowerUps[3].SetActive(true);
+            PowerUps[2].SetActive(true);
+            //AbilityUI.transform.GetChild(2).gameObject.SetActive(true);
             Debug.Log("ActivatePowerUp");
 
         }
-        if (Input.GetKey(Ability1Key))
+        if (Immune)
         {
-            if (Resize)
+            PowerUps[3].SetActive(true);
+            //AbilityUI.transform.GetChild(3).gameObject.SetActive(true);
+            Debug.Log("ActivatePowerUp");
+
+        }
+        if (Input.GetKey(ShrinkKey))
+        {
+            if (Shrink)
             {
-                Resize = false;
-                ResizePowerUp(); 
+                Shrink = false;
+                ResizePowerUp();
 
             }
         }
-        else if (Input.GetKey(Ability3Key))//grants a 1 time dagame immunity
+        else if (Input.GetKey(TeleportKey))//grants a 1 time dagame immunity
         {
             if (Teleport)
             {
@@ -114,7 +126,7 @@ public class AbilityManager : MonoBehaviour {
                 TeleportPowerUp();
             }
         }
-        else if(Input.GetKey(Ability4Key))
+        else if(Input.GetKey(AddcubeKey))
         {
             if (SpawnCube)
             {
@@ -128,7 +140,7 @@ public class AbilityManager : MonoBehaviour {
     {
         if (col.gameObject.tag == "Resize")//resizes player for 5 seconds
         {
-            Resize = true;
+            Shrink = true;
             col.gameObject.SetActive(false);
         }
         else if (col.gameObject.tag == "DamageImmune")//grants a 1 time dagame immunity
@@ -152,14 +164,15 @@ public class AbilityManager : MonoBehaviour {
     void ResizePowerUp()
     {
         PowerUps[0].SetActive(false);
+        //AbilityUI.transform.GetChild(0).gameObject.SetActive(false);
         gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x / 2, gameObject.transform.localScale.y / 2, gameObject.transform.localScale.z);
         StartCoroutine(ResizeTimer());
     }
 
     void TeleportPowerUp()
     {
-        PowerUps[2].SetActive(false);
-
+        PowerUps[1].SetActive(false);
+        //AbilityUI.transform.GetChild(1).gameObject.SetActive(false);
         if (otherPlayer == null)
         {
             if (this.tag == "Player1")
@@ -185,7 +198,8 @@ public class AbilityManager : MonoBehaviour {
 
     void SpawnCubePowerUp()
     {
-        PowerUps[3].SetActive(false);
+        PowerUps[2].SetActive(false);
+        //AbilityUI.transform.GetChild(2).gameObject.SetActive(false);
         //CubeToSpawn = new GameObject("Cube")
         //{
         //    //Add Components
