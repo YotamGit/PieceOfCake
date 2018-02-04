@@ -8,6 +8,8 @@ public class PhotonNetworkManager : MonoBehaviour
     [SerializeField] private GameObject player1;
     [SerializeField] private GameObject player2;
     [SerializeField] private GameObject lobbyCamera;
+    [SerializeField] private GameObject mainCamera1;
+    [SerializeField] private GameObject mainCamera2;
     [SerializeField] private Transform spawnPoint1;
     [SerializeField] private Transform spawnPoint2;
 
@@ -71,10 +73,12 @@ public virtual void OnJoinedLobby()
         if (PhotonNetwork.playerList.Length == 1)
         {
             PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
+            Instantiate(mainCamera1); // Creating a camera
         }
         else
         {
             PhotonNetwork.Instantiate(player2.name, spawnPoint2.position, spawnPoint2.rotation, 0);
+            Instantiate(mainCamera2); // Creating a camera
         }
 
         //foreach(GameObject a in powerUps)

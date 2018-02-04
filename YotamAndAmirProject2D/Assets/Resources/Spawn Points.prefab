@@ -35,7 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4355074969783756}
   m_Layer: 0
-  m_Name: 'spawnPointBlue '
+  m_Name: spawnPointRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4814148867672740}
   m_Layer: 0
-  m_Name: spawnPointRed
+  m_Name: spawnPointBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

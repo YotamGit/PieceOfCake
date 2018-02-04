@@ -83,6 +83,7 @@ GameObject:
   - component: {fileID: 81131463644000116}
   - component: {fileID: 124197690376024416}
   - component: {fileID: 114672180292649684}
+  - component: {fileID: 114147415949353604}
   - component: {fileID: 114705316766340626}
   m_Layer: 0
   m_Name: Camera Blue
@@ -90,7 +91,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1657674207486138
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,7 +301,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1625935719530532}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.6285255, y: 24.445278, z: -7.449606}
+  m_LocalPosition: {x: 0, y: 0, z: -7.449606}
   m_LocalScale: {x: 2.3895679, y: 2.3895679, z: 0.827734}
   m_Children: []
   m_Father: {fileID: 4409112467909228}
@@ -714,6 +715,20 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &114147415949353604
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1625935719530532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60b0d58cb7d87094fbd47922561141ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 4409112467909228}
+  smoothSpeed: 0.155
+  offset: {x: 0, y: 0, z: -50}
 --- !u!114 &114149579744901958
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -907,7 +922,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1625935719530532}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8bd4fb1a0c1d4ff49bc2be7b75dcab8b, type: 3}
   m_Name: 
