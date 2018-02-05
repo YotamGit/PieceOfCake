@@ -5,11 +5,7 @@ using UnityEngine;
 
 public class FPSDisplay : Photon.MonoBehaviour
 {
-    //float deltaTime = 0.0f;
-    //void Update()
-    //{
-    //   deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
-    //}
+    float deltaTime = 0.0f;
     private bool togglePing;
 
     [SerializeField] private KeyCode pingButton;
@@ -21,7 +17,8 @@ public class FPSDisplay : Photon.MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(pingButton))
+        deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
+        if (Input.GetKeyDown(pingButton))
         {
             togglePing = !togglePing;
         }
@@ -39,10 +36,12 @@ public class FPSDisplay : Photon.MonoBehaviour
         style.normal.textColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         //float msec = deltaTime * 1000.0f;
         //float fps = 1.0f / deltaTime;
-        
-        if(togglePing)
+        float msec = deltaTime * 1000.0f;
+        float fps = 1.0f / deltaTime;
+
+        if (togglePing)
         {
-            string text = "ms(" + PhotonNetwork.GetPing() + ")";
+            string text = "FPS(" + ((int)fps).ToString() + ") - Ping(" + PhotonNetwork.GetPing() + ")";
             GUI.Label(rect, text, style);
         }
         //string text = string.Format("{1:0.} ping", PhotonNetwork.GetPing() * 1.0f);//PhotonNetwork.networkingPeer.RoundTripTime); // GetPing works as well

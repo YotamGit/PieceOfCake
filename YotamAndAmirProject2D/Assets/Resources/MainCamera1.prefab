@@ -114,6 +114,10 @@ MonoBehaviour:
   targetTag: Player1
   smoothSpeed: 0.155
   offset: {x: 0, y: 0, z: -50}
+  xMax: 53
+  xMin: 11
+  yMax: 100
+  yMin: 6
 --- !u!114 &114883935514529236
 MonoBehaviour:
   m_ObjectHideFlags: 1

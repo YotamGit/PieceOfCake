@@ -5,6 +5,7 @@ using UnityEngine;
 public class GrabHandler : Photon.MonoBehaviour , IPunObservable
 {
     public GameObject VictoryScreen;
+    public LayerMask notGrabMask; // so the player will not drop the key/cube inside a collider
     [Space]
     [Header("Key Bindings")]
     public KeyCode pickUpKey;
@@ -206,7 +207,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
 
         if (Input.GetKeyDown(dropKey))
         {
-            if (grabbedKey && !grabbedCube)
+            if (grabbedKey && !grabbedCube && !Physics2D.OverlapPoint(keyHoldPoint.position, notGrabMask))
             {
                 //Debug.Log("Throwing");
                 grabbedKey = false;
@@ -216,7 +217,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
                 heldKey.enabled = !heldKey.enabled;
                 heldKey = null;
             }
-            else if (grabbedCube && !grabbedKey)
+            else if (grabbedCube && !grabbedKey && !Physics2D.OverlapPoint(cubeHoldPoint.position, notGrabMask))
             {
                 grabbedCube = false;
                 heldCubeTag = "";

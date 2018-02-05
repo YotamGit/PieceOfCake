@@ -726,7 +726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b0d58cb7d87094fbd47922561141ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 4409112467909228}
+  targetTag: 
   smoothSpeed: 0.155
   offset: {x: 0, y: 0, z: -50}
 --- !u!114 &114149579744901958
@@ -884,6 +884,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VictoryScreen: {fileID: 1428032748538090, guid: 293e6c085c54ede48b9a39ab5a9b6658,
     type: 2}
+  notGrabMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   pickUpKey: 32
   dropKey: 101
   grabbedKey: 0

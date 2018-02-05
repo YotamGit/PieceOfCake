@@ -881,6 +881,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VictoryScreen: {fileID: 1428032748538090, guid: 293e6c085c54ede48b9a39ab5a9b6658,
     type: 2}
+  notGrabMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   pickUpKey: 32
   dropKey: 101
   grabbedKey: 0
