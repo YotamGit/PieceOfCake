@@ -5,7 +5,12 @@ using UnityEngine.UI;
 
 public class PhotonNetworkManager : MonoBehaviour
 {
-    [SerializeField] private GameObject player1;
+    private void Start()
+    {
+        int x = 1;
+        Debug.Log(x);
+    }
+    /*[SerializeField] private GameObject player1;
     [SerializeField] private GameObject player2;
     [SerializeField] private GameObject lobbyCamera;
     [SerializeField] private GameObject mainCamera1;
@@ -50,12 +55,7 @@ public class PhotonNetworkManager : MonoBehaviour
         }
     }
 
-    /*IEnumerator WaitTwoSeconds()
-    {
-        yield return new WaitForSeconds(2);
-    }*/
-
-public virtual void OnJoinedLobby()
+    public virtual void OnJoinedLobby()
     {
         Debug.Log("joining lobby");
         RoomOptions roomOptions = new RoomOptions();
@@ -93,6 +93,6 @@ public virtual void OnJoinedLobby()
     public virtual void OnPhotonSerializeView()
     {
 
-    }
- 
+    }*/
+
 }

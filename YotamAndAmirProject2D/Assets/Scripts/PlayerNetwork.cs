@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class PlayerNetwork : MonoBehaviour
 {
-    [SerializeField] private GameObject playerCameraBlue;
+    public static PlayerNetwork instence;
+
+    public string PlayerName { get; private set; }
+
+
+    void Awake()
+    {
+        instence = this;
+        PlayerName = "name#" + Random.Range(1000, 9999); // name#3490
+    }
+    /*[SerializeField] private GameObject playerCameraBlue;
     [SerializeField] private GameObject playerCameraRed;
     [SerializeField] private MonoBehaviour[] playerControlScripts;
 
@@ -34,5 +44,5 @@ public class PlayerNetwork : MonoBehaviour
                 m.enabled = false;
             }
         }
-    }
+    }*/
 }
