@@ -12,6 +12,20 @@ public class MainMenu : MonoBehaviour
     //public Dropdown resolutionDropdown; // will not work with a TextMeshPro Dropdown...
 
     Resolution[] resolutions;
+    
+    public static MainMenu Instance;
+
+    [SerializeField]
+    private LobbyCanvas _lobbyCanvas;
+    public LobbyCanvas LobbyCanvas
+    {
+        get { return LobbyCanvas; }
+    }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     /*private void Start()
     {
@@ -35,7 +49,7 @@ public class MainMenu : MonoBehaviour
         resolutionDropdown.value = currentResIndex;
         resolutionDropdown.RefreshShownValue();
     }*/
-
+    
     public void PlayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
