@@ -45,15 +45,26 @@ public class PlayerLayoutGroup : MonoBehaviour {
         }
     }
 
+    [SerializeField]
+    private GameObject PlayButton;
+
     // called by photon when a player joins the room
     private void OnPhotonPlayerConnected(PhotonPlayer photonPlayer)
     {
+        if (PhotonNetwork.isMasterClient)
+        {
+            PlayButton.SetActive(true);
+        }
         PlayerJoinedRoom(photonPlayer);
     }
 
     // called by photon when a player leaves the room
     private void OnPhotonPlayerDisconnected(PhotonPlayer photonPlayer)
     {
+        if (PhotonNetwork.isMasterClient)
+        {
+            PlayButton.SetActive(false);
+        }
         PlayerLeftRoom(photonPlayer);
     }
     
@@ -84,10 +95,6 @@ public class PlayerLayoutGroup : MonoBehaviour {
             Debug.Log("Deleting The Other Player");
             Destroy(PlayerListings[index].gameObject);
             PlayerListings.RemoveAt(index);
-        }
-        else
-        {
-            Debug.Log("didn't other player");
         }
     }
 

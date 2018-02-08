@@ -7,8 +7,7 @@ public class PhotonNetworkManager : MonoBehaviour
 {
     private void Start()
     {
-        int x = 1;
-        Debug.Log(x);
+        Debug.Log("Starting Game");
     }
     /*[SerializeField] private GameObject player1;
     [SerializeField] private GameObject player2;

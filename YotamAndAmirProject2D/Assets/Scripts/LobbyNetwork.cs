@@ -8,7 +8,7 @@ public class LobbyNetwork : MonoBehaviour {
 	void Start () {
         Debug.Log("Connecting to server...");
         PhotonNetwork.ConnectUsingSettings("game");
-
+        PhotonNetwork.automaticallySyncScene = true;
         PhotonNetwork.playerName = PlayerNetwork.instence.PlayerName;
         PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
