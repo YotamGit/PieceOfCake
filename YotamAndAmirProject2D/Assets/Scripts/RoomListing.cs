@@ -18,13 +18,15 @@ public class RoomListing : MonoBehaviour {
     {
         GameObject lobbyCanvasObj = MainMenu.Instance.LobbyCanvas.gameObject;
 
-        if (lobbyCanvasObj != null)
+        if (lobbyCanvasObj == null)
         {
+            Debug.Log("Not Entering");
             return;
         }
 
         LobbyCanvas lobbyCanvas = lobbyCanvasObj.GetComponent<LobbyCanvas>();
 
+        Debug.Log("Room Name: " + RoomNameText.text);
         Button button = GetComponent<Button>();
         button.onClick.AddListener(() => lobbyCanvas.OnClickJoinRoom(RoomNameText.text));
     }

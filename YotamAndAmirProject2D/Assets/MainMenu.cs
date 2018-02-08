@@ -19,7 +19,14 @@ public class MainMenu : MonoBehaviour
     private LobbyCanvas _lobbyCanvas;
     public LobbyCanvas LobbyCanvas
     {
-        get { return LobbyCanvas; }
+        get { return _lobbyCanvas; }
+    }
+
+    [SerializeField]
+    private WaitingRoomCanvas _waitingRoomCanvas;
+    public WaitingRoomCanvas WaitingRoomCanvas
+    {
+        get { return _waitingRoomCanvas; }
     }
 
     private void Awake()

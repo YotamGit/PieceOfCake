@@ -8,18 +8,22 @@ public class LobbyNetwork : MonoBehaviour {
 	void Start () {
         Debug.Log("Connecting to server...");
         PhotonNetwork.ConnectUsingSettings("game");
-    }
 
-    private void OnConnectedToMaster()
-    {
-        Debug.Log("Connected to Master");
         PhotonNetwork.playerName = PlayerNetwork.instence.PlayerName;
-
         PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
+    /*void OnConnectedToMaster() // didn't work for some reason...
+    {
+        Debug.Log("Connected to Master As: " + PhotonNetwork.playerName);
+        PhotonNetwork.playerName = PlayerNetwork.instence.PlayerName;
+
+        PhotonNetwork.JoinLobby(TypedLobby.Default);
+    }*/
+
     private void OnJoinedLobby()
     {
-        Debug.Log("Joined Lobby");
+        
+        Debug.Log("Joined Lobby As: " + PhotonNetwork.player.NickName);
     }
 }
