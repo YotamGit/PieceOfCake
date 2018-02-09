@@ -40,11 +40,11 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         fullScreen.isOn = Screen.fullScreen; // updating the fullscreen button if the player started the game with fullscreen or not
-        SetFullscreen(Screen.fullScreen);
+        //SetFullscreen(Screen.fullScreen);
 
         resolutions = Screen.resolutions;
 
-        resolutionDropdown.ClearOptions(); // clearing current res options
+        resolutionDropdown.ClearOptions(); // clearing current res options in dropdown
 
         List<string> options = new List<string>(); // list that holds all the option resolutions
 

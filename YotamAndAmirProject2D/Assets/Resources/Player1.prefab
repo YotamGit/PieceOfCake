@@ -235,6 +235,7 @@ GameObject:
   - component: {fileID: 114783425601059302}
   - component: {fileID: 114072625584155418}
   - component: {fileID: 114243899895046000}
+  - component: {fileID: 114902223471905206}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Player1
@@ -729,6 +730,10 @@ MonoBehaviour:
   targetTag: 
   smoothSpeed: 0.155
   offset: {x: 0, y: 0, z: -50}
+  xMax: 0
+  xMin: 0
+  yMax: 0
+  yMin: 0
 --- !u!114 &114149579744901958
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -914,11 +919,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25d0effe1e56f8a46b45b23e3b30f87c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCameraBlue: {fileID: 1625935719530532}
-  playerCameraRed: {fileID: 1111261450236346, guid: 6ced179575a35734e86945252b02814d,
-    type: 2}
-  playerControlScripts:
-  - {fileID: 114322931283578758}
 --- !u!114 &114672180292649684
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -960,6 +960,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
   m_SynchronizeAngularVelocity: 1
+--- !u!114 &114902223471905206
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1984280513756392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b2c8ff72d8f814f9e87e0aada09fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerControlScripts:
+  - {fileID: 114322931283578758}
 --- !u!124 &124197690376024416
 Behaviour:
   m_ObjectHideFlags: 1

@@ -87,26 +87,22 @@ public class AbilityManager : MonoBehaviour {
         {
             PowerUps[0].SetActive(true);
             //AbilityUI.transform.GetChild(0).gameObject.SetActive(true);
-            Debug.Log("ActivatePowerUp");
         }
         if (Teleport)
         {
             PowerUps[1].SetActive(true);
             //AbilityUI.transform.GetChild(1).gameObject.SetActive(true);
-            Debug.Log("ActivatePowerUp");
         }
         if (SpawnCube)
         {
             PowerUps[2].SetActive(true);
             //AbilityUI.transform.GetChild(2).gameObject.SetActive(true);
-            Debug.Log("ActivatePowerUp");
 
         }
         if (Immune)
         {
             PowerUps[3].SetActive(true);
             //AbilityUI.transform.GetChild(3).gameObject.SetActive(true);
-            Debug.Log("ActivatePowerUp");
 
         }
         if (Input.GetKey(ShrinkKey))

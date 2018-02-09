@@ -9,6 +9,7 @@ public class PhotonNetworkManager : MonoBehaviour
     {
         Debug.Log("Starting Game");
     }*/
+    // Obj to spawn:
     [SerializeField] private GameObject player1;
     [SerializeField] private GameObject player2;
     [SerializeField] private GameObject lobbyCamera;
@@ -17,7 +18,12 @@ public class PhotonNetworkManager : MonoBehaviour
     [SerializeField] private Transform spawnPoint1;
     [SerializeField] private Transform spawnPoint2;
 
-    private bool gameStarted;
+    /*// Scripts to disable:
+    [SerializeField] private MonoBehaviour[] playerControlScripts;
+
+    private PhotonView photonView;*/
+
+    //private bool gameStarted; // freeze before other player joins
 
     //[SerializeField] private GameObject[] powerUps;
 
@@ -41,6 +47,7 @@ public class PhotonNetworkManager : MonoBehaviour
     {
         Debug.Log("Creating player...");
 
+        lobbyCamera.SetActive(false);
         if (PhotonNetwork.isMasterClient)
         {
             PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
@@ -55,13 +62,13 @@ public class PhotonNetworkManager : MonoBehaviour
         Debug.Log("Player created");
     }
 
-    private void Update()
+    /*private void Update()
     {
         if (!gameStarted)
         {
             if (PhotonNetwork.playerList.Length == 1)
             {
-                //Time.timeScale = 0;
+                Time.timeScale = 0;
             }
             else
             {
@@ -70,7 +77,22 @@ public class PhotonNetworkManager : MonoBehaviour
                 //StartCoroutine(WaitTwoSeconds());
             }
         }
-    }
+    }*/
+
+    /*private void Initialize()
+    {
+        if (photonView.isMine)
+        {
+
+        }
+        else
+        {
+            foreach (MonoBehaviour m in playerControlScripts)
+            {
+                m.enabled = false;
+            }
+        }
+    }*/
 
     /*public virtual void OnJoinedLobby()
     {
