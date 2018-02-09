@@ -20,7 +20,9 @@ public class RoomLayoutGroup : MonoBehaviour {
     {
         RoomInfo[] rooms = PhotonNetwork.GetRoomList();
 
-        foreach(RoomInfo room in rooms)
+        RemoveOldRooms();
+
+        foreach (RoomInfo room in rooms)
         {
             RoomReceived(room);
         }

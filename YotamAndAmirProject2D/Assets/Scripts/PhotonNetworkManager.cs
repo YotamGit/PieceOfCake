@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class PhotonNetworkManager : MonoBehaviour
 {
-    private void Start()
+    /*private void Start()
     {
         Debug.Log("Starting Game");
-    }
-    /*[SerializeField] private GameObject player1;
+    }*/
+    [SerializeField] private GameObject player1;
     [SerializeField] private GameObject player2;
     [SerializeField] private GameObject lobbyCamera;
     [SerializeField] private GameObject mainCamera1;
@@ -27,7 +27,7 @@ public class PhotonNetworkManager : MonoBehaviour
     //{
     //    Debug.Log(PhotonNetwork.connectionState.ToString());///ONLY FOR DEBUGGING
     //}
-    private void Start()
+    /*private void Start()
     {
         Debug.Log("start");
         PhotonNetwork.ConnectUsingSettings("gameAmir1");
@@ -35,6 +35,24 @@ public class PhotonNetworkManager : MonoBehaviour
         //PhotonNetwork.automaticallySyncScene = true;
 
         gameStarted = false;
+    }*/
+
+    private void Start()
+    {
+        Debug.Log("Creating player...");
+
+        if (PhotonNetwork.isMasterClient)
+        {
+            PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
+            Instantiate(mainCamera1); // Creating a camera
+        }
+        else
+        {
+            PhotonNetwork.Instantiate(player2.name, spawnPoint2.position, spawnPoint2.rotation, 0);
+            Instantiate(mainCamera2); // Creating a camera
+        }
+
+        Debug.Log("Player created");
     }
 
     private void Update()
@@ -54,18 +72,18 @@ public class PhotonNetworkManager : MonoBehaviour
         }
     }
 
-    public virtual void OnJoinedLobby()
+    /*public virtual void OnJoinedLobby()
     {
         Debug.Log("joining lobby");
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 2;
         PhotonNetwork.JoinOrCreateRoom("1Room", roomOptions, null);
         Debug.Log("joined");
-    }
+    }*/
 
-    public virtual void OnJoinedRoom()
+    /*public virtual void OnJoinedRoom()
     {
-        Debug.Log("creating player");
+        Debug.Log("Creating player");
         //PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
         //PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
 

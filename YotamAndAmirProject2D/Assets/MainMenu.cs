@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
     public AudioMixer auidoMixer;
 
-    //public Dropdown resolutionDropdown; // will not work with a TextMeshPro Dropdown...
+    public TMP_Dropdown resolutionDropdown; // will not work with a TextMeshPro Dropdown...
+    [SerializeField]
+    private Toggle fullScreen;
 
     Resolution[] resolutions;
     
@@ -33,20 +36,24 @@ public class MainMenu : MonoBehaviour
     {
         Instance = this;
     }
-
-    /*private void Start()
+    
+    private void Start()
     {
+        fullScreen.isOn = Screen.fullScreen; // updating the fullscreen button if the player started the game with fullscreen or not
+        SetFullscreen(Screen.fullScreen);
+
         resolutions = Screen.resolutions;
 
         resolutionDropdown.ClearOptions(); // clearing current res options
 
         List<string> options = new List<string>(); // list that holds all the option resolutions
+
         int currentResIndex = 0;
         for(int i = 0; i < resolutions.Length; i++) // placing res in the list
         {
             options.Add(resolutions[i].width + " x " + resolutions[i].height);
 
-            if(resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
             {
                 currentResIndex = i;
             }
@@ -55,11 +62,17 @@ public class MainMenu : MonoBehaviour
         resolutionDropdown.AddOptions(options); // adding the resolution options to the list
         resolutionDropdown.value = currentResIndex;
         resolutionDropdown.RefreshShownValue();
-    }*/
+    }
     
     public void PlayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void SetResolution(int resolutionIndex)
+    {
+        Resolution resolution = resolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
     public void SetVolume(float volume)
