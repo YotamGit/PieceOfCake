@@ -5,11 +5,11 @@ using TMPro;
 public class RoomListing : MonoBehaviour {
 
     [SerializeField]
-    private TextMeshProUGUI _roomNameText;
-    private TextMeshProUGUI RoomNameText
-    {
-        get { return _roomNameText; }
-    }
+    private TextMeshProUGUI RoomNameText;
+    //private TextMeshProUGUI RoomNameText
+    //{
+    //    get { return _roomNameText; }
+    //}
 
     public string RoomName { get; private set; }
     public bool Updated { get; set; }

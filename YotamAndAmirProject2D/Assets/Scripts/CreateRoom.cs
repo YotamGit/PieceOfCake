@@ -12,11 +12,11 @@ public class CreateRoom : MonoBehaviour {
     private GameObject toDisable;
 
     [SerializeField]
-    private TextMeshProUGUI _roomName;
-    private TextMeshProUGUI RoomName
-    {
-        get { return _roomName; }
-    }
+    private TextMeshProUGUI RoomName;
+    //private TextMeshProUGUI RoomName
+    //{
+    //    get { return _roomName; }
+    //}
 
     public void OnClick_CreateRoom()
     {

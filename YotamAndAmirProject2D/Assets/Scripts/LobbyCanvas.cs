@@ -5,11 +5,11 @@ using UnityEngine;
 public class LobbyCanvas : MonoBehaviour {
 
     [SerializeField]
-    private RoomLayoutGroup _roomLayoutGroup;
-    private RoomLayoutGroup RoomLayoutGroup
-    {
-        get { return _roomLayoutGroup; }
-    }
+    private RoomLayoutGroup RoomLayoutGroup;
+    //private RoomLayoutGroup RoomLayoutGroup
+    //{
+    //    get { return _roomLayoutGroup; }
+    //}
 
 
     [SerializeField]

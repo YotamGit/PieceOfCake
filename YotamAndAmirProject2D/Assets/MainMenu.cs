@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
 {
     public AudioMixer auidoMixer;
 
-    public TMP_Dropdown resolutionDropdown; // will not work with a TextMeshPro Dropdown...
+    public TMP_Dropdown resolutionDropdown;
     [SerializeField]
     private Toggle fullScreen;
 
@@ -18,19 +18,18 @@ public class MainMenu : MonoBehaviour
     
     public static MainMenu Instance;
 
-    [SerializeField]
-    private LobbyCanvas _lobbyCanvas;
-    public LobbyCanvas LobbyCanvas
-    {
-        get { return _lobbyCanvas; }
-    }
+    public LobbyCanvas LobbyCanvas;
+    //public LobbyCanvas LobbyCanvas
+    //{
+    //    get { return _lobbyCanvas; }
+    //}
 
     [SerializeField]
-    private WaitingRoomCanvas _waitingRoomCanvas;
-    public WaitingRoomCanvas WaitingRoomCanvas
-    {
-        get { return _waitingRoomCanvas; }
-    }
+    private WaitingRoomCanvas WaitingRoomCanvas;
+    //public WaitingRoomCanvas WaitingRoomCanvas
+    //{
+    //    get { return _waitingRoomCanvas; }
+    //}
 
     private void Awake()
     {

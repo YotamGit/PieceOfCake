@@ -6,11 +6,11 @@ using TMPro;
 public class LobbyNetwork : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI _sighnInText;
-    private TextMeshProUGUI SighnInText
+    private TextMeshProUGUI SighnInText;
+    /*private TextMeshProUGUI SighnInText
     {
         get { return _sighnInText; }
-    }
+    }*/
 
     // Use this for initialization
     void Start () {
@@ -22,6 +22,11 @@ public class LobbyNetwork : MonoBehaviour
         //PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
+    private void OnConnectedToServer()
+    {
+        Debug.Log("Joined Server");
+    }
+
     public void JoinLobbyAs()
     {
         string playerName = SighnInText.text;
@@ -31,7 +36,7 @@ public class LobbyNetwork : MonoBehaviour
         }
         else
         {
-            PhotonNetwork.playerName = PlayerNetwork.instence.PlayerName;
+            PhotonNetwork.playerName = PlayerNetwork.instance.PlayerName;
         }
         PhotonNetwork.JoinLobby(TypedLobby.Default);
     }

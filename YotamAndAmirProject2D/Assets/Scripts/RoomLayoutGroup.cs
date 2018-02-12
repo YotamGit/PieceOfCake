@@ -4,17 +4,17 @@ using UnityEngine;
 public class RoomLayoutGroup : MonoBehaviour {
 
     [SerializeField]
-    private GameObject _roomListingPrefab;
-    private GameObject RoomListingPrefab
-    {
-        get { return _roomListingPrefab; }
-    }
+    private GameObject RoomListingPrefab;
+    //private GameObject RoomListingPrefab
+    //{
+    //    get { return _roomListingPrefab; }
+    //}
 
-    private List<RoomListing> _roomListingButtons = new List<RoomListing>();
-    private List<RoomListing> RoomListingButtons
-    {
-        get { return _roomListingButtons; }
-    }
+    private List<RoomListing> RoomListingButtons = new List<RoomListing>();
+    //private List<RoomListing> RoomListingButtons
+    //{
+    //    get { return _roomListingButtons; }
+    //}
 
     public void OnReceivedRoomListUpdate()
     {
@@ -32,7 +32,7 @@ public class RoomLayoutGroup : MonoBehaviour {
 
     private void RoomReceived(RoomInfo room)
     {
-        int index = RoomListingButtons.FindIndex(x => x.RoomName == room.Name); // finsing room in list
+        int index = RoomListingButtons.FindIndex(x => x.RoomName == room.Name); // finding room in list//find wth is thisfind method!!
 
         if(index == -1) // adding room to list
         {
@@ -71,6 +71,7 @@ public class RoomLayoutGroup : MonoBehaviour {
                 roomListing.Updated = false;
             }
         }
+
         foreach(RoomListing roomListing in removeRooms)
         {
             GameObject roomListingObj = roomListing.gameObject;

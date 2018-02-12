@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerLayoutGroup : MonoBehaviour {
+public class PlayerLayoutGroup : MonoBehaviour
+{
 
     [SerializeField]
     private GameObject _playerListingPrefab;
@@ -98,15 +99,16 @@ public class PlayerLayoutGroup : MonoBehaviour {
         }
     }
 
-    public void OnClickRoomState()
-    {
-        if(PhotonNetwork.isMasterClient)
-        {
-            return;
-        }
-        PhotonNetwork.room.IsOpen = !PhotonNetwork.room.IsOpen;
-        PhotonNetwork.room.IsVisible = PhotonNetwork.room.IsOpen;
-    }
+
+    //public void OnClickRoomState()
+    //{
+    //    if(PhotonNetwork.isMasterClient)
+    //    {
+    //        return;
+    //    }
+    //    PhotonNetwork.room.IsOpen = !PhotonNetwork.room.IsOpen;
+    //    PhotonNetwork.room.IsVisible = PhotonNetwork.room.IsOpen;
+    //}
 
     public void OnClickLeaveRoom()
     {

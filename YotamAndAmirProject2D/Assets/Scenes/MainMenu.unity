@@ -304,7 +304,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &9064128
 RectTransform:
   m_ObjectHideFlags: 0
@@ -542,6 +542,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 0
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &17685600
@@ -1628,7 +1639,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4281479730
   m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_enableVertexGradient: 0
   m_fontColorGradient:
@@ -1686,13 +1697,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 141536842}
-    characterCount: 0
+    characterCount: 8
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 0
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
-    lineCount: 0
-    pageCount: 0
+    lineCount: 1
+    pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -2218,8 +2229,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2021691157}
   m_HandleRect: {fileID: 2021691156}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.2
+  m_Value: 1
+  m_Size: 0.99999976
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2290,7 +2301,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000011444092}
   m_SizeDelta: {x: 0, y: 41.6}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &257206689
@@ -4333,7 +4344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toEnable: {fileID: 1496339364}
   toDisable: {fileID: 91677287}
-  _roomName: {fileID: 906756177}
+  RoomName: {fileID: 906756177}
   changeAlpha: {fileID: 1202897984}
 --- !u!1 &532390498
 GameObject:
@@ -4527,7 +4538,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -18, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &538125083
 MonoBehaviour:
@@ -7741,7 +7752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a45f2b9980e6c6642a9242d5b108322b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roomListingPrefab: {fileID: 1985526745197548, guid: 81d048a602b703d498aee60c83735fb6,
+  RoomListingPrefab: {fileID: 1985526745197548, guid: 81d048a602b703d498aee60c83735fb6,
     type: 2}
 --- !u!1 &1053719756
 GameObject:
@@ -8147,7 +8158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f057db330303c249ade7d774f880b35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roomLayoutGroup: {fileID: 1044173078}
+  RoomLayoutGroup: {fileID: 1044173078}
   toEnable: {fileID: 1496339364}
   toDisable: {fileID: 1087023347}
 --- !u!1 &1100328765
@@ -14121,7 +14132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90467c2bb01b58944aaafa1f1f6dfdb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sighnInText: {fileID: 1138954058}
+  SighnInText: {fileID: 1138954058}
 --- !u!4 &1988567756
 Transform:
   m_ObjectHideFlags: 0
@@ -14309,8 +14320,8 @@ RectTransform:
   m_Father: {fileID: 2124814530}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.2}
+  m_AnchorMin: {x: 0, y: 0.00000023841858}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -14782,8 +14793,8 @@ MonoBehaviour:
   auidoMixer: {fileID: 24100000, guid: 82e5f3cf81275094e9db5c71eb65f001, type: 2}
   resolutionDropdown: {fileID: 943410495}
   fullScreen: {fileID: 3318566}
-  _lobbyCanvas: {fileID: 1087023349}
-  _waitingRoomCanvas: {fileID: 1496339366}
+  LobbyCanvas: {fileID: 1087023349}
+  WaitingRoomCanvas: {fileID: 1496339366}
 --- !u!1 &2055208469
 GameObject:
   m_ObjectHideFlags: 0
@@ -16498,6 +16509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25d0effe1e56f8a46b45b23e3b30f87c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerName: 
 --- !u!1 &2131896261
 GameObject:
   m_ObjectHideFlags: 0
