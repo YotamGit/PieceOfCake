@@ -1,15 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class LobbyNetwork : MonoBehaviour {
+public class LobbyNetwork : MonoBehaviour
+{
+    [SerializeField]
+    private TextMeshProUGUI _sighnInText;
+    private TextMeshProUGUI SighnInText
+    {
+        get { return _sighnInText; }
+    }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         Debug.Log("Connecting to server...");
         PhotonNetwork.ConnectUsingSettings("game");
         PhotonNetwork.automaticallySyncScene = true;
-        PhotonNetwork.playerName = PlayerNetwork.instence.PlayerName;
+        PhotonNetwork.autoJoinLobby = false;
+        //PhotonNetwork.playerName = PlayerNetwork.instence.PlayerName;
+        //PhotonNetwork.JoinLobby(TypedLobby.Default);
+    }
+
+    public void JoinLobbyAs()
+    {
+        string playerName = SighnInText.text;
+        if (playerName != "" && !playerName.Contains(" "))
+        {
+            PhotonNetwork.playerName = playerName;
+        }
+        else
+        {
+            PhotonNetwork.playerName = PlayerNetwork.instence.PlayerName;
+        }
         PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
@@ -23,7 +46,6 @@ public class LobbyNetwork : MonoBehaviour {
 
     private void OnJoinedLobby()
     {
-        
         Debug.Log("Joined Lobby As: " + PhotonNetwork.player.NickName);
     }
 }
