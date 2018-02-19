@@ -3305,7 +3305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &409808207
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3758,11 +3758,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -4604,7 +4604,7 @@ MonoBehaviour:
   toDisable: {fileID: 91677287}
   RoomName: {fileID: 906756177}
   changeAlpha: {fileID: 1202897984}
-  cancleText: {fileID: 1294872024}
+  cancelText: {fileID: 1294872024}
 --- !u!1 &530889748
 GameObject:
   m_ObjectHideFlags: 0
@@ -10616,11 +10616,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -14306,7 +14306,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Vloume:'
+  m_text: 'Volume:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 163292f6f226d954593d45b079f8aae0, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: 163292f6f226d954593d45b079f8aae0, type: 2}
@@ -16504,11 +16504,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -17233,12 +17233,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f9af4430f0da4843ac574ca4622401d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerListingPrefab: {fileID: 1513348173809448, guid: e2b9064242d644f43a3fcd8e742ebc04,
+  PlayerListingPrefab: {fileID: 1513348173809448, guid: e2b9064242d644f43a3fcd8e742ebc04,
     type: 2}
   toDisable: {fileID: 1496339364}
   toEnable: {fileID: 1087023347}
-  cancleButtonText: {fileID: 1294872024}
-  cancleButton: {fileID: 762552718}
+  cancelButtonText: {fileID: 1294872024}
+  cancelButton: {fileID: 762552718}
   PlayButton: {fileID: 1604218359}
 --- !u!1 &2122756465
 GameObject:

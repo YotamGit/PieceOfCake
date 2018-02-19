@@ -18,9 +18,9 @@ public class RoomLayoutGroup : MonoBehaviour {
 
     public void OnReceivedRoomListUpdate()
     {
-        RoomInfo[] rooms = PhotonNetwork.GetRoomList();
+        RoomInfo[] rooms = PhotonNetwork.GetRoomList(); // getting all the current rooms
 
-        RemoveOldRooms();
+        //RemoveOldRooms();
 
         foreach (RoomInfo room in rooms)
         {
@@ -82,7 +82,7 @@ public class RoomLayoutGroup : MonoBehaviour {
 
     public void RemoveAllRooms()
     {
-        List<RoomListing> removeRooms = new List<RoomListing>();
+        /*List<RoomListing> removeRooms = new List<RoomListing>();
 
         foreach (RoomListing roomListing in RoomListingButtons)
         {
@@ -94,6 +94,6 @@ public class RoomLayoutGroup : MonoBehaviour {
             GameObject roomListingObj = roomListing.gameObject;
             RoomListingButtons.Remove(roomListing);
             Destroy(roomListingObj);
-        }
+        }*/
     }
 }

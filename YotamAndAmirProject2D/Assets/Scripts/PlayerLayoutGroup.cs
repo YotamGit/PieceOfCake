@@ -8,28 +8,27 @@ public class PlayerLayoutGroup : MonoBehaviour
 {
 
     [SerializeField]
-    private GameObject _playerListingPrefab;
-    private GameObject PlayerListingPrefab
-    {
-        get { return _playerListingPrefab; }
-    }
+    private GameObject PlayerListingPrefab;
+    //private GameObject PlayerListingPrefab
+    //{
+    //    get { return _playerListingPrefab; }
+    //}
 
-    private List<PlayerListing> _playerListings = new List<PlayerListing>();
-    private List<PlayerListing> PlayerListings
-    {
-        get {return _playerListings; }
-    }
+    private List<PlayerListing> PlayerListings = new List<PlayerListing>();
+    //private List<PlayerListing> PlayerListings
+    //{
+    //    get {return _playerListings; }
+    //}
 
     [SerializeField]
     private GameObject toDisable, toEnable;
 
-
     [SerializeField]
-    private TextMeshProUGUI cancleButtonText;
+    private TextMeshProUGUI cancelButtonText;
     [SerializeField]
-    private Button cancleButton;
+    private Button cancelButton;
 
-    private void Start()
+    private void Awake()
     {
         ChangeTextAlpha(true);
     }
@@ -51,11 +50,11 @@ public class PlayerLayoutGroup : MonoBehaviour
     {
         if (change)
         {
-            cancleButtonText.faceColor = new Color(1, 1, 1, 0.4F);
+            cancelButtonText.faceColor = new Color(1, 1, 1, 0.4F);
         }
         else
         {
-            cancleButtonText.faceColor = new Color(1, 1, 1, 1F);
+            cancelButtonText.faceColor = new Color(1, 1, 1, 1F);
         }
     }
 
@@ -72,7 +71,7 @@ public class PlayerLayoutGroup : MonoBehaviour
 
         //enabling the cancle button
         ChangeTextAlpha(false);
-        cancleButton.interactable = true;
+        cancelButton.interactable = true;
     }
 
     [SerializeField]
@@ -150,6 +149,6 @@ public class PlayerLayoutGroup : MonoBehaviour
 
         //disableing the cancle button
         ChangeTextAlpha(true);
-        cancleButton.interactable = false;
+        cancelButton.interactable = false;
     }
 }
