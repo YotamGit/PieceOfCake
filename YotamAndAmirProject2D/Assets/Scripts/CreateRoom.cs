@@ -47,12 +47,16 @@ public class CreateRoom : MonoBehaviour {
         button.enabled = false;
     }
 
+    [SerializeField]
+    private TextMeshProUGUI cancleText; // text of waiting room cancle
+
     private void OnCreatedRoom()
     {
         Button button = GetComponent<Button>();
         button.enabled = true;
 
         changeAlpha.faceColor = new Color(1, 1, 1, 1F);
+        cancleText.faceColor = new Color(1, 1, 1, 0.4F);
 
         Debug.Log("Room Created successfully");
         toDisable.SetActive(false);

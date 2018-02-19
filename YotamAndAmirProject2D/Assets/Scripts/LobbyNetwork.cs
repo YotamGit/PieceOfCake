@@ -40,10 +40,19 @@ public class LobbyNetwork : MonoBehaviour
         Debug.Log("Joined Server");
     }
 
+    private bool IsValidUser(string user)
+    {
+        if (user != "" && !user.Contains(" ") && user.Length > 1)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void JoinLobbyAs()
     {
         string playerName = SignInText.text;
-        if (playerName != "" && !playerName.Contains(" "))
+        if (IsValidUser(playerName))
         {
             PhotonNetwork.playerName = playerName;
         }

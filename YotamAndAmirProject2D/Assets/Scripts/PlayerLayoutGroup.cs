@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerLayoutGroup : MonoBehaviour
 {
@@ -21,6 +23,17 @@ public class PlayerLayoutGroup : MonoBehaviour
     [SerializeField]
     private GameObject toDisable, toEnable;
 
+
+    [SerializeField]
+    private TextMeshProUGUI cancleButtonText;
+    [SerializeField]
+    private Button cancleButton;
+
+    private void Start()
+    {
+        ChangeTextAlpha(true);
+    }
+
     // called by photon when a master client is switched
     private void OnMasterClientSwitched(PhotonPlayer newMasterClient)
     {
@@ -34,6 +47,18 @@ public class PlayerLayoutGroup : MonoBehaviour
         PhotonNetwork.LeaveRoom();
     }
 
+    public void ChangeTextAlpha(bool change) // true: pale, false: normal
+    {
+        if (change)
+        {
+            cancleButtonText.faceColor = new Color(1, 1, 1, 0.4F);
+        }
+        else
+        {
+            cancleButtonText.faceColor = new Color(1, 1, 1, 1F);
+        }
+    }
+
     // called by photon when you join a room
     private void OnJoinedRoom()
     {
@@ -44,6 +69,10 @@ public class PlayerLayoutGroup : MonoBehaviour
         {
             PlayerJoinedRoom(photonPlayers[i]);
         }
+
+        //enabling the cancle button
+        ChangeTextAlpha(false);
+        cancleButton.interactable = true;
     }
 
     [SerializeField]
@@ -118,5 +147,9 @@ public class PlayerLayoutGroup : MonoBehaviour
         }
         PlayerListings.Clear();
         PhotonNetwork.LeaveRoom();
+
+        //disableing the cancle button
+        ChangeTextAlpha(true);
+        cancleButton.interactable = false;
     }
 }

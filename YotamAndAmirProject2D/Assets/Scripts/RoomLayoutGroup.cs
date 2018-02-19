@@ -25,7 +25,6 @@ public class RoomLayoutGroup : MonoBehaviour {
         foreach (RoomInfo room in rooms)
         {
             RoomReceived(room);
-            Debug.Log(room.MaxPlayers + "-" + room.PlayerCount);
         }
 
         RemoveOldRooms();
@@ -37,7 +36,7 @@ public class RoomLayoutGroup : MonoBehaviour {
 
         if(index == -1) // adding room to list
         {
-            if(room.IsVisible && room.PlayerCount < room.MaxPlayers)
+            if(room.PlayerCount < room.MaxPlayers) //room.IsVisible &&
             {
                 GameObject roomListingObj = Instantiate(RoomListingPrefab);
                 roomListingObj.transform.SetParent(transform, false);
