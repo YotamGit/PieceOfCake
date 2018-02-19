@@ -6,7 +6,7 @@ using TMPro;
 
 public class CreateRoom : MonoBehaviour {
 
-    [SerializeField]
+    [SerializeField]//write comments
     private GameObject toEnable;
     [SerializeField]
     private GameObject toDisable;

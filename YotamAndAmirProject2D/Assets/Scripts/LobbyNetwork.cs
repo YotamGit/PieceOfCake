@@ -1,12 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class LobbyNetwork : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI SighnInText;
+    private TextMeshProUGUI SignInText; // username
+    [SerializeField]
+    private TextMeshProUGUI SignInButtonText; // always: "sign in"
+    [SerializeField]
+    private Button SignInButton;
+    [SerializeField]
+    private Button BackButton;
+    [SerializeField]
+    private GameObject toDisable;
+    [SerializeField]
+    private GameObject toEnable;
+    //when you go back to the main menu sign out. if this issue isnt fixed the player can log in infinite times (20 to be exact or less)
+
     /*private TextMeshProUGUI SighnInText
     {
         get { return _sighnInText; }
@@ -29,7 +42,7 @@ public class LobbyNetwork : MonoBehaviour
 
     public void JoinLobbyAs()
     {
-        string playerName = SighnInText.text;
+        string playerName = SignInText.text;
         if (playerName != "" && !playerName.Contains(" "))
         {
             PhotonNetwork.playerName = playerName;
@@ -39,6 +52,23 @@ public class LobbyNetwork : MonoBehaviour
             PhotonNetwork.playerName = PlayerNetwork.instance.PlayerName;
         }
         PhotonNetwork.JoinLobby(TypedLobby.Default);
+
+        ChangeTextAlpha(true);
+
+        BackButton.enabled = false;
+    }
+
+    public void ChangeTextAlpha(bool change) // true: pale, false: normal
+    {
+        if(change)
+        {
+            SignInButtonText.faceColor = new Color(1, 1, 1, 0.4F);
+        }
+        else
+        {
+            SignInButtonText.faceColor = new Color(1, 1, 1, 1F);
+        }
+        SignInButton.interactable = !SignInButton.interactable;
     }
 
     /*void OnConnectedToMaster() // didn't work for some reason...
@@ -52,5 +82,17 @@ public class LobbyNetwork : MonoBehaviour
     private void OnJoinedLobby()
     {
         Debug.Log("Joined Lobby As: " + PhotonNetwork.player.NickName);
+
+        BackButton.enabled = true;
+
+        ChangeTextAlpha(false);
+
+        toDisable.SetActive(false);
+        toEnable.SetActive(true);
+    }
+
+    public void LeaveLobbyUser()
+    {
+        PhotonNetwork.LeaveLobby();
     }
 }

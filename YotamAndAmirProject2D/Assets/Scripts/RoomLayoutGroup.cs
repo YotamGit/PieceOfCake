@@ -25,6 +25,7 @@ public class RoomLayoutGroup : MonoBehaviour {
         foreach (RoomInfo room in rooms)
         {
             RoomReceived(room);
+            Debug.Log(room.MaxPlayers + "-" + room.PlayerCount);
         }
 
         RemoveOldRooms();
@@ -56,7 +57,7 @@ public class RoomLayoutGroup : MonoBehaviour {
         }
     }
 
-    private void RemoveOldRooms()
+    public void RemoveOldRooms()
     {
         List<RoomListing> removeRooms = new List<RoomListing>();
 
@@ -73,6 +74,23 @@ public class RoomLayoutGroup : MonoBehaviour {
         }
 
         foreach(RoomListing roomListing in removeRooms)
+        {
+            GameObject roomListingObj = roomListing.gameObject;
+            RoomListingButtons.Remove(roomListing);
+            Destroy(roomListingObj);
+        }
+    }
+
+    public void RemoveAllRooms()
+    {
+        List<RoomListing> removeRooms = new List<RoomListing>();
+
+        foreach (RoomListing roomListing in RoomListingButtons)
+        {
+            removeRooms.Add(roomListing);
+        }
+
+        foreach (RoomListing roomListing in removeRooms)
         {
             GameObject roomListingObj = roomListing.gameObject;
             RoomListingButtons.Remove(roomListing);
