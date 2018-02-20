@@ -17,7 +17,6 @@ public class LobbyCanvas : MonoBehaviour {
 
     public void OnClickJoinRoom(string roomName)
     {
-
         RoomInfo[] rooms = PhotonNetwork.GetRoomList();
         RoomInfo thisRoom = null;
 
@@ -32,13 +31,12 @@ public class LobbyCanvas : MonoBehaviour {
 
         if(thisRoom.PlayerCount < thisRoom.MaxPlayers)
         {
-            toEnable.SetActive(true);
-            toDisable.SetActive(false);
-
             if (PhotonNetwork.JoinRoom(roomName))
             {
                 Debug.Log("Joined Room Successfully!");
             }
+            toEnable.SetActive(true);
+            toDisable.SetActive(false);
         }
         else
         {

@@ -6,7 +6,6 @@ using TMPro;
 
 public class PlayerLayoutGroup : MonoBehaviour
 {
-
     [SerializeField]
     private GameObject PlayerListingPrefab;
     //private GameObject PlayerListingPrefab
@@ -21,7 +20,7 @@ public class PlayerLayoutGroup : MonoBehaviour
     //}
 
     [SerializeField]
-    private GameObject toDisable, toEnable;
+    private GameObject toDisableWaitingScreen, toEnableRoomMenu;//toEnableLobby;
 
     [SerializeField]
     private TextMeshProUGUI cancelButtonText;
@@ -36,8 +35,6 @@ public class PlayerLayoutGroup : MonoBehaviour
     // called by photon when a master client is switched
     private void OnMasterClientSwitched(PhotonPlayer newMasterClient)
     {
-        toEnable.SetActive(true);
-        toDisable.SetActive(false);
         foreach (PlayerListing tempPL in PlayerListings)
         {
             Destroy(tempPL.gameObject);
@@ -61,8 +58,6 @@ public class PlayerLayoutGroup : MonoBehaviour
     // called by photon when you join a room
     private void OnJoinedRoom()
     {
-        //MainMenu.Instance.WaitingRoomCanvas.transform.SetAsLastSibling();
-
         PhotonPlayer[] photonPlayers = PhotonNetwork.playerList;
         for (int i = 0; i < photonPlayers.Length; i++)
         {
@@ -119,14 +114,13 @@ public class PlayerLayoutGroup : MonoBehaviour
     {
         int index = PlayerListings.FindIndex(x => x.PhotonPlayer == photonPlayer);
         
-        if (index != -1)
+        if (index != -1) // if player found
         {
             Debug.Log("Deleting The Other Player");
             Destroy(PlayerListings[index].gameObject);
             PlayerListings.RemoveAt(index);
         }
     }
-
 
     //public void OnClickRoomState()
     //{
@@ -150,5 +144,11 @@ public class PlayerLayoutGroup : MonoBehaviour
         //disableing the cancle button
         ChangeTextAlpha(true);
         cancelButton.interactable = false;
+    }
+
+    private void OnLeftRoom()
+    {
+        toEnableRoomMenu.SetActive(true);
+        toDisableWaitingScreen.SetActive(false);
     }
 }

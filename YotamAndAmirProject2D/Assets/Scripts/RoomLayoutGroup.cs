@@ -16,23 +16,26 @@ public class RoomLayoutGroup : MonoBehaviour {
     //    get { return _roomListingButtons; }
     //}
 
+    //called by photon when the room list updates
     public void OnReceivedRoomListUpdate()
     {
         RoomInfo[] rooms = PhotonNetwork.GetRoomList(); // getting all the current rooms
-
+        Debug.Log("Num of rooms received: " + rooms.Length);
         //RemoveOldRooms();
 
         foreach (RoomInfo room in rooms)
         {
+            Debug.Log("Received Room: " + room.Name);
             RoomReceived(room);
         }
 
         RemoveOldRooms();
     }
 
+    // checking if the room already exists
     private void RoomReceived(RoomInfo room)
     {
-        int index = RoomListingButtons.FindIndex(x => x.RoomName == room.Name); // finding room in list//find wth is thisfind method!!
+        int index = RoomListingButtons.FindIndex(x => x.RoomName == room.Name); // finding room in list//find what is this find method!!
 
         if(index == -1) // adding room to list
         {
@@ -80,9 +83,9 @@ public class RoomLayoutGroup : MonoBehaviour {
         }
     }
 
-    public void RemoveAllRooms()
+    /*public void RemoveAllRooms()
     {
-        /*List<RoomListing> removeRooms = new List<RoomListing>();
+        List<RoomListing> removeRooms = new List<RoomListing>();
 
         foreach (RoomListing roomListing in RoomListingButtons)
         {
@@ -94,6 +97,6 @@ public class RoomLayoutGroup : MonoBehaviour {
             GameObject roomListingObj = roomListing.gameObject;
             RoomListingButtons.Remove(roomListing);
             Destroy(roomListingObj);
-        }*/
-    }
+        }
+    }*/
 }
