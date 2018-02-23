@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AbilityManager : MonoBehaviour {
 
@@ -30,11 +31,18 @@ public class AbilityManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        //Transform T1 = AbilityUI.transform;
         AbilityUI = Instantiate(AbilityUI);
         //AbilityUI.SetActive(true);
         AbilityUI.transform.parent = GameObject.Find("Canvas").transform;
-        //AbilityUI.transform.position = new Vector3(213, -70, 0);
+        RectTransform rectTransform = AbilityUI.GetComponent<RectTransform>();
+        rectTransform.anchoredPosition = new Vector3(0f, 0f, 0f);
+
+        /*rectTransform.anchorMin = new Vector2(0, 1);
+        rectTransform.anchorMax = new Vector2(0, 1);*/
+
+        //StartCoroutine(ReplaceAbilityUI(rectTransform));
+        //Transform T1 = AbilityUI.transform;
+
 
         //AbilityUI.transform.position = T1.position;
         for (int i = 0; i <= 3; i++)
@@ -46,6 +54,15 @@ public class AbilityManager : MonoBehaviour {
             PowerUps[i].SetActive(false);
         }
     }
+    
+
+    /*IEnumerator ReplaceAbilityUI(RectTransform AbilityUITransform)
+    {
+        yield return new WaitForSeconds(0.4f);
+        AbilityUITransform.position = new Vector3(0, 0, 0); // placing the ability manager in the top left corner
+        yield return new WaitForSeconds(0.4f);
+        Debug.Log(AbilityUITransform.position);
+    }*/
 
     IEnumerator ResizeTimer()
     {
@@ -82,6 +99,8 @@ public class AbilityManager : MonoBehaviour {
         //gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x / 2, gameObject.transform.localScale.y / 2, gameObject.transform.localScale.z);
     }
 
+    [SerializeField]
+    private float px, py, pz;
     // Update is called once per frame
     void Update ()
     {
