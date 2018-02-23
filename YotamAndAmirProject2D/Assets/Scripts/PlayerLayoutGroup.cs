@@ -134,13 +134,12 @@ public class PlayerLayoutGroup : MonoBehaviour
 
     public void OnClickLeaveRoom()
     {
-        foreach(PlayerListing tempPL in PlayerListings)
+        foreach (PlayerListing tempPL in PlayerListings)
         {
             Destroy(tempPL.gameObject);
         }
         PlayerListings.Clear();
         PhotonNetwork.LeaveRoom();
-
         //disableing the cancle button
         ChangeTextAlpha(true);
         cancelButton.interactable = false;

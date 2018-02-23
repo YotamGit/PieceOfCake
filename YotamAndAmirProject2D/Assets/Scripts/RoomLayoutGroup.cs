@@ -19,13 +19,18 @@ public class RoomLayoutGroup : MonoBehaviour {
     //called by photon when the room list updates
     public void OnReceivedRoomListUpdate()
     {
+        if(!PhotonNetwork.insideLobby) // joining lobby if we're not in one
+        {
+            PhotonNetwork.JoinLobby(TypedLobby.Default);
+        }
+
         RoomInfo[] rooms = PhotonNetwork.GetRoomList(); // getting all the current rooms
-        Debug.Log("Num of rooms received: " + rooms.Length);
+        //Debug.Log("Is in Room: " + PhotonNetwork.inRoom + "-Is in Lobby: " + PhotonNetwork.insideLobby + " - Num of rooms received: " + rooms.Length);
         //RemoveOldRooms();
 
         foreach (RoomInfo room in rooms)
         {
-            Debug.Log("Received Room: " + room.Name);
+            //Debug.Log("Received Room: " + room.Name);
             RoomReceived(room);
         }
 

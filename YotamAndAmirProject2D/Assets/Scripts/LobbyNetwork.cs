@@ -6,8 +6,8 @@ using TMPro;
 
 public class LobbyNetwork : MonoBehaviour
 {
-    [SerializeField]
-    private TextMeshProUGUI SignInText; // username
+    //[SerializeField]
+    public TextMeshProUGUI SignInText; // username
     [SerializeField]
     private TextMeshProUGUI SignInButtonText; // always: "sign in"
     [SerializeField]
@@ -27,10 +27,14 @@ public class LobbyNetwork : MonoBehaviour
 
     // Use this for initialization
     void Start () {
-        Debug.Log("Connecting to server...");
-        PhotonNetwork.ConnectUsingSettings("game");
-        PhotonNetwork.automaticallySyncScene = true;
-        PhotonNetwork.autoJoinLobby = false;
+        if (!PhotonNetwork.connected) /*DDOL will initiate when you enter the menu scene, thus you shouldnt return to in. so just return to a diff simulare menu*/
+        {
+            Debug.Log("Connecting to server...");
+            PhotonNetwork.ConnectUsingSettings("game");
+            PhotonNetwork.automaticallySyncScene = true;
+            PhotonNetwork.autoJoinLobby = false;
+        }
+        
         //PhotonNetwork.playerName = PlayerNetwork.instence.PlayerName;
         //PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
@@ -91,13 +95,19 @@ public class LobbyNetwork : MonoBehaviour
     private void OnJoinedLobby()
     {
         Debug.Log("Joined Lobby As: " + PhotonNetwork.player.NickName);
+        if (toDisable.activeInHierarchy && !toEnable.activeInHierarchy) // checking if the toDisable is already disabled (if not, then it will be)
+        {
+            BackButton.enabled = true;
 
-        BackButton.enabled = true;
+            ChangeTextAlpha(false);
 
-        ChangeTextAlpha(false);
-
-        toDisable.SetActive(false);
-        toEnable.SetActive(true);
+            toDisable.SetActive(false);
+            toEnable.SetActive(true);
+        }
+        else
+        {
+            MainMenu.Instance.RoomLayoutGroup.OnReceivedRoomListUpdate(); // getting all the rooms
+        }
     }
 
     public void LeaveLobbyUser()

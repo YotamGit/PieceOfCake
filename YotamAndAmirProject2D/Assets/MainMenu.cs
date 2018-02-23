@@ -34,6 +34,8 @@ public class MainMenu : MonoBehaviour
     //    get { return _waitingRoomCanvas; }
     //}
 
+    public RoomLayoutGroup RoomLayoutGroup;
+
     private void Awake()
     {
         Instance = this;
@@ -45,21 +47,37 @@ public class MainMenu : MonoBehaviour
 
         // getting resolutions and placing them in the resolution dropdown:
 
-        resolutions = Screen.resolutions;
+        Resolution[] tempResolutions = Screen.resolutions;
+        resolutions = new Resolution[tempResolutions.Length];
+        //resolutions = Screen.resolutions;
 
         resolutionDropdown.ClearOptions(); // clearing current res options in dropdown
 
         List<string> options = new List<string>(); // list that holds all the option resolutions
 
+        string tempRes = "", LastTempRes = "";
+        int currentNumInDropDown = 0;
+        
         int currentResIndex = 0;
-        for (int i = 0; i < resolutions.Length; i++) // placing res in the list
+        for (int i = 0; i < tempResolutions.Length; i++) // placing res in the list
         {
-            options.Add(resolutions[i].width + " x " + resolutions[i].height);
+            tempRes = tempResolutions[i].width + " x " + tempResolutions[i].height;
 
-            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+            if(LastTempRes != tempRes) // preventing duplicets of the same resolution
             {
-                currentResIndex = i;
+                options.Add(tempRes);
+
+                //entering the resolution to the array so we could switch resolutions later
+                resolutions[currentNumInDropDown] = tempResolutions[i];
+
+                if (tempResolutions[i].width == Screen.width && tempResolutions[i].height == Screen.height)//(resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+                {
+                    currentResIndex = currentNumInDropDown;
+                }
+                currentNumInDropDown++;
             }
+
+            LastTempRes = tempResolutions[i].width + " x " + tempResolutions[i].height;
         }
 
         resolutionDropdown.AddOptions(options); // adding the resolution options to the list
