@@ -34,6 +34,8 @@ public class AbilityManager : MonoBehaviour {
         AbilityUI = Instantiate(AbilityUI);
         //AbilityUI.SetActive(true);
         AbilityUI.transform.parent = GameObject.Find("Canvas").transform;
+        //AbilityUI.transform.position = new Vector3(213, -70, 0);
+
         //AbilityUI.transform.position = T1.position;
         for (int i = 0; i <= 3; i++)
         {
