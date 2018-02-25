@@ -745,15 +745,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfd529ccc23c5874280adbf37cca0ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tutorial: {fileID: 1571235086352034, guid: 9d65b3d1157f1274db4448166ca42628, type: 2}
   loadScene: TutorialTest
   PlayerMovement: Horizontal1
   FlameLights:
   - {fileID: 1720903511329694}
   - {fileID: 1956515576437854}
   - {fileID: 1685257318264906}
-  ShowTutorial: 109
-  restartKey: 112
   jumpKey: 119
   boostDownKey: 115
   movementSpeed: 7.5
@@ -844,7 +841,6 @@ MonoBehaviour:
   - {fileID: 114243899895046000}
   - {fileID: 114427712555281450}
   - {fileID: 114783425601059302}
-  - {fileID: 114149579744901958}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -974,6 +970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerControlScripts:
   - {fileID: 114322931283578758}
+  - {fileID: 114149579744901958}
 --- !u!124 &124197690376024416
 Behaviour:
   m_ObjectHideFlags: 1

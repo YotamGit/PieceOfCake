@@ -7,8 +7,8 @@ public class Player : Photon.PunBehaviour , IPunObservable
 {
     //public Transform mask;
 
-    [SerializeField]
-    private GameObject Tutorial;
+    /*[SerializeField]
+    private GameObject Tutorial;*/
     [SerializeField]
     private string loadScene;
     public string PlayerMovement;
@@ -17,8 +17,8 @@ public class Player : Photon.PunBehaviour , IPunObservable
     [Space]
 
     [Header("Key Bindings")]
-    public KeyCode ShowTutorial;
-    public KeyCode restartKey;
+    //public KeyCode ShowTutorial;
+    //public KeyCode restartKey;
     public KeyCode jumpKey;
     public KeyCode boostDownKey;
 
@@ -65,7 +65,7 @@ public class Player : Photon.PunBehaviour , IPunObservable
     [Header("Stats")]
     public bool damaged;
 
-    private bool TutorialIsShown = false;
+    //private bool TutorialIsShown = false;
     private bool currentPlayer = false;
 
     // Use this for initialization
@@ -73,7 +73,7 @@ public class Player : Photon.PunBehaviour , IPunObservable
     {
         SoundManager.instance.musicSource.Stop();
         SoundManager.instance.RandomizeSfx(BackGroundMusic);
-        Tutorial.SetActive(false);
+        //Tutorial.SetActive(false);
         rigidBody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         facingRight = true;
@@ -92,7 +92,7 @@ public class Player : Photon.PunBehaviour , IPunObservable
         {
             return;
         }
-        if (Input.GetKeyDown(ShowTutorial))//KeyCode.R)) // returns to check point
+        /*if (Input.GetKeyDown(ShowTutorial))//KeyCode.R)) // returns to check point
         {
             if(TutorialIsShown)
             {
@@ -113,17 +113,17 @@ public class Player : Photon.PunBehaviour , IPunObservable
                 Tutorial.SetActive(true);
                 TutorialIsShown = true;
             }
-        }
+        }*/
         //else if (Input.GetKeyDown(restartKey))//KeyCode.R)) // returns to check point
         //{
         //    Time.timeScale = 1;
         //    gameObject.GetComponent<GrabHandler>().VictoryScreen.SetActive(false);
         //    ReturnToCheckPoint();
         //}
-        else if (Input.GetKeyDown(KeyCode.Escape))
+        /*else if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
-        }
+        }*/
 
         if (damaged)
         {
@@ -133,13 +133,19 @@ public class Player : Photon.PunBehaviour , IPunObservable
                 ReturnToCheckPoint();
             }
         }
-        else
+        
+    }
+
+    // FixedUpdate is better for physics
+    private void FixedUpdate()
+    {
+        if (!damaged)
         {
             // checking if the object is mid air, and moving him according to the key he pressed
             isGroundedVar = IsGrounded();
 
             float horizontal = Input.GetAxis(PlayerMovement);
-            
+
             if (Time.timeScale == 1) // will not be called if time != normal time
             {
                 HandleMovement(horizontal);
@@ -169,30 +175,36 @@ public class Player : Photon.PunBehaviour , IPunObservable
     {
         //SoundManager.instance.efxSource.Stop();
         // Checking if the player got damaged. reseting his position if he did
-        if (col.gameObject.tag == "Dangerous" && gameObject.GetComponent<AbilityManager>().Immune == false)
+        if (col.gameObject.tag == "Dangerous")//&& gameObject.GetComponent<AbilityManager>().Immune == false)
         {
-            Time.timeScale = 0f;
-            damaged = true;
-            gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            SoundManager.instance.moveEfxSource1.Stop();
-            SoundManager.instance.efxSource1.Stop();
+            if(gameObject.GetComponent<AbilityManager>().Immune == false)
+            {
+                Time.timeScale = 0f;
+                damaged = true;
+                gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+                SoundManager.instance.moveEfxSource1.Stop();
+                SoundManager.instance.efxSource1.Stop();
 
-            SoundManager.instance.moveEfxSource2.Stop();
-            SoundManager.instance.efxSource2.Stop();
+                SoundManager.instance.moveEfxSource2.Stop();
+                SoundManager.instance.efxSource2.Stop();
 
-            SoundManager.instance.musicSource.Stop();
+                SoundManager.instance.musicSource.Stop();
 
-            //SoundManager.instance.musicSource.clip = deathSound;
-            //SoundManager.instance.musicSource.volume = 0.5f;
-            //SoundManager.instance.efxSource.pitch = 1f;
-            SoundManager.instance.PlayDeathEffect(DeathMusic[0]);
-            //SoundManager.instance.musicSource.loop = false;
-            //SoundManager.instance.RandomizeSfx(DeathMusic);
+                //SoundManager.instance.musicSource.clip = deathSound;
+                //SoundManager.instance.musicSource.volume = 0.5f;
+                //SoundManager.instance.efxSource.pitch = 1f;
+                SoundManager.instance.PlayDeathEffect(DeathMusic[0]);
+                //SoundManager.instance.musicSource.loop = false;
+                //SoundManager.instance.RandomizeSfx(DeathMusic);
+            }
         }
-        else if(col.gameObject.tag == "Dangerous" && gameObject.GetComponent<AbilityManager>().Immune == true)
+        else if(col.gameObject.tag == "Dangerous" )//&& gameObject.GetComponent<AbilityManager>().Immune == true)
         {
-            gameObject.GetComponent<AbilityManager>().PowerUps[3].SetActive(false); //PowerUps[1].SetActive(false);
-            gameObject.GetComponent<AbilityManager>().Immune = false;
+            if(gameObject.GetComponent<AbilityManager>().Immune == true)
+            {
+                gameObject.GetComponent<AbilityManager>().PowerUps[3].SetActive(false); //PowerUps[1].SetActive(false);
+                gameObject.GetComponent<AbilityManager>().Immune = false;
+            }
         }
     }
 
@@ -230,10 +242,11 @@ public class Player : Photon.PunBehaviour , IPunObservable
         }
     }
 
+    //TODO: fix this...
     private void ReturnToCheckPoint()
     {
         //SceneManager.LoadScene(loadScene);
-        PhotonNetwork.LoadLevel(loadScene); // doesn't yet work
+        PhotonNetwork.LoadLevel(loadScene);
 
         //SceneManager.LoadScene(loadScene, LoadSceneMode.Single); // loading a scene
     }
@@ -305,7 +318,7 @@ public class Player : Photon.PunBehaviour , IPunObservable
 
             }
         }
-        // force fall (amazing name for the ability - By Amir Weinfeld)
+
         else if (!isGroundedVar)
         {
             if (rigidBody.velocity.y < 1.5 && rigidBody.velocity.y > 0 && rigidBody.velocity.x != 0)
@@ -362,7 +375,7 @@ public class Player : Photon.PunBehaviour , IPunObservable
     */
     private bool IsGrounded()
     {
-        if (rigidBody.velocity.y == 0) // checking that velocity in y == 0 (the player isnt moving)
+        if (rigidBody.velocity.y == 0) // checking that velocity in y == 0 (the player is not moving up/down)
         {
             foreach (Transform point in groundPoints)
             {

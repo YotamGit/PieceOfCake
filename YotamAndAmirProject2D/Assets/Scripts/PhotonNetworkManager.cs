@@ -82,6 +82,11 @@ public class PhotonNetworkManager : MonoBehaviour
                 Instructions.SetActive(false);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) // for testing only!
+        {
+            Application.Quit();
+        }
     }
 
     /*private void Update()
