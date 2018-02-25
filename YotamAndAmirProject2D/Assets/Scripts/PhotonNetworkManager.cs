@@ -17,6 +17,9 @@ public class PhotonNetworkManager : MonoBehaviour
     [SerializeField] private GameObject mainCamera2;
     [SerializeField] private Transform spawnPoint1;
     [SerializeField] private Transform spawnPoint2;
+    [SerializeField] private GameObject Instructions;
+
+    public KeyCode InstructionsKey;
 
     /*// Scripts to disable:
     [SerializeField] private MonoBehaviour[] playerControlScripts;
@@ -60,6 +63,25 @@ public class PhotonNetworkManager : MonoBehaviour
         }
 
         Debug.Log("Player created");
+    }
+
+    private void Update()
+    {
+        // setting the instructions to the opposite of its current enable state when clicking on the M button
+        if (Input.GetKeyDown(InstructionsKey))
+        {
+            Instructions.SetActive(!Instructions.activeInHierarchy);
+        }
+        // if the player clicks on one of those buttons while the instructions is open, it will close
+        if(Instructions.activeInHierarchy)
+        {
+            if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D)
+            || Input.GetKey(KeyCode.Alpha1) || Input.GetKey(KeyCode.Alpha2) || Input.GetKey(KeyCode.Alpha3)
+            || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Space))
+            {
+                Instructions.SetActive(false);
+            }
+        }
     }
 
     /*private void Update()

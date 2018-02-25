@@ -31,11 +31,15 @@ public class AbilityManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        AbilityUI = Instantiate(AbilityUI);
-        //AbilityUI.SetActive(true);
-        AbilityUI.transform.parent = GameObject.Find("Canvas").transform;
-        RectTransform rectTransform = AbilityUI.GetComponent<RectTransform>();
-        rectTransform.anchoredPosition = new Vector3(0f, 0f, 0f);
+        // if the player running the script is not the other players "clone"
+        if ((PhotonNetwork.isMasterClient && gameObject.tag == "Player1") || (!PhotonNetwork.isMasterClient && gameObject.tag == "Player2"))
+        {
+            AbilityUI = Instantiate(AbilityUI);
+            //AbilityUI.SetActive(true);
+            AbilityUI.transform.parent = GameObject.Find("Canvas").transform;
+            RectTransform rectTransform = AbilityUI.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition = new Vector3(0f, 0f, 0f);
+        }
 
         /*rectTransform.anchorMin = new Vector2(0, 1);
         rectTransform.anchorMax = new Vector2(0, 1);*/
@@ -99,8 +103,6 @@ public class AbilityManager : MonoBehaviour {
         //gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x / 2, gameObject.transform.localScale.y / 2, gameObject.transform.localScale.z);
     }
 
-    [SerializeField]
-    private float px, py, pz;
     // Update is called once per frame
     void Update ()
     {
