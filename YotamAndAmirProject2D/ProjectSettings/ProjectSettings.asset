@@ -12,8 +12,8 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: Example 2D Project
-  defaultCursor: {fileID: 0}
+  productName: Piece Of Cake
+  defaultCursor: {fileID: 2800000, guid: 0d5c0519c10496947818b2b8d0400973, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.1397059, g: 0.50162244, b: 1, a: 1}
   m_ShowUnitySplashScreen: 1

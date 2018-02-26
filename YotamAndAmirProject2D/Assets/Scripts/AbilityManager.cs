@@ -38,7 +38,8 @@ public class AbilityManager : MonoBehaviour {
             //AbilityUI.SetActive(true);
             AbilityUI.transform.parent = GameObject.Find("Canvas").transform;
             RectTransform rectTransform = AbilityUI.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = new Vector3(0f, 0f, 0f);
+            rectTransform.anchoredPosition = new Vector3(0f, 50f, 0f);
+            rectTransform.localScale = new Vector3(2.75f, 2.75f, 2.75f);
         }
 
         /*rectTransform.anchorMin = new Vector2(0, 1);
@@ -68,7 +69,7 @@ public class AbilityManager : MonoBehaviour {
         Debug.Log(AbilityUITransform.position);
     }*/
 
-    IEnumerator ResizeTimer()
+    IEnumerator ResizeTimer() // TODO: fix this pls
     {
         yield return new WaitForSeconds(2.1f);
         gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.5F);
