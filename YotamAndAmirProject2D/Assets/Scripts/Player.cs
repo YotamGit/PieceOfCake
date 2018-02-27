@@ -114,16 +114,6 @@ public class Player : Photon.PunBehaviour , IPunObservable
                 TutorialIsShown = true;
             }
         }*/
-        //else if (Input.GetKeyDown(restartKey))//KeyCode.R)) // returns to check point
-        //{
-        //    Time.timeScale = 1;
-        //    gameObject.GetComponent<GrabHandler>().VictoryScreen.SetActive(false);
-        //    ReturnToCheckPoint();
-        //}
-        /*else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }*/
 
         if (damaged)
         {
@@ -154,22 +144,7 @@ public class Player : Photon.PunBehaviour , IPunObservable
             }
         }
     }
-
-
-    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    //{
-    //    if (stream.isWriting)
-    //    {
-    //        Vector3 pos = transform.localPosition;
-    //        stream.Serialize(ref pos);
-    //    }
-    //    else
-    //    {
-    //        Vector3 pos = Vector3.zero;
-    //        stream.Serialize(ref pos);  // pos gets filled-in. must be used somewhere
-    //    }
-    //}
-
+    
     // This function is called when this object touches a different object
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -177,7 +152,9 @@ public class Player : Photon.PunBehaviour , IPunObservable
         // Checking if the player got damaged. reseting his position if he did
         if (col.gameObject.tag == "Dangerous")//&& gameObject.GetComponent<AbilityManager>().Immune == false)
         {
-            if(gameObject.GetComponent<AbilityManager>().Immune == false)
+            AbilityManager abilityManager = gameObject.GetComponent<AbilityManager>();
+
+            if (!abilityManager.Immune) // don't have dmg immune
             {
                 Time.timeScale = 0f;
                 damaged = true;
@@ -197,15 +174,20 @@ public class Player : Photon.PunBehaviour , IPunObservable
                 //SoundManager.instance.musicSource.loop = false;
                 //SoundManager.instance.RandomizeSfx(DeathMusic);
             }
+            else // has dmg immune
+            {
+                abilityManager.PowerUps[3].SetActive(false);
+                abilityManager.Immune = false;
+            }
         }
-        else if(col.gameObject.tag == "Dangerous" )//&& gameObject.GetComponent<AbilityManager>().Immune == true)
+        /*else if(col.gameObject.tag == "Dangerous" )//&& gameObject.GetComponent<AbilityManager>().Immune == true)
         {
             if(gameObject.GetComponent<AbilityManager>().Immune == true)
             {
                 gameObject.GetComponent<AbilityManager>().PowerUps[3].SetActive(false); //PowerUps[1].SetActive(false);
                 gameObject.GetComponent<AbilityManager>().Immune = false;
             }
-        }
+        }*/
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -246,7 +228,9 @@ public class Player : Photon.PunBehaviour , IPunObservable
     private void ReturnToCheckPoint()
     {
         //SceneManager.LoadScene(loadScene);
-        PhotonNetwork.LoadLevel(loadScene);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        //PhotonNetwork.LoadLevel(loadScene);
 
         //SceneManager.LoadScene(loadScene, LoadSceneMode.Single); // loading a scene
     }
@@ -394,21 +378,18 @@ public class Player : Photon.PunBehaviour , IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        //if (photonView.isMine)
-        //{
-        //    if (stream.isWriting)
-        //    {
-        //        // We own this player: send the others our data
-        //        stream.SendNext(isGroundedVar);
-        //        stream.SendNext(damaged);
-        //    }
-        //}
-        //else
-        //{
-        //    // Network player, receive data
-        //    isGroundedVar = (bool)stream.ReceiveNext();
-        //    damaged = (bool)stream.ReceiveNext();
-
-        //}
+        if (photonView.isMine)
+        {
+            if (stream.isWriting)
+            {
+                // We own this player: send the others our data
+                stream.SendNext(damaged);
+            }
+        }
+        else
+        {
+            // Network player, receive data
+            damaged = (bool)stream.ReceiveNext();
+        }
     }
 }

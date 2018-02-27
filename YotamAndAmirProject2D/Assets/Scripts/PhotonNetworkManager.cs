@@ -12,11 +12,14 @@ public class PhotonNetworkManager : MonoBehaviour
     // Obj to spawn:
     [SerializeField] private GameObject player1;
     [SerializeField] private GameObject player2;
-    [SerializeField] private GameObject lobbyCamera;
     [SerializeField] private GameObject mainCamera1;
     [SerializeField] private GameObject mainCamera2;
+
     [SerializeField] private Transform spawnPoint1;
     [SerializeField] private Transform spawnPoint2;
+
+    [SerializeField] private GameObject lobbyCamera;
+
     [SerializeField] private GameObject Instructions;
 
     public KeyCode InstructionsKey;
@@ -68,16 +71,16 @@ public class PhotonNetworkManager : MonoBehaviour
     private void Update()
     {
         // setting the instructions to the opposite of its current enable state when clicking on the M button
-        if (Input.GetKeyDown(InstructionsKey))
+        if (Input.GetKeyDown(InstructionsKey) && Time.timeScale != 0)
         {
             Instructions.SetActive(!Instructions.activeInHierarchy);
         }
-        // if the player clicks on one of those buttons while the instructions is open, it will close
+        // if the player clicks on one of those buttons (or the timescale is frozen) while the instructions is open, it will close
         if(Instructions.activeInHierarchy)
         {
-            if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D)
+            if((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D)
             || Input.GetKey(KeyCode.Alpha1) || Input.GetKey(KeyCode.Alpha2) || Input.GetKey(KeyCode.Alpha3)
-            || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Space))
+            || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Space)) || Time.timeScale == 0)
             {
                 Instructions.SetActive(false);
             }
