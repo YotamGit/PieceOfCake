@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cfd529ccc23c5874280adbf37cca0ad9
+timeCreated: 1513717287
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - moveSound: {instanceID: 0}
+  - deathSound: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

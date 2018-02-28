@@ -40,6 +40,8 @@ public class MainMenu : MonoBehaviour
     {
         Instance = this;
 
+        fullScreen.isOn = Screen.fullScreen;
+
         // setting the graphics settings according to the graphics that the player enters:
 
         qualityDropdown.value = QualitySettings.GetQualityLevel();
@@ -85,11 +87,11 @@ public class MainMenu : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
     }
     
-    private void Start()
+    /*private void Start() // probably doesnt matter if in start or awake im this case...
     {
-        fullScreen.isOn = Screen.fullScreen; // updating the fullscreen button if the player started the game with fullscreen or not
+        ; // updating the fullscreen button if the player started the game with fullscreen or not
         //SetFullscreen(Screen.fullScreen);
-    }
+    }*/
     
     public void PlayGame()
     {

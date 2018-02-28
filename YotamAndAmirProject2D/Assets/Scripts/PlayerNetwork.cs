@@ -13,7 +13,7 @@ public class PlayerNetwork : MonoBehaviour
     void Awake()
     {
         instance = this;
-        PlayerName = "User#" + Random.Range(1000, 9999); // name#3490
+        PlayerName = "Guest#" + Random.Range(1000, 9999); // Guest#3490
     }
     /*[SerializeField] private GameObject playerCameraBlue;
     [SerializeField] private GameObject playerCameraRed;
