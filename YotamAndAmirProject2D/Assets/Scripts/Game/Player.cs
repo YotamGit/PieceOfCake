@@ -77,6 +77,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
     // Use this for initialization
     void Start()
     {
+        Time.timeScale = 0f;
         SoundManager.instance.musicSource.Stop();
         SoundManager.instance.RandomizeSfx(BackGroundMusic);
         //Tutorial.SetActive(false);
@@ -91,9 +92,23 @@ public class Player : Photon.PunBehaviour, IPunObservable
         gameObject.SetActive(true);
         clickingOnDown = false;
         //otherPlayer = null;
-        /*damaged = false;
+        if (gameObject.tag == "Player1")
+        {
+            if(GameObject.FindGameObjectWithTag("Player2") != null)
+            {
+                Time.timeScale = 1f;
+            }
+        }
+        else
+        {
+            if (GameObject.FindGameObjectWithTag("Player1") != null)
+            {
+                Time.timeScale = 1f;
+            }
+        }
+            /*damaged = false;
 
-        otherPlayerDamaged = false;*/
+            otherPlayerDamaged = false;*/
     }
 
     // Update is called once per frame
@@ -128,16 +143,16 @@ public class Player : Photon.PunBehaviour, IPunObservable
         //if (!damaged)
         //{
             // checking if the object is mid air, and moving him according to the key he pressed
-            isGroundedVar = IsGrounded();
+        isGroundedVar = IsGrounded();
 
-            float horizontal = Input.GetAxis(PlayerMovement);
+        float horizontal = Input.GetAxis(PlayerMovement);
 
-            //if (Time.timeScale == 1) // will not be called if time != normal time
-            //{
-                HandleMovement(horizontal);
-                ///send location and velocity to playert
-                Flip(horizontal);
-            //}
+        if (Time.timeScale == 1) // will not be called if time != normal time
+        {
+            HandleMovement(horizontal);
+            ///send location and velocity to playert
+            Flip(horizontal);
+        }
         //}
     }
 

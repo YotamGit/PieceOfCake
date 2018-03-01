@@ -51,9 +51,9 @@ public class PhotonNetworkManager : MonoBehaviour
 
     private void Start()
     {
-        PhotonNetwork.automaticallySyncScene = true; // when the master client loads a scene other playes will too
+        //PhotonNetwork.automaticallySyncScene = true; // when the master client loads a scene other playes will too
         
-        Time.timeScale = 1;
+        //Time.timeScale = 0;
         lobbyCamera.SetActive(false);
         if (PhotonNetwork.isMasterClient)
         {
@@ -73,11 +73,11 @@ public class PhotonNetworkManager : MonoBehaviour
 
     private void Update()
     {
-        if (PhotonNetwork.room.PlayerCount == 1)
+        /*if (PhotonNetwork.room.PlayerCount == 1)
         {
             Application.Quit();
             Debug.Log("Quiting - Only One Player!");
-        }
+        }*/
         // setting the instructions to the opposite of its current enable state when clicking on the M button
         if (Input.GetKeyDown(InstructionsKey) && Time.timeScale != 0)
         {
@@ -99,6 +99,20 @@ public class PhotonNetworkManager : MonoBehaviour
             Application.Quit();
         }
     }
+
+    // called by photon when a player leaves the room
+    void OnPhotonPlayerDisconnected(PhotonPlayer player)
+    {
+        Debug.Log("Quiting - Only One Player!");
+        Application.Quit();
+    }
+
+    // called when an object is instantiated throughout photon (or something...)
+    /*void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        Debug.Log("Continuing...");
+        Time.timeScale = 1f;
+    }*/
 
     /*private void Update()
     {
