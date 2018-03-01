@@ -72,6 +72,8 @@ public class Player : Photon.PunBehaviour, IPunObservable
 
     //private GameObject otherPlayer;
 
+    //private GameObject otherPlayer;
+
     // Use this for initialization
     void Start()
     {
@@ -88,6 +90,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
         }
         gameObject.SetActive(true);
         clickingOnDown = false;
+        //otherPlayer = null;
         /*damaged = false;
 
         otherPlayerDamaged = false;*/
@@ -111,6 +114,17 @@ public class Player : Photon.PunBehaviour, IPunObservable
     // FixedUpdate is better for physics
     private void Update()
     {
+        /*if (!otherPlayer) // getting the other players gameobject after he connects
+        {
+            if(gameObject.tag == "Player1")
+            {
+                otherPlayer = GameObject.FindGameObjectWithTag("Player2");
+            }
+            else
+            {
+                otherPlayer = GameObject.FindGameObjectWithTag("Player1");
+            }
+        }*/
         //if (!damaged)
         //{
             // checking if the object is mid air, and moving him according to the key he pressed
@@ -223,7 +237,9 @@ public class Player : Photon.PunBehaviour, IPunObservable
     void ReturnToCheckPoint()
     {
         Debug.Log("loading scene again...");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex);
+        
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     /*private void ReturnToCheckPoint()

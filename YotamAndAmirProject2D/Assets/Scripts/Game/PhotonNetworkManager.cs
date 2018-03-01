@@ -51,6 +51,8 @@ public class PhotonNetworkManager : MonoBehaviour
 
     private void Start()
     {
+        PhotonNetwork.automaticallySyncScene = true; // when the master client loads a scene other playes will too
+        
         Time.timeScale = 1;
         lobbyCamera.SetActive(false);
         if (PhotonNetwork.isMasterClient)
