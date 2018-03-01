@@ -97,6 +97,8 @@ public class Player : Photon.PunBehaviour, IPunObservable
             if(GameObject.FindGameObjectWithTag("Player2") != null)
             {
                 Time.timeScale = 1f;
+                PhotonView photonView = PhotonView.Get(this);
+                photonView.RPC("DisableWaitingScreen", PhotonTargets.All);
             }
         }
         else
@@ -104,6 +106,8 @@ public class Player : Photon.PunBehaviour, IPunObservable
             if (GameObject.FindGameObjectWithTag("Player1") != null)
             {
                 Time.timeScale = 1f;
+                PhotonView photonView = PhotonView.Get(this);
+                photonView.RPC("DisableWaitingScreen", PhotonTargets.All);
             }
         }
             /*damaged = false;
@@ -111,6 +115,11 @@ public class Player : Photon.PunBehaviour, IPunObservable
             otherPlayerDamaged = false;*/
     }
 
+    [PunRPC]
+    void DisableWaitingScreen()
+    {
+        GameObject.FindGameObjectWithTag("WaitingText").SetActive(false);
+    }
     // Update is called once per frame
     /*void Update()
     {

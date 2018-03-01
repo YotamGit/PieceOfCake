@@ -178,8 +178,8 @@ QualitySettings:
     name: Optimized
     pixelLightCount: 1
     shadows: 1
-    shadowResolution: 1
-    shadowProjection: 1
+    shadowResolution: 0
+    shadowProjection: 0
     shadowCascades: 1
     shadowDistance: 25
     shadowNearPlaneOffset: 3
@@ -195,9 +195,9 @@ QualitySettings:
     realtimeReflectionProbes: 0
     billboardsFaceCameraPosition: 0
     vSyncCount: 0
-    lodBias: 2
+    lodBias: 0.5
     maximumLODLevel: 0
-    particleRaycastBudget: 64
+    particleRaycastBudget: 4
     asyncUploadTimeSlice: 2
     asyncUploadBufferSize: 4
     resolutionScalingFixedDPIFactor: 1

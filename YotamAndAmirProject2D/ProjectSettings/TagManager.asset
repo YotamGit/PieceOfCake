@@ -34,6 +34,7 @@ TagManager:
   - KeyWhite
   - Cube1
   - Friction
+  - WaitingText
   layers:
   - Default
   - TransparentFX

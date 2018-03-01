@@ -43,4 +43,5 @@ MonoBehaviour:
   - RequestForPickupTimes
   - TaggedPlayer
   - ReturnToCheckPoint
+  - DisableWaitingScreen
   DisableAutoOpenWizard: 1
