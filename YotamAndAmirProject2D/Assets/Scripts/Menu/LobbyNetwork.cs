@@ -28,7 +28,7 @@ public class LobbyNetwork : MonoBehaviour
 
     // Use this for initialization
     void Start () {
-        Application.targetFrameRate = 120; // max fps of 120
+        Application.targetFrameRate = 256; // setting the max FPS
         if (!PhotonNetwork.connected) /*DDOL will initiate when you enter the menu scene, thus you shouldnt return to in. so just return to a diff simulare menu*/
         {
             Debug.Log("Connecting to server...");
