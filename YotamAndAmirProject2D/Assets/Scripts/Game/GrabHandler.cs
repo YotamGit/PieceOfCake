@@ -13,8 +13,8 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
 
     [SerializeField]
     private bool grabbedKey, grabbedCube;
-    private string heldKeyTag;
-    private string heldCubeTag;
+    //private string heldKeyTag;
+    //private string heldCubeTag;
 
     [SerializeField]
     private float throwForce;
@@ -47,13 +47,49 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
     // Use this for initialization
     void Start()
     {
-        heldKeyTag = "";
-        heldCubeTag = "";
+        //heldKeyTag = "";
+        //heldCubeTag = "";
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (grabbedKey)
+        {
+            if(heldKey)
+            {
+                heldKey.transform.position = keyHoldPoint.position;
+            }
+            else
+            {
+                Debug.Log("Grabbing a null key!");
+            }
+        }
+        else if (grabbedCube)
+        {
+            if (heldCube)
+            {
+                heldCube.transform.position = cubeHoldPoint.position;
+            }
+            else
+            {
+                Debug.Log("Grabbing a null cube!");
+            }
+        }
+
+        if (Input.GetKeyDown(dropKey) && photonView.isMine)
+        {
+            if (grabbedKey && !Physics2D.OverlapPoint(keyHoldPoint.position, notGrabMask))
+            {
+                PhotonView photonView = PhotonView.Get(this);
+                photonView.RPC("DropObj", PhotonTargets.All, heldKey.gameObject.tag, gameObject.tag, false);
+            }
+            else if (grabbedCube && !Physics2D.OverlapPoint(cubeHoldPoint.position, notGrabMask))
+            {
+                PhotonView photonView = PhotonView.Get(this);
+                photonView.RPC("DropObj", PhotonTargets.All, heldCube.gameObject.tag, gameObject.tag, true);
+            }
+        }
         /*if (photonView.isMine)
         {
             Debug.Log("MY - " + gameObject.tag + "key: " + heldKeyTag);
@@ -118,8 +154,8 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
             heldKey.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }*/
 
-
-        if (heldKeyTag != "") // if key
+        //works:
+        /*if (heldKeyTag != "") // if key
         {
             if (heldKey == null) // getting key
             {
@@ -199,8 +235,8 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
             heldCube.enabled = true;
             heldCube = null;
         }*/
-
-        if (!photonView.isMine && PhotonNetwork.connected == true) // stopping the script so the other player won't throw the key when you click on drop
+        //works:
+        /*if (!photonView.isMine && PhotonNetwork.connected == true) // stopping the script so the other player won't throw the key when you click on drop
         {
             return;
         }
@@ -225,6 +261,48 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
                 heldCube.enabled = !heldCube.enabled;
                 heldCube = null;
             }
+        }*/
+    }
+
+    [PunRPC]
+    void GotObj(string objTag, string playerTag, bool objTybe) //objType is false => Key - objType is true => Cube
+    {
+        if(gameObject.tag == playerTag)
+        {
+            if (objTybe) // Recieving the cube
+            {
+                grabbedCube = true;
+                heldCube = GameObject.FindGameObjectWithTag(objTag).GetComponent<BoxCollider2D>();
+                heldCube.enabled = !heldCube.enabled;
+            }
+            else // Recieving the key
+            {
+                grabbedKey = true;
+                heldKey = GameObject.FindGameObjectWithTag(objTag).GetComponent<BoxCollider2D>();
+                heldKey.enabled = !heldKey.enabled;
+            }
+        }
+    }
+
+    [PunRPC]
+    void DropObj(string objTag, string playerTag, bool objTybe) //objType is false => Key - objType is true => Cube
+    {
+        if (gameObject.tag == playerTag)
+        {
+            if (objTybe) // Recieving the cube
+            {
+                grabbedCube = false;
+                heldCube.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+                heldCube.enabled = !heldCube.enabled;
+                heldCube = null;
+            }
+            else // Recieving the key
+            {
+                grabbedKey = false;
+                heldKey.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x * throwForce, 1 * throwForce);
+                heldKey.enabled = !heldKey.enabled;
+                heldKey = null;
+            }
         }
     }
 
@@ -248,7 +326,8 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
                 //stream.SendNext(grabbedKey);
                 //stream.SendNext(grabbedCube);
 
-                if (heldKey != null ) // Sending Key info
+                //WORKS:
+                /*if (heldKey != null ) // Sending Key info
                 {
                     //Debug.Log("sending: " + heldKey.gameObject.tag);
                     stream.SendNext(heldKey.gameObject.tag);
@@ -270,7 +349,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
                 {
                     //Debug.Log("sending: ");
                     stream.SendNext("");
-                }
+                }*/
 
                 //stream.SendNext(heldKey.gameObject.tag);
 
@@ -308,14 +387,14 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
             //Second Way (BEST):
             //grabbedKey = (bool)stream.ReceiveNext();
             //grabbedCube = (bool)stream.ReceiveNext();//??
-            heldKeyTag = (string)stream.ReceiveNext();
+            //heldKeyTag = (string)stream.ReceiveNext(); //WORKS:
 
-            heldCubeTag = (string)stream.ReceiveNext();
+            //heldCubeTag = (string)stream.ReceiveNext(); //WORKS:
             //Debug.Log("Recieved Tag: " + heldKeyTag);
 
-            
 
-            if (heldKeyTag != "" && heldKey == null) // && heldKey == null
+            //WORKS:
+            /*if (heldKeyTag != "" && heldKey == null) // && heldKey == null
             {
                 heldKey = GameObject.FindGameObjectsWithTag(heldKeyTag)[0].GetComponent<BoxCollider2D>();
                 //Debug.Log("New key(at recieved): " + heldKey.gameObject.tag);
@@ -332,7 +411,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
                 {
                     heldCube.enabled = false;
                 }
-            }
+            }*/
 
             /*foreach (GameObject key in keys)
             {
@@ -414,14 +493,15 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
                         SoundManager.instance.PlayEffect2(pickUpSound);
                     }
                     //heldKeyTag = col.gameObject.tag;
-                    grabbedKey = true;
+                    PhotonView photonView = PhotonView.Get(this);
+                    photonView.RPC("GotObj", PhotonTargets.All, col.gameObject.tag, gameObject.tag, false);
+                    /*grabbedKey = true;
                     col.transform.position = keyHoldPoint.position;
                     heldKey = col.gameObject.GetComponent<BoxCollider2D>();
                     //heldKey.collider.enabled = !heldKey.collider.enabled;
-                    heldKey.enabled = !heldKey.enabled;
-                    heldKeyTag = heldKey.tag;
+                    heldKey.enabled = !heldKey.enabled;*/
+                    //heldKeyTag = heldKey.tag;
                 }
-                
             }
         }
     }
@@ -453,11 +533,13 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
         {
             if (!grabbedCube && !grabbedKey)
             {
-                grabbedCube = true;
+                PhotonView photonView = PhotonView.Get(this);
+                photonView.RPC("GotObj", PhotonTargets.All, col.gameObject.tag, gameObject.tag, true);
+                /*grabbedCube = true;
                 col.transform.position = cubeHoldPoint.position;
                 heldCube = col.gameObject.GetComponent<BoxCollider2D>();
-                heldCube.enabled = !heldCube.enabled;
-                heldCubeTag = heldCube.tag;
+                heldCube.enabled = !heldCube.enabled;*/
+                //heldCubeTag = heldCube.tag;
             }
         }
     }

@@ -60,7 +60,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
     [SerializeField]
     private bool isGroundedVar;
 
-    private bool clickingOnDown;
+    private bool clickingDown;
 
     /*[Header("Stats")]
     public bool damaged;
@@ -90,7 +90,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
             currentPlayer = true;
         }
         gameObject.SetActive(true);
-        clickingOnDown = false;
+        clickingDown = false;
         //otherPlayer = null;
         if (gameObject.tag == "Player1")
         {
@@ -118,7 +118,11 @@ public class Player : Photon.PunBehaviour, IPunObservable
     [PunRPC]
     void DisableWaitingScreen()
     {
-        GameObject.FindGameObjectWithTag("WaitingText").SetActive(false);
+        GameObject waitingScreen = GameObject.FindGameObjectWithTag("WaitingText");
+        if (waitingScreen)
+        {
+            waitingScreen.SetActive(false);
+        }
     }
     // Update is called once per frame
     /*void Update()
@@ -167,7 +171,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
 
     private void FixedUpdate()
     {
-        if (clickingOnDown)
+        if (clickingDown)
         {
             rigidBody.AddForce(new Vector2(0, -jumpForce / 10));
         }
@@ -367,7 +371,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
 
             myAnimator.SetFloat("speedy", rigidBody.velocity.y);
             myAnimator.SetBool("boostDown", false);
-            clickingOnDown = false;
+            clickingDown = false;
             FlameLights[1].SetActive(false);
             if (Input.GetKey(boostDownKey))//KeyCode.S))
             {
@@ -385,7 +389,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
                         SoundManager.instance.PlayMove2(moveSound1);
                     }
                 }
-                clickingOnDown = true;
+                clickingDown = true;
                 //rigidBody.AddForce(new Vector2(0, -jumpForce / 30));
                 myAnimator.SetBool("boostDown", true);
                 FlameLights[1].SetActive(true);

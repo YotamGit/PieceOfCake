@@ -44,4 +44,6 @@ MonoBehaviour:
   - TaggedPlayer
   - ReturnToCheckPoint
   - DisableWaitingScreen
+  - GotObj
+  - DropObj
   DisableAutoOpenWizard: 1
