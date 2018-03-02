@@ -46,4 +46,5 @@ MonoBehaviour:
   - DisableWaitingScreen
   - GotObj
   - DropObj
+  - DisableCancleButton
   DisableAutoOpenWizard: 1

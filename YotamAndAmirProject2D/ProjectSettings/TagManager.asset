@@ -35,6 +35,7 @@ TagManager:
   - Cube1
   - Friction
   - WaitingText
+  - DoorWhite
   layers:
   - Default
   - TransparentFX

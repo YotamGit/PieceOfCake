@@ -36,6 +36,11 @@ public class MainMenu : MonoBehaviour
 
     public RoomLayoutGroup RoomLayoutGroup;
 
+    /*[SerializeField]
+    private Button roomCancleButton;
+    [SerializeField]
+    private GameObject LoadingGameText;*/
+
     private void Awake()
     {
         Instance = this;
@@ -95,8 +100,18 @@ public class MainMenu : MonoBehaviour
     
     public void PlayGame()
     {
+        /*PhotonView photonView = PhotonView.Get(this);
+        photonView.RPC("DisableCancleButton", PhotonTargets.All);*/
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
+    /*[PunRPC]
+    private void DisableCancleButton()
+    {
+        roomCancleButton.interactable = false;
+        LoadingGameText.SetActive(true);
+    }*/
 
     public void SetResolution(int resolutionIndex)
     {
