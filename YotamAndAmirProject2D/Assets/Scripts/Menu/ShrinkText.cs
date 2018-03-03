@@ -1,41 +1,45 @@
 ﻿using UnityEngine;
 
 public class ShrinkText : MonoBehaviour {
+    // This value + the min scale = max scale
+    // so if we set it to 1 our object will get to a max scale of: 1 + the min scale
+    [Range(0, 2)]
+    public float AddScale; // this value moves between 0 and infinate
 
-    [Range(-1, 2)]
-    public float MaxShrink; // this value moves between 1 and -1
-
+    // we're adding the scaling speed on each FixedUpdate to the current scale variable
     [Range(-1, 1)]
-    public float ShrinkSpeed, add;
+    public float ScalingSpeed; 
 
+    // the smallest the object will become
     [Range(0, 100)]
-    public float minShrink;
+    public float minScale;
 
-    private float currentShr; // this value moves between 1 and 0
+    private float ScaleParam; // this value moves between 1 and 0 at the speed of scaling speed
 
     private RectTransform objTransform;
 
     private void Start()
     {
         objTransform = GetComponent<RectTransform>();
-        currentShr = 0;
+        ScaleParam = 0;
     }
 
     private void FixedUpdate()
     {
-        currentShr += ShrinkSpeed;
+        ScaleParam += ScalingSpeed;
 
-        float smooth = Smoother(currentShr);
-        objTransform.localScale = new Vector3(smooth, smooth, objTransform.localScale.z);
+        float value = ScaleFunc(ScaleParam);
+        objTransform.localScale = new Vector3(value, value, objTransform.localScale.z);
 
-        if (currentShr + add > 1 || currentShr - add < 0)
+        if (ScaleParam  > 1 || ScaleParam  < 0)
         {
-            ShrinkSpeed = -ShrinkSpeed;
+            ScalingSpeed = -ScalingSpeed;
         }
     }
 
-    private float Smoother(float n)
+    // f(n). when we enter a certian n (from 0 to 1), it will return a smoother using the function
+    private float ScaleFunc(float n)
     {
-        return n * n * n * (n * (6 * n * MaxShrink - 15 * MaxShrink) + 10 * MaxShrink) + minShrink;
+        return n * n * n * AddScale * (n * (6 * n  - 15) + 10) + minScale;
     }
 }

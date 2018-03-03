@@ -11055,10 +11055,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ce7ccfe969c7f44b80bcdcda2867e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxShrink: 0.3
-  ShrinkSpeed: 0.025
-  add: 0
-  minShrink: 0.8
+  AddScale: 0
+  ScalingSpeed: 0
+  minScale: 0
 --- !u!114 &1403678403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11072,7 +11071,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRotate: 0.12
   RotateSpeed: 0.02
-  add: 0
 --- !u!114 &1403678404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18542,7 +18540,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRotate: 0.12
   RotateSpeed: 0.02
-  add: 0
 --- !u!114 &2131896266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18554,10 +18551,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ce7ccfe969c7f44b80bcdcda2867e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxShrink: 0.3
-  ShrinkSpeed: 0.025
-  add: 0
-  minShrink: 0.8
+  AddScale: 0.3
+  ScalingSpeed: 0.025
+  minScale: 0.8
 --- !u!1 &2142241962
 GameObject:
   m_ObjectHideFlags: 0
