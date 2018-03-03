@@ -43,9 +43,12 @@ public class LobbyNetwork : MonoBehaviour
 
     private void OnConnectedToMaster()
     {
-        disableConnectingScreen.SetActive(false);
-        enableMainMenu.SetActive(true);
-        Debug.Log("Joined Server");
+        if (disableConnectingScreen.activeInHierarchy)
+        {
+            disableConnectingScreen.SetActive(false);
+            enableMainMenu.SetActive(true);
+            Debug.Log("Joined Server");
+        }
     }
 
     private bool IsValidUser(string user)
