@@ -16,7 +16,7 @@ public class LobbyNetwork : MonoBehaviour
     [SerializeField]
     private Button SignInButton;
     [SerializeField]
-    private Button BackButton;
+    private GameObject BackButton;
     [SerializeField]
     private GameObject disableSighIn, enableSingleOrMulti;
     //when you go back to the main menu sign out. if this issue isnt fixed the player can log in infinite times (20 to be exact or less)
@@ -25,6 +25,10 @@ public class LobbyNetwork : MonoBehaviour
     {
         get { return _sighnInText; }
     }*/
+    [SerializeField]
+    private GameObject errorMessage;
+    [SerializeField]
+    private TextMeshProUGUI errorText;
 
     // Use this for initialization
     void Start () {
@@ -51,9 +55,10 @@ public class LobbyNetwork : MonoBehaviour
         }
     }
 
-    private bool IsValidUser(string user)
+    //username: min 3 letters. doesn't contain cerian charecters
+    private bool IsValidUsername(string user)
     {
-        if (user != "" && !user.Contains(" ") && user.Length > 1)
+        if (user.Length > 3 && !user.Contains(" ") && !user.Contains("*") && !user.Contains("."))
         {
             return true;
         }
@@ -63,19 +68,37 @@ public class LobbyNetwork : MonoBehaviour
     public void JoinLobbyAs()
     {
         string playerName = SignInText.text;
-        if (IsValidUser(playerName))
+
+        if (playerName.Length == 1) // this part is only for debugging
+        {
+            PhotonNetwork.playerName = PlayerNetwork.instance.PlayerName;
+        }
+        else if(IsValidUsername(playerName))
         {
             PhotonNetwork.playerName = playerName;
         }
         else
         {
-            PhotonNetwork.playerName = PlayerNetwork.instance.PlayerName;
+            StartCoroutine(DisplayError("Invalid Username\nPlease Try again"));
+            return;
+            //PhotonNetwork.playerName = PlayerNetwork.instance.PlayerName;
         }
+
         PhotonNetwork.JoinLobby(TypedLobby.Default);
 
         ChangeTextAlpha(true);
 
-        BackButton.enabled = false;
+        BackButton.SetActive(false);
+    }
+
+    // changing the error message and displaying it to the user
+    private IEnumerator DisplayError(string error)
+    {
+        errorText.text = error;
+        errorMessage.SetActive(true);
+        
+        yield return new WaitForSeconds(2f); // waiting 2 seconds
+        errorMessage.SetActive(false);
     }
 
     public void ChangeTextAlpha(bool change) // true: pale, false: normal
@@ -104,7 +127,7 @@ public class LobbyNetwork : MonoBehaviour
         Debug.Log("Joined Lobby As: " + PhotonNetwork.player.NickName);
         if (disableSighIn.activeInHierarchy && !enableSingleOrMulti.activeInHierarchy) // checking if the toDisable is already disabled (if not, then it will be)
         {
-            BackButton.enabled = true;
+            BackButton.SetActive(true);
 
             ChangeTextAlpha(false);
 

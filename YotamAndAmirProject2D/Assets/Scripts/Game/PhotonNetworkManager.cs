@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PhotonNetworkManager : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class PhotonNetworkManager : MonoBehaviour
 
     [SerializeField] private GameObject Menu;
     [SerializeField] private GameObject[] ObjectsInMenu;
+
+    //private bool playerLeftRoom;
 
     public KeyCode MenuKey;
     private GameObject waitingScreen;
@@ -53,6 +56,7 @@ public class PhotonNetworkManager : MonoBehaviour
 
     private void Start()
     {
+        //playerLeftRoom = false;
         //PhotonNetwork.automaticallySyncScene = true; // when the master client loads a scene other playes will too
         waitingScreen = GameObject.FindGameObjectWithTag("WaitingText");
         waitingScreen.SetActive(true);
@@ -120,9 +124,29 @@ public class PhotonNetworkManager : MonoBehaviour
     {
         Time.timeScale = 0;
         waitingScreen.SetActive(true);
+        //playerLeftRoom = true;
         //Debug.Log("Quiting - Only One Player!");
         //Application.Quit();
     }
+
+    /*void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        if (playerLeftRoom)
+        {
+            Debug.Log("Restarting now!");
+            PhotonView photonView = PhotonView.Get(this);
+            photonView.RPC("ReturnToCheckPoint", PhotonTargets.All);
+        }
+    }
+
+    [PunRPC]
+    void ReturnToCheckPoint()
+    {
+        Debug.Log("loading scene again...");
+        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex);
+
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }*/
 
     void OnMasterClientSwitched(PhotonPlayer newMasterClient)
     {

@@ -36,6 +36,8 @@ TagManager:
   - Friction
   - WaitingText
   - DoorWhite
+  - GameLogic
+  - DDOL
   layers:
   - Default
   - TransparentFX

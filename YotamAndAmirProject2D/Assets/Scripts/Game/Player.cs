@@ -119,6 +119,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
     void DisableWaitingScreen()
     {
         GameObject waitingScreen = GameObject.FindGameObjectWithTag("WaitingText");
+
         if (waitingScreen)
         {
             waitingScreen.SetActive(false);
