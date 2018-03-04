@@ -147,7 +147,10 @@ public class PlayerLayoutGroup : MonoBehaviour
 
     private void OnLeftRoom()
     {
-        toEnableRoomMenu.SetActive(true);
-        toDisableWaitingScreen.SetActive(false);
+        if (toDisableWaitingScreen.activeInHierarchy)
+        {
+            toEnableRoomMenu.SetActive(true);
+            toDisableWaitingScreen.SetActive(false);
+        }
     }
 }

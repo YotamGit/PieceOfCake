@@ -43,6 +43,8 @@ public class MainMenu : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1;
+
         Instance = this;
 
         fullScreen.isOn = Screen.fullScreen;
@@ -55,7 +57,6 @@ public class MainMenu : MonoBehaviour
         // getting resolutions and placing them in the resolution dropdown:
 
         Resolution[] tempResolutions = Screen.resolutions;
-        Debug.Log(tempResolutions);
         resolutions = new Resolution[tempResolutions.Length];
         //resolutions = Screen.resolutions;
 
@@ -110,8 +111,14 @@ public class MainMenu : MonoBehaviour
     {
         roomCancleButton.interactable = false;
         LoadingGameText.SetActive(true);
-
-        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1);
+        if(SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex - 1);
+        }
+        else
+        {
+            PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     public void SetResolution(int resolutionIndex)

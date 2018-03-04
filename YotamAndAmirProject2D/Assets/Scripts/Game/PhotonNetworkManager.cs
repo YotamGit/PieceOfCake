@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PhotonNetworkManager : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class PhotonNetworkManager : MonoBehaviour
     [SerializeField] private GameObject[] ObjectsInMenu;
 
     public KeyCode MenuKey;
-
+    private GameObject waitingScreen;
     /*// Scripts to disable:
     [SerializeField] private MonoBehaviour[] playerControlScripts;
 
@@ -53,7 +54,9 @@ public class PhotonNetworkManager : MonoBehaviour
     private void Start()
     {
         //PhotonNetwork.automaticallySyncScene = true; // when the master client loads a scene other playes will too
-        
+        waitingScreen = GameObject.FindGameObjectWithTag("WaitingText");
+        waitingScreen.SetActive(true);
+
         //Time.timeScale = 0;
         lobbyCamera.SetActive(false);
         if (PhotonNetwork.isMasterClient)
@@ -106,17 +109,26 @@ public class PhotonNetworkManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F1)) // for testing only!
+        /*if (Input.GetKeyDown(KeyCode.F1)) // for testing only!
         {
             Application.Quit();
-        }
+        }*/
     }
 
     // called by photon when a player leaves the room
     void OnPhotonPlayerDisconnected(PhotonPlayer player)
     {
-        Debug.Log("Quiting - Only One Player!");
-        Application.Quit();
+        Time.timeScale = 0;
+        waitingScreen.SetActive(true);
+        //Debug.Log("Quiting - Only One Player!");
+        //Application.Quit();
+    }
+
+    void OnMasterClientSwitched(PhotonPlayer newMasterClient)
+    {
+        TextMeshProUGUI text = waitingScreen.GetComponentInChildren<TextMeshProUGUI>();
+        text.text = "Player One Dissconnected";
+        PhotonNetwork.LeaveRoom();
     }
 
     // called when an object is instantiated throughout photon (or something...)
