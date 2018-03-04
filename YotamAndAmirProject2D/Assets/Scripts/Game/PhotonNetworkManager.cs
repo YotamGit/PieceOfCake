@@ -20,9 +20,10 @@ public class PhotonNetworkManager : MonoBehaviour
 
     [SerializeField] private GameObject lobbyCamera;
 
-    [SerializeField] private GameObject Instructions;
+    [SerializeField] private GameObject Menu;
+    [SerializeField] private GameObject[] ObjectsInMenu;
 
-    public KeyCode InstructionsKey;
+    public KeyCode MenuKey;
 
     /*// Scripts to disable:
     [SerializeField] private MonoBehaviour[] playerControlScripts;
@@ -79,22 +80,33 @@ public class PhotonNetworkManager : MonoBehaviour
             Debug.Log("Quiting - Only One Player!");
         }*/
         // setting the instructions to the opposite of its current enable state when clicking on the M button
-        if (Input.GetKeyDown(InstructionsKey) && Time.timeScale != 0)
+        if (Input.GetKeyDown(MenuKey) && Time.timeScale != 0)
         {
-            Instructions.SetActive(!Instructions.activeInHierarchy);
+            Menu.SetActive(!Menu.activeInHierarchy);
+            
+            foreach (GameObject obj in ObjectsInMenu)
+            {
+                obj.SetActive(false);
+            }
+            ObjectsInMenu[0].SetActive(true);
         }
         // if the player clicks on one of those buttons (or the timescale is frozen) while the instructions is open, it will close
-        if(Instructions.activeInHierarchy)
+        if(Menu.activeInHierarchy)
         {
             if((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D)
             || Input.GetKey(KeyCode.Alpha1) || Input.GetKey(KeyCode.Alpha2) || Input.GetKey(KeyCode.Alpha3)
             || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Space)) || Time.timeScale == 0)
             {
-                Instructions.SetActive(false);
+                Menu.SetActive(false);
+                foreach (GameObject obj in ObjectsInMenu)
+                {
+                    obj.SetActive(false);
+                }
+                ObjectsInMenu[0].SetActive(true);
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) // for testing only!
+        if (Input.GetKeyDown(KeyCode.F1)) // for testing only!
         {
             Application.Quit();
         }

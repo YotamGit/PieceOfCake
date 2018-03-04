@@ -47,4 +47,5 @@ MonoBehaviour:
   - GotObj
   - DropObj
   - DisableCancleButton
+  - DisableCancleButtonAndLoadLevel
   DisableAutoOpenWizard: 1

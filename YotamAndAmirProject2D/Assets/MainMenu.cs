@@ -55,6 +55,7 @@ public class MainMenu : MonoBehaviour
         // getting resolutions and placing them in the resolution dropdown:
 
         Resolution[] tempResolutions = Screen.resolutions;
+        Debug.Log(tempResolutions);
         resolutions = new Resolution[tempResolutions.Length];
         //resolutions = Screen.resolutions;
 
@@ -101,16 +102,16 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("DisableCancleButton", PhotonTargets.All);
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        photonView.RPC("DisableCancleButtonAndLoadLevel", PhotonTargets.All);
     }
 
     [PunRPC]
-    private void DisableCancleButton()
+    private void DisableCancleButtonAndLoadLevel()
     {
         roomCancleButton.interactable = false;
         LoadingGameText.SetActive(true);
+
+        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void SetResolution(int resolutionIndex)
