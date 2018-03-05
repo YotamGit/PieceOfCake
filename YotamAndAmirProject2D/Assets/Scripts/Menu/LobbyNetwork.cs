@@ -55,11 +55,19 @@ public class LobbyNetwork : MonoBehaviour
         }
     }
 
-    //username: min 3 letters. doesn't contain cerian charecters
+    //username: min 3 letters. contains only letters and numbers
     private bool IsValidUsername(string user)
     {
-        if (user.Length > 3 && !user.Contains(" ") && !user.Contains("*") && !user.Contains("."))
+        if (user.Length >= 4 && user.Length <= 17) //there is a EOS at the end of the string
         {
+            user = user.ToLower();
+            for (int i = 0; i < user.Length - 1; i++)
+            {
+                if (!((user[i] > 96 && user[i] < 123) || (user[i] > 47 && user[i] < 58))) 
+                {
+                    return false;
+                }
+            }
             return true;
         }
         return false;
