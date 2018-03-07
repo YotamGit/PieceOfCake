@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1755,6 +1755,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c0dee4c8486c84e95e7f020b84173c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableOnReturn: {fileID: 2105890402}
+  enableOnReturn: {fileID: 237708802}
 --- !u!4 &99753058
 Transform:
   m_ObjectHideFlags: 0
@@ -3181,8 +3183,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9999985, y: 0.9999985, z: 0.9999985}
   m_Children:
-  - {fileID: 1432761477}
   - {fileID: 1403678401}
+  - {fileID: 1432761477}
   - {fileID: 2035716638}
   - {fileID: 1530098697}
   - {fileID: 17685598}
@@ -17205,7 +17207,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 237708803}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -17223,8 +17225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ce7ccfe969c7f44b80bcdcda2867e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AddScale: 0.3
-  ScalingSpeed: 0.025
+  HalfOfAddScale: 0.15
+  ScalingSpeed: 0.02
   minScale: 0.8
 --- !u!114 &1403678403
 MonoBehaviour:
@@ -17237,8 +17239,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236f142699a2fd042b26f12b60a0e8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxRotate: 0.12
-  RotateSpeed: 0.02
+  HalfOfMaxRotate: 0.1
+  RotateSpeed: 0.015
 --- !u!114 &1403678404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17823,7 +17825,7 @@ RectTransform:
   - {fileID: 1805877965}
   - {fileID: 2075106771}
   m_Father: {fileID: 237708803}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -28373,8 +28375,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236f142699a2fd042b26f12b60a0e8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxRotate: 0.12
-  RotateSpeed: 0.02
+  HalfOfMaxRotate: 0.1
+  RotateSpeed: 0.015
 --- !u!114 &2131896266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28386,8 +28388,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ce7ccfe969c7f44b80bcdcda2867e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AddScale: 0.3
-  ScalingSpeed: 0.025
+  HalfOfAddScale: 0.15
+  ScalingSpeed: 0.02
   minScale: 0.8
 --- !u!1 &2133998574
 GameObject:

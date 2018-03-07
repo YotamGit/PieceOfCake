@@ -8,8 +8,7 @@ public class PlayerNetwork : MonoBehaviour
 
     [HideInInspector]
     public string PlayerName;// { get; private set; }
-
-
+    
     void Awake()
     {
         instance = this;

@@ -62,8 +62,11 @@ public class HoldButton : MonoBehaviour {
 
     public void LoadSceneAndLeaveRoom()
     {
-        PhotonNetwork.LeaveRoom();
-        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1);
+        if (PhotonNetwork.inRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     public void OnPressed()
