@@ -49,4 +49,6 @@ MonoBehaviour:
   - DisableCancleButton
   - DisableCancleButtonAndLoadLevel
   - LoadMainMenu
+  - LoadLevel
+  - DoneDisableing
   DisableAutoOpenWizard: 1

@@ -100,25 +100,30 @@ public class MainMenu : MonoBehaviour
         //SetFullscreen(Screen.fullScreen);
     }*/
     
+    // This func disables the cancle button, and after the master clients sees that the other cancled too it loads the scene
     public void PlayGame()
     {
         PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("DisableCancleButtonAndLoadLevel", PhotonTargets.All);
+        photonView.RPC("DisableCancleButton", PhotonTargets.All);
     }
 
     [PunRPC]
-    private void DisableCancleButtonAndLoadLevel()
+    private void DisableCancleButton()
     {
         roomCancleButton.interactable = false;
         LoadingGameText.SetActive(true);
-        if(SceneManager.GetActiveScene().buildIndex == 2)
+
+        if(!PhotonNetwork.isMasterClient) // telling the master client that he can load the scene
         {
-            PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex - 1);
+            PhotonView photonView = PhotonView.Get(this);
+            photonView.RPC("DoneDisableing", PhotonTargets.MasterClient);
         }
-        else
-        {
-            PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1);
-        }
+    }
+
+    [PunRPC]
+    private void DoneDisableing()
+    {
+        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1); // loading the Game scene
     }
 
     public void SetResolution(int resolutionIndex)
