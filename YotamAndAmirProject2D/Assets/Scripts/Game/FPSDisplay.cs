@@ -18,8 +18,6 @@ public class FPSDisplay : Photon.MonoBehaviour
         Toggle = false;
 
         TextObj.SetActive(false);
-
-        StartCoroutine(DisplayStats());
     }
 
     private void Update()
@@ -33,6 +31,8 @@ public class FPSDisplay : Photon.MonoBehaviour
         if (Toggle && !TextObj.activeInHierarchy)
         {
             TextObj.SetActive(true);
+
+            StartCoroutine(DisplayStats()); // this will start when the toggled and stop when not toggled
         }
         else if(!Toggle && TextObj.activeInHierarchy)
         {
@@ -42,15 +42,12 @@ public class FPSDisplay : Photon.MonoBehaviour
 
     private IEnumerator DisplayStats()
     {
-        while (true)
+        while (Toggle)
         {
-            if (Toggle)
-            {
-                float msec = deltaTime * 1000.0f;
-                float fps = 1.0f / deltaTime;
+            float msec = deltaTime * 1000.0f;
+            float fps = 1.0f / deltaTime;
 
-                Text.text = "FPS(" + ((int)fps).ToString() + ") - Ping(" + PhotonNetwork.GetPing() + ")";
-            }
+            Text.text = "FPS(" + ((int)fps).ToString() + ") - Ping(" + PhotonNetwork.GetPing() + ")";
             yield return new WaitForSeconds(0.5f);
         }
     }
