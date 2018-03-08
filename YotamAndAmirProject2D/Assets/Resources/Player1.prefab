@@ -745,7 +745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfd529ccc23c5874280adbf37cca0ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadScene: TutorialTest
   PlayerMovement: Horizontal1
   FlameLights:
   - {fileID: 1720903511329694}
@@ -784,7 +783,6 @@ MonoBehaviour:
   moveSound2: {fileID: 8300000, guid: cc6ade3340be3d74889403aab78bca36, type: 3}
   bounceSound: {fileID: 8300000, guid: 65425ccbc5a68c14b82893020a20bb47, type: 3}
   isGroundedVar: 0
-  damaged: 0
 --- !u!114 &114243899895046000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -884,8 +882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0cee45ac46ca3c479fe0258113a9c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VictoryScreen: {fileID: 1428032748538090, guid: 293e6c085c54ede48b9a39ab5a9b6658,
-    type: 2}
+  VictoryScreen: {fileID: 0}
   notGrabMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -896,10 +893,6 @@ MonoBehaviour:
   throwForce: 7
   keyHoldPoint: {fileID: 4133568843708536}
   cubeHoldPoint: {fileID: 4657317673738632}
-  otherPlayerKeyPoint: {fileID: 4476867851684252, guid: 6ced179575a35734e86945252b02814d,
-    type: 2}
-  otherPlayerCubePoint: {fileID: 4496797542935024, guid: 6ced179575a35734e86945252b02814d,
-    type: 2}
   heldKey: {fileID: 0}
   heldCube: {fileID: 0}
   pickUpSound: {fileID: 8300000, guid: 06b83d6e023de55488eed278509ba16b, type: 3}

@@ -38,6 +38,7 @@ TagManager:
   - DoorWhite
   - GameLogic
   - DDOL
+  - WinningText
   layers:
   - Default
   - TransparentFX

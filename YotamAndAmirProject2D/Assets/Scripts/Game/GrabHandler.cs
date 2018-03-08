@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GrabHandler : Photon.MonoBehaviour , IPunObservable
 {
-    public GameObject VictoryScreen;
+    private GameObject VictoryScreen;
     public LayerMask notGrabMask; // so the player will not drop the key/cube inside a collider
     [Space]
     [Header("Key Bindings")]
@@ -50,6 +50,12 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
     // Use this for initialization
     void Start()
     {
+        VictoryScreen = GameObject.FindGameObjectWithTag("WinningText");
+        if (VictoryScreen != null) // preventing sccidents that occure when both the grabHandlers try to get the screen
+        {
+            VictoryScreen.SetActive(false);
+            Debug.Log("victory at start - " + gameObject.tag);
+        }
         //otherPlayerKeyPoint = null;
         //otherPlayerCubePoint = null;
         //heldKeyTag = "";
@@ -556,18 +562,8 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
     {
         if(col.gameObject.tag == "Victory")
         {
-            VictoryScreen.SetActive(true);
-            Time.timeScale = 0.0f;
-            gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            SoundManager.instance.moveEfxSource1.Stop();
-            SoundManager.instance.efxSource1.Stop();
-            SoundManager.instance.moveEfxSource2.Stop();
-            SoundManager.instance.efxSource2.Stop();
-            SoundManager.instance.musicSource.Stop();
-
-            SoundManager.instance.musicSource.loop = false;
-            SoundManager.instance.musicSource.clip = VictoryTheme;
-            SoundManager.instance.musicSource.Play();
+            PhotonView photonView = PhotonView.Get(this);
+            photonView.RPC("Victory", PhotonTargets.All);
         }
         else if (col.gameObject.tag.Substring(0, 3) == "Key")
         {
@@ -599,6 +595,30 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
                 //}
             }
         }
+    }
+
+    [PunRPC]
+    void Victory()
+    {
+        if (VictoryScreen != null) // telling the other player to enable the victoryScreen if we dont have it
+        {
+            VictoryScreen.SetActive(true);
+        }
+        else
+        {
+            otherPlayerGrabHandler.VictoryScreen.SetActive(true);
+        }
+        Time.timeScale = 0.0f;
+        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        SoundManager.instance.moveEfxSource1.Stop();
+        SoundManager.instance.efxSource1.Stop();
+        SoundManager.instance.moveEfxSource2.Stop();
+        SoundManager.instance.efxSource2.Stop();
+        SoundManager.instance.musicSource.Stop();
+
+        SoundManager.instance.musicSource.loop = false;
+        SoundManager.instance.musicSource.clip = VictoryTheme;
+        SoundManager.instance.musicSource.Play();
     }
 
     void OnCollisionStay2D(Collision2D col)
