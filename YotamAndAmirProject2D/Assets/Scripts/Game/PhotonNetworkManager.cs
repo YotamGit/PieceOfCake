@@ -25,6 +25,9 @@ public class PhotonNetworkManager : MonoBehaviour
     [SerializeField] private GameObject Menu;
     [SerializeField] private GameObject[] ObjectsInMenu;
 
+    [HideInInspector]
+    public bool wonGame = false;
+
     //private bool playerLeftRoom;
 
     public KeyCode MenuKey;
@@ -122,8 +125,11 @@ public class PhotonNetworkManager : MonoBehaviour
     // called by photon when a player leaves the room
     void OnPhotonPlayerDisconnected(PhotonPlayer player)
     {
-        Time.timeScale = 0;
-        waitingScreen.SetActive(true);
+        if (!wonGame)
+        {
+            Time.timeScale = 0;
+            waitingScreen.SetActive(true);
+        }
         //playerLeftRoom = true;
         //Debug.Log("Quiting - Only One Player!");
         //Application.Quit();

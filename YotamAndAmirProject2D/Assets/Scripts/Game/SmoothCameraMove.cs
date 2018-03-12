@@ -22,11 +22,14 @@ public class SmoothCameraMove : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate (){
-        Vector3 desiredPos = target.position + offset;
-        Vector3 calmpedPos = new Vector3(Mathf.Clamp(transform.position.x, xMin, xMax), Mathf.Clamp(transform.position.y, yMin, yMax), transform.position.z);
-        Vector3 smoothedPos = Vector3.Lerp(calmpedPos, desiredPos, smoothSpeed);
-        transform.position = smoothedPos;
-
+        if (target)
+        {
+            Vector3 desiredPos = target.position + offset;
+            Vector3 calmpedPos = new Vector3(Mathf.Clamp(transform.position.x, xMin, xMax), Mathf.Clamp(transform.position.y, yMin, yMax), transform.position.z);
+            Vector3 smoothedPos = Vector3.Lerp(calmpedPos, desiredPos, smoothSpeed);
+            transform.position = smoothedPos;
+        }
+        
         //target.LookAt(target); // ONLY FOR 3D!
     }
 }

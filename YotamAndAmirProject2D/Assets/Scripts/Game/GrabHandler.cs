@@ -600,6 +600,12 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
     [PunRPC]
     void Victory()
     {
+        GameObject.FindGameObjectWithTag("GameLogic").GetComponent<PhotonNetworkManager>().wonGame = true;
+        
+        if (PhotonNetwork.inRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
         if (VictoryScreen != null) // telling the other player to enable the victoryScreen if we dont have it
         {
             VictoryScreen.SetActive(true);
@@ -608,7 +614,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
         {
             otherPlayerGrabHandler.VictoryScreen.SetActive(true);
         }
-        Time.timeScale = 0.0f;
+        //Time.timeScale = 0.0f;
         gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         SoundManager.instance.moveEfxSource1.Stop();
         SoundManager.instance.efxSource1.Stop();
@@ -619,6 +625,9 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
         SoundManager.instance.musicSource.loop = false;
         SoundManager.instance.musicSource.clip = VictoryTheme;
         SoundManager.instance.musicSource.Play();
+        
+        Time.timeScale = 1;
+        Destroy(gameObject);
     }
 
     void OnCollisionStay2D(Collision2D col)
