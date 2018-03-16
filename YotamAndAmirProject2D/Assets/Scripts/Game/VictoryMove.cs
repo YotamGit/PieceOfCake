@@ -14,6 +14,14 @@ public class VictoryMove : MonoBehaviour {
     [SerializeField]
     private float smoothness, distance; // distance is to check if the victory is close enough to the next pos
 
+    private void Start()
+    {
+        if (!PhotonNetwork.isMasterClient)
+        {
+            PhotonView photonView = PhotonView.Get(this);
+            photonView.RPC("GetCurrVictoryPos", PhotonTargets.MasterClient);
+        }
+    }
 
     // Update is called once per frame
     void Update () {
@@ -38,6 +46,25 @@ public class VictoryMove : MonoBehaviour {
                 curPosIndex++;
                 goToNextPos = true; // telling the obj to lerp to the other pos
             }
+        }
+    }
+
+    // telling the other player what is the position of the cake currently
+    [PunRPC]
+    private void GetCurrVictoryPos()
+    {
+        PhotonView photonView = PhotonView.Get(this);
+        photonView.RPC("GetCurrVictoryPos", PhotonTargets.Others, curPosIndex);
+    }
+
+    // setting the current victory index and pos with the index we got (using the list)
+    [PunRPC]
+    private void GetCurrVictoryPos(int recPosIndex) 
+    {
+        if (!PhotonNetwork.isMasterClient)
+        {
+            curPosIndex = recPosIndex;
+            transform.position = positions[curPosIndex];
         }
     }
 }

@@ -52,4 +52,5 @@ MonoBehaviour:
   - LoadLevel
   - DoneDisableing
   - Victory
+  - GetCurrVictoryPos
   DisableAutoOpenWizard: 1
