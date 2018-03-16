@@ -54,7 +54,6 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
         if (VictoryScreen != null) // preventing sccidents that occure when both the grabHandlers try to get the screen
         {
             VictoryScreen.SetActive(false);
-            Debug.Log("victory at start - " + gameObject.tag);
         }
         //otherPlayerKeyPoint = null;
         //otherPlayerCubePoint = null;
