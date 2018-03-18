@@ -39,7 +39,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private Button roomCancleButton;
     [SerializeField]
-    private GameObject LoadingGameText;
+    private GameObject LoadingGameText, errorMessage;
+    [SerializeField]
+    private TextMeshProUGUI errorText;
 
     private void Awake()
     {
@@ -93,12 +95,14 @@ public class MainMenu : MonoBehaviour
         resolutionDropdown.value = currentResIndex;
         resolutionDropdown.RefreshShownValue();
     }
-    
-    /*private void Start() // probably doesnt matter if in start or awake im this case...
+
+    public IEnumerator DisplayError(string error)
     {
-        ; // updating the fullscreen button if the player started the game with fullscreen or not
-        //SetFullscreen(Screen.fullScreen);
-    }*/
+        errorMessage.SetActive(true);
+        errorText.text = error;
+        yield return new WaitForSeconds(2f);
+        errorMessage.SetActive(false);
+    }
     
     // This func disables the cancle button, and after the master clients sees that the other cancled too it loads the scene
     public void PlayGame()

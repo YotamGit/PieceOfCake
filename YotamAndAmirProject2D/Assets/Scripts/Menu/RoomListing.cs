@@ -28,7 +28,7 @@ public class RoomListing : MonoBehaviour {
 
         //Debug.Log("Room Name: " + RoomNameText.text);
         Button button = GetComponent<Button>();
-        button.onClick.AddListener(() => lobbyCanvas.OnClickJoinRoom(RoomNameText.text));
+        button.onClick.AddListener(() => lobbyCanvas.OnClickJoinRoom(RoomNameText.text, gameObject));
     }
 
     private void OnDestroy()

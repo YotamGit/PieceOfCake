@@ -44,7 +44,7 @@ public class RoomLayoutGroup : MonoBehaviour {
 
         if(index == -1) // adding room to list
         {
-            if(room.IsVisible && room.PlayerCount < room.MaxPlayers) //room.IsVisible &&
+            if(room.IsVisible && room.PlayerCount < room.MaxPlayers)
             {
                 GameObject roomListingObj = Instantiate(RoomListingPrefab);
                 roomListingObj.transform.SetParent(transform, false);

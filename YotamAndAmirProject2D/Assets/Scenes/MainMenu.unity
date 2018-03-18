@@ -2215,7 +2215,7 @@ RectTransform:
   m_Children:
   - {fileID: 287602616}
   m_Father: {fileID: 1651846549}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2239,7 +2239,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -7225,28 +7225,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 508238683}
-        m_MethodName: DisableSelf
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 81510249}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &508238681
@@ -7295,9 +7273,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toEnable: {fileID: 1496339364}
   toDisable: {fileID: 91677287}
+  backButton: {fileID: 81510249}
   RoomName: {fileID: 906756177}
   changeAlpha: {fileID: 1202897984}
   cancelText: {fileID: 1294872024}
+  mainMenuScript: {fileID: 2054273154}
 --- !u!1 &520022313
 GameObject:
   m_ObjectHideFlags: 0
@@ -14436,6 +14416,7 @@ MonoBehaviour:
   RoomLayoutGroup: {fileID: 1044173078}
   toEnable: {fileID: 1496339364}
   toDisable: {fileID: 1087023347}
+  mainMenuScript: {fileID: 2054273154}
 --- !u!1 &1096022211
 GameObject:
   m_ObjectHideFlags: 0
@@ -20578,8 +20559,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 128673405}
   - {fileID: 2129475943}
+  - {fileID: 128673405}
   m_Father: {fileID: 2054273153}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -25346,8 +25327,7 @@ MonoBehaviour:
   BackButton: {fileID: 2074368755}
   disableSighIn: {fileID: 126583498}
   enableSingleOrMulti: {fileID: 237708802}
-  errorMessage: {fileID: 1651846548}
-  errorText: {fileID: 2129475941}
+  mainMenuScript: {fileID: 2054273154}
 --- !u!4 &1988567756
 Transform:
   m_ObjectHideFlags: 0
@@ -26201,6 +26181,8 @@ MonoBehaviour:
   RoomLayoutGroup: {fileID: 1044173078}
   roomCancleButton: {fileID: 762552718}
   LoadingGameText: {fileID: 1815585336}
+  errorMessage: {fileID: 1651846548}
+  errorText: {fileID: 2129475941}
 --- !u!114 &2054273155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28648,7 +28630,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1651846549}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

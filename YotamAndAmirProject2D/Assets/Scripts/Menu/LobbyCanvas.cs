@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LobbyCanvas : MonoBehaviour {
 
@@ -15,7 +16,10 @@ public class LobbyCanvas : MonoBehaviour {
     [SerializeField]
     private GameObject toEnable, toDisable;
 
-    public void OnClickJoinRoom(string roomName)
+    [SerializeField]
+    private MainMenu mainMenuScript;
+
+    public void OnClickJoinRoom(string roomName, GameObject sender)
     {
         RoomInfo[] rooms = PhotonNetwork.GetRoomList();
         RoomInfo thisRoom = null;
@@ -40,7 +44,8 @@ public class LobbyCanvas : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Joined Room Failed!");
+            Destroy(sender);
+            StartCoroutine(mainMenuScript.DisplayError("Room Already Full")); // telling the main menu to display the error message
         }
     }
 }

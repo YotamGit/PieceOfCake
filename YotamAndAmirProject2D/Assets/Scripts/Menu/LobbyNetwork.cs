@@ -26,9 +26,7 @@ public class LobbyNetwork : MonoBehaviour
         get { return _sighnInText; }
     }*/
     [SerializeField]
-    private GameObject errorMessage;
-    [SerializeField]
-    private TextMeshProUGUI errorText;
+    private MainMenu mainMenuScript;
 
     // Use this for initialization
     void Start () {
@@ -87,7 +85,7 @@ public class LobbyNetwork : MonoBehaviour
         }
         else
         {
-            StartCoroutine(DisplayError("Invalid Username\nPlease Try again"));
+            StartCoroutine(mainMenuScript.DisplayError("Invalid Username\nPlease Try again")); // telling the main menu to display the error message
             return;
             //PhotonNetwork.playerName = PlayerNetwork.instance.PlayerName;
         }
@@ -97,16 +95,6 @@ public class LobbyNetwork : MonoBehaviour
         ChangeTextAlpha(true);
 
         BackButton.SetActive(false);
-    }
-
-    // changing the error message and displaying it to the user
-    private IEnumerator DisplayError(string error)
-    {
-        errorText.text = error;
-        errorMessage.SetActive(true);
-        
-        yield return new WaitForSeconds(2f); // waiting 2 seconds
-        errorMessage.SetActive(false);
     }
 
     public void ChangeTextAlpha(bool change) // true: pale, false: normal
