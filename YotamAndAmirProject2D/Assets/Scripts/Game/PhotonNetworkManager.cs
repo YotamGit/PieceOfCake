@@ -90,7 +90,7 @@ public class PhotonNetworkManager : MonoBehaviour
             Debug.Log("Quiting - Only One Player!");
         }*/
         // setting the instructions to the opposite of its current enable state when clicking on the M button
-        if (Input.GetKeyDown(MenuKey) && Time.timeScale != 0)
+        if (Input.GetKeyDown(MenuKey) && Time.timeScale != 0 && !wonGame)
         {
             Menu.SetActive(!Menu.activeInHierarchy);
             

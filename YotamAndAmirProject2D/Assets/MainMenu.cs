@@ -108,15 +108,24 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("LoadScene", PhotonTargets.All);
+        photonView.RPC("DisableCancelButton", PhotonTargets.All);
+    }
+
+    [PunRPC]
+    private void DisableCancelButton()
+    {
+        roomCancelButton.interactable = false;
+        LoadingGameText.SetActive(true);
+        if (!PhotonNetwork.isMasterClient) // telling the master client that he can load the scene
+        {
+            PhotonView photonView = PhotonView.Get(this);
+            photonView.RPC("LoadScene", PhotonTargets.MasterClient);
+        }
     }
 
     [PunRPC]
     private void LoadScene()
     {
-        roomCancelButton.interactable = false;
-        LoadingGameText.SetActive(true);
-
         if (PhotonNetwork.room.PlayerCount == 2)
         {
             PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1); // loading the Game scene
@@ -128,33 +137,6 @@ public class MainMenu : MonoBehaviour
             LoadingGameText.SetActive(false);
         }
     }
-    /*[PunRPC]
-    private void DisableCancelButton()
-    {
-        roomCancelButton.interactable = false;
-        LoadingGameText.SetActive(true);
-
-        if(!PhotonNetwork.isMasterClient) // telling the master client that he can load the scene
-        {
-            PhotonView photonView = PhotonView.Get(this);
-            photonView.RPC("DoneDisableing", PhotonTargets.MasterClient);
-        }
-    }
-
-    [PunRPC]
-    private void DoneDisableing()
-    {
-        if(PhotonNetwork.room.PlayerCount == 2)
-        {
-            PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1); // loading the Game scene
-        }
-        else
-        {
-            roomCancelButton.interactable = true;
-            roomCancelButton.GetComponent<GameObject>().SetActive(true);
-            LoadingGameText.SetActive(false);
-        }
-    }*/
 
     public void SetResolution(int resolutionIndex)
     {
