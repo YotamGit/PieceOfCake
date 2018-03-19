@@ -14,8 +14,7 @@ public class PhotonNetworkManager : MonoBehaviour
     // Obj to spawn:
     [SerializeField] private GameObject player1;
     [SerializeField] private GameObject player2;
-    [SerializeField] private GameObject mainCamera1;
-    [SerializeField] private GameObject mainCamera2;
+    [SerializeField] private GameObject mainCamera;
 
     [SerializeField] private Transform spawnPoint1;
     [SerializeField] private Transform spawnPoint2;
@@ -64,31 +63,27 @@ public class PhotonNetworkManager : MonoBehaviour
         waitingScreen = GameObject.FindGameObjectWithTag("WaitingText");
         waitingScreen.SetActive(true);
 
+        Transform tempPlayer;
         //Time.timeScale = 0;
         lobbyCamera.SetActive(false);
         if (PhotonNetwork.isMasterClient)
         {
             Debug.Log("Creating player 1...");
-            PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
-            Instantiate(mainCamera1); // Creating a camera
+            tempPlayer = PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0).transform;
         }
         else
         {
             Debug.Log("Creating player 2...");
-            PhotonNetwork.Instantiate(player2.name, spawnPoint2.position, spawnPoint2.rotation, 0);
-            Instantiate(mainCamera2); // Creating a camera
+            tempPlayer = PhotonNetwork.Instantiate(player2.name, spawnPoint2.position, spawnPoint2.rotation, 0).transform;
         }
+
+        Instantiate(mainCamera).GetComponent<SmoothCameraMove>().target = tempPlayer.transform; // Creating a camera and assighning the player to the target
 
         Debug.Log("Player created");
     }
 
     private void Update()
     {
-        /*if (PhotonNetwork.room.PlayerCount == 1)
-        {
-            Application.Quit();
-            Debug.Log("Quiting - Only One Player!");
-        }*/
         // setting the instructions to the opposite of its current enable state when clicking on the M button
         if (Input.GetKeyDown(MenuKey) && Time.timeScale != 0 && !wonGame)
         {
@@ -115,11 +110,6 @@ public class PhotonNetworkManager : MonoBehaviour
                 ObjectsInMenu[0].SetActive(true);
             }
         }
-
-        /*if (Input.GetKeyDown(KeyCode.F1)) // for testing only!
-        {
-            Application.Quit();
-        }*/
     }
 
     // called by photon when a player leaves the room

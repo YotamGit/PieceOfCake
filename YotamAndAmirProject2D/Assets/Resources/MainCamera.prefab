@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114639535778826654}
   - component: {fileID: 114367246995527888}
   m_Layer: 0
-  m_Name: MainCamera1
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,8 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b0d58cb7d87094fbd47922561141ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTag: Player1
-  smoothSpeed: 0.155
+  target: {fileID: 0}
+  smoothSpeed: 0.175
   offset: {x: 0, y: 0, z: -50}
   xMax: 53
   xMin: 11

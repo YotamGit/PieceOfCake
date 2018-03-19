@@ -2,8 +2,7 @@
 
 public class SmoothCameraMove : MonoBehaviour
 {
-    public string targetTag;
-    private Transform target;
+    public Transform target;
 
     public float smoothSpeed;
     public Vector3 offset;
@@ -13,12 +12,6 @@ public class SmoothCameraMove : MonoBehaviour
 
     public float yMax;
     public float yMin;
-
-    // Use this for initialization
-    private void Start()
-    {
-        target = GameObject.FindGameObjectsWithTag(targetTag)[0].transform; // Recieving the transform of the desired player
-    }
 
     // Update is called once per frame
     void FixedUpdate (){
