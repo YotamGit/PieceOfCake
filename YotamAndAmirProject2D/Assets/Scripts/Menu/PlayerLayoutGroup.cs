@@ -64,7 +64,7 @@ public class PlayerLayoutGroup : MonoBehaviour
             PlayerJoinedRoom(photonPlayers[i]);
         }
 
-        //enabling the cancle button
+        //enabling the cancel button
         ChangeTextAlpha(false);
         cancelButton.interactable = true;
     }
@@ -140,7 +140,7 @@ public class PlayerLayoutGroup : MonoBehaviour
         }
         PlayerListings.Clear();
         PhotonNetwork.LeaveRoom();
-        //disableing the cancle button
+        //disableing the cancel button
         ChangeTextAlpha(true);
         cancelButton.interactable = false;
     }

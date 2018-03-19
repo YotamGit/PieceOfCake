@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -10103,6 +10103,17 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1604218359}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1815585336}
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
@@ -26179,7 +26190,7 @@ MonoBehaviour:
   LobbyCanvas: {fileID: 1087023349}
   WaitingRoomCanvas: {fileID: 1496339366}
   RoomLayoutGroup: {fileID: 1044173078}
-  roomCancleButton: {fileID: 762552718}
+  roomCancelButton: {fileID: 762552718}
   LoadingGameText: {fileID: 1815585336}
   errorMessage: {fileID: 1651846548}
   errorText: {fileID: 2129475941}

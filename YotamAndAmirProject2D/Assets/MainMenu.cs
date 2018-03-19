@@ -37,7 +37,7 @@ public class MainMenu : MonoBehaviour
     public RoomLayoutGroup RoomLayoutGroup;
 
     [SerializeField]
-    private Button roomCancleButton;
+    private Button roomCancelButton;
     [SerializeField]
     private GameObject LoadingGameText, errorMessage;
     [SerializeField]
@@ -104,17 +104,34 @@ public class MainMenu : MonoBehaviour
         errorMessage.SetActive(false);
     }
     
-    // This func disables the cancle button, and after the master clients sees that the other cancled too it loads the scene
+    // This func disables the cancel button, and after the master clients sees that the other canceld too it loads the scene
     public void PlayGame()
     {
         PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("DisableCancleButton", PhotonTargets.All);
+        photonView.RPC("LoadScene", PhotonTargets.All);
     }
 
     [PunRPC]
-    private void DisableCancleButton()
+    private void LoadScene()
     {
-        roomCancleButton.interactable = false;
+        roomCancelButton.interactable = false;
+        LoadingGameText.SetActive(true);
+
+        if (PhotonNetwork.room.PlayerCount == 2)
+        {
+            PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1); // loading the Game scene
+        }
+        else
+        {
+            roomCancelButton.interactable = true;
+            roomCancelButton.GetComponent<GameObject>().SetActive(true);
+            LoadingGameText.SetActive(false);
+        }
+    }
+    /*[PunRPC]
+    private void DisableCancelButton()
+    {
+        roomCancelButton.interactable = false;
         LoadingGameText.SetActive(true);
 
         if(!PhotonNetwork.isMasterClient) // telling the master client that he can load the scene
@@ -127,8 +144,17 @@ public class MainMenu : MonoBehaviour
     [PunRPC]
     private void DoneDisableing()
     {
-        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1); // loading the Game scene
-    }
+        if(PhotonNetwork.room.PlayerCount == 2)
+        {
+            PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1); // loading the Game scene
+        }
+        else
+        {
+            roomCancelButton.interactable = true;
+            roomCancelButton.GetComponent<GameObject>().SetActive(true);
+            LoadingGameText.SetActive(false);
+        }
+    }*/
 
     public void SetResolution(int resolutionIndex)
     {
