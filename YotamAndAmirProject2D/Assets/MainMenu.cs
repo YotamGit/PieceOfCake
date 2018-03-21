@@ -114,12 +114,16 @@ public class MainMenu : MonoBehaviour
     [PunRPC]
     private void DisableCancelButton()
     {
-        roomCancelButton.interactable = false;
-        LoadingGameText.SetActive(true);
-        if (!PhotonNetwork.isMasterClient) // telling the master client that he can load the scene
+        if (PhotonNetwork.room.PlayerCount == 2)
         {
-            PhotonView photonView = PhotonView.Get(this);
-            photonView.RPC("LoadScene", PhotonTargets.MasterClient);
+            roomCancelButton.interactable = false;
+            LoadingGameText.SetActive(true);
+
+            if (!PhotonNetwork.isMasterClient) // telling the master client that he can load the scene
+            {
+                PhotonView photonView = PhotonView.Get(this);
+                photonView.RPC("LoadScene", PhotonTargets.MasterClient);
+            }
         }
     }
 

@@ -3,16 +3,21 @@
 public class DDOL : MonoBehaviour
 {
     [SerializeField]
-    private GameObject disableOnReturn, enableOnReturn;
+    private GameObject disableOnReturn, enableOnReturn, connectingScreen, MainMenu;
 
     private void Awake()
     {
         if (GameObject.FindGameObjectsWithTag("DDOL").Length > 1) // this happens when you return to the same scene and it duplicate DDOLs
         {
-            disableOnReturn.SetActive(false);
-            enableOnReturn.SetActive(true);
+            if (PhotonNetwork.connected)
+            {
+                Debug.Log("Returned Connected");
+                disableOnReturn.SetActive(false);
+                enableOnReturn.SetActive(true);
+            }
             Destroy(gameObject);
         }
+        transform.GetChild(0).GetComponent<PlayerNetwork>().InstantiateSelf(); //telling the PlayerNetwork that he is not a duplicate
         DontDestroyOnLoad(this);
     }
 }

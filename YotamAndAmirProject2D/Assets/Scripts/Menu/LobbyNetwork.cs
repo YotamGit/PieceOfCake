@@ -31,13 +31,7 @@ public class LobbyNetwork : MonoBehaviour
     // Use this for initialization
     void Start () {
         Application.targetFrameRate = 256; // setting the max FPS
-        if (!PhotonNetwork.connected) /*DDOL will initiate when you enter the menu scene, thus you shouldnt return to in. so just return to a diff simulare menu*/
-        {
-            Debug.Log("Connecting to server...");
-            PhotonNetwork.ConnectUsingSettings("game");
-            PhotonNetwork.automaticallySyncScene = true;
-            PhotonNetwork.autoJoinLobby = false;
-        }
+        
         
         //PhotonNetwork.playerName = PlayerNetwork.instence.PlayerName;
         //PhotonNetwork.JoinLobby(TypedLobby.Default);
@@ -45,7 +39,7 @@ public class LobbyNetwork : MonoBehaviour
 
     private void OnConnectedToMaster()
     {
-        if (disableConnectingScreen.activeInHierarchy)
+        if (disableConnectingScreen.activeInHierarchy && !PhotonNetwork.inRoom)
         {
             disableConnectingScreen.SetActive(false);
             enableMainMenu.SetActive(true);
