@@ -271,17 +271,6 @@ public class Player : Photon.PunBehaviour, IPunObservable
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    /*private void ReturnToCheckPoint()
-    {
-        //SceneManager.LoadScene(loadScene);
-        Debug.Log("Loading Scene as: " + gameObject.tag);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-        //PhotonNetwork.LoadLevel(loadScene);
-
-        //SceneManager.LoadScene(loadScene, LoadSceneMode.Single); // loading a scene
-    }*/
-
     private void HandleMovement(float Horizontal)
     {
         if (!currentPlayer)
@@ -405,14 +394,14 @@ public class Player : Photon.PunBehaviour, IPunObservable
     */
     private bool IsGrounded()
     {
-        if (rigidBody.velocity.y == 0) // checking that velocity in y == 0 (the player is not moving up/down)
+        if (rigidBody.velocity.y < 0.05 && rigidBody.velocity.y > -0.05) // checking that velocity in y == 0 (the player is not moving up/down)
         {
             foreach (Transform point in groundPoints)
             {
                 Collider2D[] collider = Physics2D.OverlapCircleAll(point.position, groundRadius, whatIsGround);
                 for (int i = 0; i < collider.Length; i++)
                 {
-                    if (collider[i].gameObject != gameObject)
+                    if (collider[i].gameObject != gameObject && (collider[i].gameObject. tag != "Wall" || rigidBody.velocity.y == 0))
                     {
                         return true;
                     }

@@ -14,7 +14,7 @@ public class ClickedOnFromKeyboard : MonoBehaviour
 	
 	// if the player presses Escape, it will be like pressing on the exit button
 	void Update () {
-        if (Input.GetKeyDown(onClickKey) && button.interactable)
+        if (Input.GetKeyDown(onClickKey) && button.interactable && button.enabled)
         {
             button.onClick.Invoke();
         }

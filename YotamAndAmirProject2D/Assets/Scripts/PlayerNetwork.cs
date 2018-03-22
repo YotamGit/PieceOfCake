@@ -39,6 +39,10 @@ public class PlayerNetwork : MonoBehaviour
             {
                 if (!restartedSceneAlready || SceneManager.GetActiveScene().buildIndex != 0)
                 {
+                    if(Time.timeScale == 0)
+                    {
+                        Time.timeScale = 1;
+                    }
                     Debug.Log("Loading connection scene...");
                     restartedSceneAlready = true;
                     SceneManager.LoadScene(0);

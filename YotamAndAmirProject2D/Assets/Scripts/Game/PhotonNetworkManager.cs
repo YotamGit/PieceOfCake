@@ -64,7 +64,7 @@ public class PhotonNetworkManager : MonoBehaviour
         waitingScreen.SetActive(true);
 
         Transform tempPlayer;
-        //Time.timeScale = 0;
+
         lobbyCamera.SetActive(false);
         if (PhotonNetwork.isMasterClient)
         {
@@ -76,8 +76,8 @@ public class PhotonNetworkManager : MonoBehaviour
             Debug.Log("Creating player 2...");
             tempPlayer = PhotonNetwork.Instantiate(player2.name, spawnPoint2.position, spawnPoint2.rotation, 0).transform;
         }
-
-        Instantiate(mainCamera).GetComponent<SmoothCameraMove>().target = tempPlayer.transform; // Creating a camera and assighning the player to the target
+        GameObject mainCameraObj = Instantiate(mainCamera); // Creating a camera
+        mainCameraObj.GetComponent<SmoothCameraMove>().target = tempPlayer.transform; // Assighning the player to the target
 
         Debug.Log("Player created");
     }

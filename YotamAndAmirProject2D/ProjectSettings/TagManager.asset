@@ -39,6 +39,7 @@ TagManager:
   - GameLogic
   - DDOL
   - WinningText
+  - Wall
   layers:
   - Default
   - TransparentFX
