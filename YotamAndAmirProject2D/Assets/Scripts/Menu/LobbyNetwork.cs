@@ -10,7 +10,7 @@ public class LobbyNetwork : MonoBehaviour
     [SerializeField]
     private GameObject disableConnectingScreen, enableMainMenu;
 
-    public TextMeshProUGUI SignInText; // username
+    public TextMeshProUGUI SignInUser, SignInPass; // username
     [SerializeField]
     private TextMeshProUGUI SignInButtonText; // always: "sign in"
     [SerializeField]
@@ -27,6 +27,9 @@ public class LobbyNetwork : MonoBehaviour
     }*/
     [SerializeField]
     private MainMenu mainMenuScript;
+
+    [SerializeField]
+    private DCF_DemoScene_ManagerScript_CSharp dbManager;
 
     // Use this for initialization
     void Start () {
@@ -47,48 +50,36 @@ public class LobbyNetwork : MonoBehaviour
         }
     }
 
-    //username: min 3 letters. contains only letters and numbers
-    private bool IsValidUsername(string user)
+    // false - invalid user/pass
+    public bool JoinLobbyAs()
     {
-        if (user.Length >= 4 && user.Length <= 17) //there is a EOS at the end of the string
-        {
-            user = user.ToLower();
-            for (int i = 0; i < user.Length - 1; i++)
-            {
-                if (!((user[i] > 96 && user[i] < 123) || (user[i] > 47 && user[i] < 58))) 
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
+        /*string playerName = SignInUser.text;
+        string playerPass = SignInPass.text;*/
 
-    public void JoinLobbyAs()
-    {
-        string playerName = SignInText.text;
-
-        if (playerName.Length == 1) // this part is only for debugging
+        /*if (playerName.Length == 1 && playerPass.Length == 1) // this part is only for debugging
         {
             PhotonNetwork.playerName = PlayerNetwork.instance.PlayerName;
         }
-        else if(IsValidUsername(playerName))
+        else if (IsValidText(playerName, 4) && IsValidText(playerPass, 7))
         {
             PhotonNetwork.playerName = playerName;
         }
         else
         {
-            StartCoroutine(mainMenuScript.DisplayError("Invalid Username\nPlease Try again")); // telling the main menu to display the error message
-            return;
+            StartCoroutine(mainMenuScript.DisplayError("Invalid Username or Password\nPlease Try again")); // telling the main menu to display the error message
+            return false;
             //PhotonNetwork.playerName = PlayerNetwork.instance.PlayerName;
-        }
+        }*/
+        
+        //dbManager.Login_LoginButtonPressed(); // sending a login request to connect to the DB server
 
         PhotonNetwork.JoinLobby(TypedLobby.Default);
 
         ChangeTextAlpha(true);
 
         BackButton.SetActive(false);
+
+        return true;
     }
 
     public void ChangeTextAlpha(bool change) // true: pale, false: normal
