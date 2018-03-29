@@ -79,6 +79,8 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
         if (response == "Success")
         {
             //Username and Password were correct. Stop showing 'Loading...' and show the LoggedIn UI. And set the text to display the username.
+            loginButton.interactable = true;
+            loginBackButton.interactable = true;
             lobbyNetwork.JoinLobbyAs();
             /*ResetAllUIElements();
             loadingParent.gameObject.SetActive(false);
@@ -90,7 +92,7 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
             //Something went wrong logging in. Stop showing 'Loading...' and go back to LoginUI
             StartCoroutine(mainMenuScript.DisplayError("Invalid Username or Password\nPlease Try again")); // telling the main menu to display the error message
             loginButton.interactable = true;
-            signinBackButton.interactable = true;
+            loginBackButton.interactable = true;
             /*loadingParent.gameObject.SetActive(false);
             loginParent.gameObject.SetActive(true);*/
             /*if (response == "UserError")
@@ -151,6 +153,8 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
 
                 //There was another error. This error message should never appear, but is here just in case.
             }
+            signinBackButton.interactable = true;
+            signinButton.interactable = true;
         }
     }
     IEnumerator GetData ()
@@ -233,21 +237,21 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
         //Get the username and password the player entered
         playerUsername = Login_UsernameField.text.ToUpper();
         playerPassword = Login_PasswordField.text.ToUpper();
-        if (IsValidText(playerUsername, 4) && IsValidText(playerPassword, 7))
+        if (IsValidText(playerUsername, 4) && IsValidText(playerPassword, 6))
         {
             PhotonNetwork.playerName = playerUsername;
         }
         else
         {
             StartCoroutine(mainMenuScript.DisplayError("Invalid Username or Password\nPlease Try again")); // telling the main menu to display the error message
-
+            
             loginButton.interactable = true;
-            signinBackButton.interactable = true;
+            loginBackButton.interactable = true;
             return;
         }
         StartCoroutine(LoginUser());
-        loginButton.interactable = true;
-        signinBackButton.interactable = true;
+        /*loginButton.interactable = true;
+        signinBackButton.interactable = true;*/
         /*//Check the lengths of the username and password. (If they are wrong, we might as well show an error now instead of waiting for the request to the server)
         if (playerUsername.Length > 3)
         {
@@ -284,12 +288,9 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
         playerUsername = Register_UsernameField.text.ToUpper();
         playerPassword = Register_PasswordField.text.ToUpper(); 
         string confirmedPassword = Register_ConfirmPasswordField.text.ToUpper();
-
-        signinBackButton.interactable = false;
-        signinButton.interactable = false;
-
+                
         //Make sure username and password are long enough
-        if (IsValidText(playerUsername, 4) && IsValidText(playerPassword, 7))
+        if (IsValidText(playerUsername, 4) && IsValidText(playerPassword, 6))
         {
             if (playerPassword == confirmedPassword)
             {
