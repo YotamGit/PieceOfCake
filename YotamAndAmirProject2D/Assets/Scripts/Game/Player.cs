@@ -62,6 +62,8 @@ public class Player : Photon.PunBehaviour, IPunObservable
 
     private bool clickingDown;
 
+    private DCF_DemoScene_ManagerScript_CSharp dataBaseScript;
+
     /*[Header("Stats")]
     public bool damaged;
 
@@ -110,6 +112,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
                 photonView.RPC("DisableWaitingScreen", PhotonTargets.All);
             }
         }
+        dataBaseScript = GameObject.FindGameObjectWithTag("DataBaseManager").GetComponent<DCF_DemoScene_ManagerScript_CSharp>();
             /*damaged = false;
 
             otherPlayerDamaged = false;*/
@@ -209,6 +212,14 @@ public class Player : Photon.PunBehaviour, IPunObservable
                 //SoundManager.instance.PlayDeathEffect(DeathMusic[0]); // playing death effect
 
                 //telling the other player to run the ReturnToCheckPoint function
+                if(PhotonNetwork.isMasterClient && gameObject.tag == "Player1")
+                {
+                    dataBaseScript.AddDeathAndRestart();
+                }
+                else if(!PhotonNetwork.isMasterClient && gameObject.tag == "Player2")
+                {
+                    dataBaseScript.AddDeathAndRestart();
+                }
                 PhotonView photonView = PhotonView.Get(this);
                 photonView.RPC("ReturnToCheckPoint", PhotonTargets.All);
             }
@@ -266,8 +277,9 @@ public class Player : Photon.PunBehaviour, IPunObservable
     void ReturnToCheckPoint()
     {
         Debug.Log("loading scene again...");
+        //dataBaseScript
+        //PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex);
         PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex);
-        
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

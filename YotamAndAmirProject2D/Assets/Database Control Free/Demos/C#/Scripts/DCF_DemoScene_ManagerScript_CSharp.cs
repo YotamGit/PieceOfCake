@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine.UI;
 using DatabaseControl; // << Remember to add this reference to your scripts which use DatabaseControl
+using UnityEngine.SceneManagement;
 
 public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
 
@@ -31,12 +32,12 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
     public TextMeshProUGUI LoggedIn_DisplayUsernameText;
 
     //These store the username and password of the player when they have logged in
-    private string playerUsername = "";
-    private string playerPassword = "";
+    public string playerUsername = "";
+    public string playerPassword = "";
 
     [SerializeField]
     private LobbyNetwork lobbyNetwork;
-    
+
     [SerializeField]
     private MainMenu mainMenuScript;
 
@@ -44,14 +45,17 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
 
     public Button signinButton, signinBackButton;
 
+    public TextMeshProUGUI PlayerStatsText;
+
     //Called at the very start of the game
     void Awake()
     {
         ResetAllUIElements();
+        DontDestroyOnLoad(this);
     }
 
     //Called by Button Pressed Methods to Reset UI Fields
-    void ResetAllUIElements ()
+    void ResetAllUIElements()
     {
         //This resets all of the UI elements. It clears all the strings in the input fields and any errors being displayed
         /*Login_UsernameField.text = "";
@@ -67,7 +71,7 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
     }
 
     //Called by Button Pressed Methods. These use DatabaseControl namespace to communicate with server.
-    IEnumerator LoginUser ()
+    IEnumerator LoginUser()
     {
         IEnumerator e = DCF.Login(playerUsername, playerPassword); // << Send request to login, providing username and password
         while (e.MoveNext())
@@ -116,7 +120,7 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
     }
     IEnumerator RegisterUser()
     {
-        IEnumerator e = DCF.RegisterUser(playerUsername, playerPassword, "Cakes Eaten: 0"); // << Send request to register a new user, providing submitted username and password. It also provides an initial value for the data string on the account, which is "Hello World".
+        IEnumerator e = DCF.RegisterUser(playerUsername, playerPassword, "Cakes Eaten: 0\nCakes Shared: 0\nDeaths: 0"); // << Send request to register a new user, providing submitted username and password. It also provides an initial value for the data string on the account, which is "Hello World".
         while (e.MoveNext())
         {
             yield return e.Current;
@@ -157,7 +161,7 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
             signinButton.interactable = true;
         }
     }
-    IEnumerator GetData ()
+    IEnumerator GetData()
     {
         IEnumerator e = DCF.GetUserData(playerUsername, playerPassword); // << Send request to get the player's data string. Provides the username and password
         while (e.MoveNext())
@@ -169,22 +173,46 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
         if (response == "Error")
         {
             //There was another error. Automatically logs player out. This error message should never appear, but is here just in case.
-            ResetAllUIElements();
+            PhotonNetwork.Disconnect();
+            /*ResetAllUIElements();
             playerUsername = "";
             playerPassword = "";
             loginParent.gameObject.SetActive(true);
             loadingParent.gameObject.SetActive(false);
-            Login_ErrorText.text = "Error: Unknown Error. Please try again later.";
+            Login_ErrorText.text = "Error: Unknown Error. Please try again later.";*/
         }
         else
         {
             //The player's data was retrieved. Goes back to loggedIn UI and displays the retrieved data in the InputField
-            loadingParent.gameObject.SetActive(false);
-            loggedInParent.gameObject.SetActive(true);
-            LoggedIn_DataOutputField.text = response;
+            /*loadingParent.gameObject.SetActive(false);
+            loggedInParent.gameObject.SetActive(true);*/
+            //LoggedIn_DataOutputField.text = response;
+            PlayerStatsText.text = response;
         }
     }
-    IEnumerator SetData (string data)
+    IEnumerator AddDeathCount()
+    {
+        IEnumerator e = DCF.GetUserData(playerUsername, playerPassword); // << Send request to get the player's data string. Provides the username and password
+        while (e.MoveNext())
+        {
+            yield return e.Current;
+        }
+        string response = e.Current as string; // << The returned string from the request
+
+        if (response == "Error")
+        {
+            //There was another error. Automatically logs player out. This error message should never appear, but is here just in case.
+            PhotonNetwork.Disconnect();
+        }
+        else
+        {
+            string[] splitStr = response.Split('\n');
+            int Deaths = System.Convert.ToInt32(splitStr[2].Substring(7, splitStr[2].Length - 7)) + 1;
+            string newDeath = "Deaths: " + Deaths.ToString();
+            StartCoroutine(SetDataAndRestart(splitStr[0] + "\n" + splitStr[1] + "\n" + newDeath));
+        }
+    }
+    IEnumerator SetData(string data)
     {
         IEnumerator e = DCF.SetUserData(playerUsername, playerPassword, data); // << Send request to set the player's data string. Provides the username, password and new data string
         while (e.MoveNext())
@@ -196,18 +224,67 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
         if (response == "Success")
         {
             //The data string was set correctly. Goes back to LoggedIn UI
-            loadingParent.gameObject.SetActive(false);
-            loggedInParent.gameObject.SetActive(true);
+            /*loadingParent.gameObject.SetActive(false);
+            loggedInParent.gameObject.SetActive(true);*/
         }
         else
         {
             //There was another error. Automatically logs player out. This error message should never appear, but is here just in case.
-            ResetAllUIElements();
+            PhotonNetwork.Disconnect();
+            /*ResetAllUIElements();
             playerUsername = "";
             playerPassword = "";
             loginParent.gameObject.SetActive(true);
             loadingParent.gameObject.SetActive(false);
-            Login_ErrorText.text = "Error: Unknown Error. Please try again later.";
+            Login_ErrorText.text = "Error: Unknown Error. Please try again later.";*/
+        }
+    }
+
+    private bool firstDBManager = false;
+
+    private void OnLevelWasLoaded(int level)
+    {
+        if(level == 0 && firstDBManager)
+        {
+            GameObject[] dataBaseManagers = GameObject.FindGameObjectsWithTag("DataBaseManager");
+
+            if (dataBaseManagers.Length >= 1)
+            {
+                if(dataBaseManagers[0] == gameObject)
+                {
+                    DCF_DemoScene_ManagerScript_CSharp dbManager = dataBaseManagers[1].GetComponent<DCF_DemoScene_ManagerScript_CSharp>();
+                    dbManager.playerUsername = playerUsername;
+                    dbManager.playerPassword = playerPassword;
+                }
+                else
+                {
+                    DCF_DemoScene_ManagerScript_CSharp dbManager = dataBaseManagers[0].GetComponent<DCF_DemoScene_ManagerScript_CSharp>();
+                    dbManager.playerUsername = playerUsername;
+                    dbManager.playerPassword = playerPassword;
+                }
+                Destroy(gameObject);
+            }
+        }
+        firstDBManager = true;
+    }
+
+    IEnumerator SetDataAndRestart(string data)
+    {
+        IEnumerator e = DCF.SetUserData(playerUsername, playerPassword, data); // << Send request to set the player's data string. Provides the username, password and new data string
+        while (e.MoveNext())
+        {
+            yield return e.Current;
+        }
+        string response = e.Current as string; // << The returned string from the request
+
+        if (response == "Success")
+        {
+            //PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex);
+        }
+        else
+        {
+            //There was another error. Automatically logs player out. This error message should never appear, but is here just in case.
+            PhotonNetwork.Disconnect();
         }
     }
 
@@ -237,7 +314,7 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
         //Get the username and password the player entered
         playerUsername = Login_UsernameField.text.ToUpper();
         playerPassword = Login_PasswordField.text.ToUpper();
-        if (IsValidText(playerUsername, 4) && IsValidText(playerPassword, 6))
+        if (IsValidText(playerUsername, 3) && IsValidText(playerPassword, 6))
         {
             PhotonNetwork.playerName = playerUsername;
         }
@@ -290,7 +367,7 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
         string confirmedPassword = Register_ConfirmPasswordField.text.ToUpper();
                 
         //Make sure username and password are long enough
-        if (IsValidText(playerUsername, 4) && IsValidText(playerPassword, 6))
+        if (IsValidText(playerUsername, 3) && IsValidText(playerPassword, 6))
         {
             if (playerPassword == confirmedPassword)
             {
@@ -343,6 +420,17 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
             Register_ErrorText.text = "Error: Username too Short";
         }*/
     }
+    public void PlayerStats_StatsButtonPressed()
+    {
+        //Called when the player asks to see his stats
+
+        StartCoroutine(GetData());
+    }
+    public void AddDeathAndRestart()
+    {
+        StartCoroutine(AddDeathCount());
+    }
+
     public void Register_BackButtonPressed ()
     {
         //Called when the player presses the 'Back' button on the register UI. Switches back to the Login UI
@@ -360,8 +448,8 @@ public class DCF_DemoScene_ManagerScript_CSharp : MonoBehaviour {
     public void LoggedIn_LoadDataButtonPressed ()
     {
         //Called when the player hits 'Get Data' to retrieve the data string on their account. Switches UI to 'Loading...' and starts coroutine to get the players data string from the server
-        loadingParent.gameObject.SetActive(true);
-        loggedInParent.gameObject.SetActive(false);
+        /*loadingParent.gameObject.SetActive(true);
+        loggedInParent.gameObject.SetActive(false);*/
         StartCoroutine(GetData());
     }
     public void LoggedIn_LogoutButtonPressed ()

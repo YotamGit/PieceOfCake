@@ -43,6 +43,12 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI errorText;
 
+    [SerializeField]
+    private TMP_InputField passwordText;
+
+    [SerializeField]
+    private GameObject mainMenu, optionsScreen, chooseingScreen;
+
     private void Awake()
     {
         Time.timeScale = 1;
@@ -95,7 +101,7 @@ public class MainMenu : MonoBehaviour
         resolutionDropdown.value = currentResIndex;
         resolutionDropdown.RefreshShownValue();
     }
-
+    
     public IEnumerator DisplayError(string error)
     {
         errorMessage.SetActive(true);

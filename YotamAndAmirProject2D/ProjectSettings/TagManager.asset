@@ -40,6 +40,7 @@ TagManager:
   - DDOL
   - WinningText
   - Wall
+  - DataBaseManager
   layers:
   - Default
   - TransparentFX
