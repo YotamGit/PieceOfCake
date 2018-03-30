@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using DatabaseControl; // << Remember to add this reference to your scripts which use DatabaseControl
 using UnityEngine.SceneManagement;
-
+//ignore this comment
 public class DBCManager : MonoBehaviour {
 
     //All public variables bellow are assigned in the Inspector
