@@ -5,16 +5,8 @@ public class RoomLayoutGroup : MonoBehaviour {
 
     [SerializeField]
     private GameObject RoomListingPrefab;
-    //private GameObject RoomListingPrefab
-    //{
-    //    get { return _roomListingPrefab; }
-    //}
 
     private List<RoomListing> RoomListingButtons = new List<RoomListing>();
-    //private List<RoomListing> RoomListingButtons
-    //{
-    //    get { return _roomListingButtons; }
-    //}
 
     //called by photon when the room list updates
     public void OnReceivedRoomListUpdate()
@@ -25,12 +17,10 @@ public class RoomLayoutGroup : MonoBehaviour {
         }
 
         RoomInfo[] rooms = PhotonNetwork.GetRoomList(); // getting all the current rooms
-        //Debug.Log("Is in Room: " + PhotonNetwork.inRoom + "-Is in Lobby: " + PhotonNetwork.insideLobby + " - Num of rooms received: " + rooms.Length);
-        //RemoveOldRooms();
+
 
         foreach (RoomInfo room in rooms)
         {
-            //Debug.Log("Received Room: " + room.Name);
             RoomReceived(room);
         }
 
@@ -46,17 +36,17 @@ public class RoomLayoutGroup : MonoBehaviour {
         {
             if(room.IsVisible && room.PlayerCount < room.MaxPlayers)
             {
-                GameObject roomListingObj = Instantiate(RoomListingPrefab);
+                GameObject roomListingObj = Instantiate(RoomListingPrefab);//creating the button
                 roomListingObj.transform.SetParent(transform, false);
 
                 RoomListing roomListing = roomListingObj.GetComponent<RoomListing>();
-                RoomListingButtons.Add(roomListing);
+                RoomListingButtons.Add(roomListing);//adding the script to the list
 
-                index = (RoomListingButtons.Count - 1);
+                index = (RoomListingButtons.Count - 1);//getting the index of the last script added
             }
         }
 
-        if (index != -1)
+        if (index != -1)//updating the data of the last room added or the found room
         {
             RoomListing roomListing = RoomListingButtons[index];
             roomListing.SetRoomNameText(room.Name);
@@ -70,7 +60,7 @@ public class RoomLayoutGroup : MonoBehaviour {
 
         foreach(RoomListing roomListing in RoomListingButtons)
         {
-            if(!roomListing.Updated)
+            if(!roomListing.Updated)//if the room is not updated we delete it
             {
                 removeRooms.Add(roomListing);
             }
@@ -83,25 +73,8 @@ public class RoomLayoutGroup : MonoBehaviour {
         foreach(RoomListing roomListing in removeRooms)
         {
             GameObject roomListingObj = roomListing.gameObject;
-            RoomListingButtons.Remove(roomListing);
-            Destroy(roomListingObj);
+            RoomListingButtons.Remove(roomListing);//removing the script
+            Destroy(roomListingObj);//destroying the object
         }
     }
-
-    /*public void RemoveAllRooms()
-    {
-        List<RoomListing> removeRooms = new List<RoomListing>();
-
-        foreach (RoomListing roomListing in RoomListingButtons)
-        {
-            removeRooms.Add(roomListing);
-        }
-
-        foreach (RoomListing roomListing in removeRooms)
-        {
-            GameObject roomListingObj = roomListing.gameObject;
-            RoomListingButtons.Remove(roomListing);
-            Destroy(roomListingObj);
-        }
-    }*/
 }

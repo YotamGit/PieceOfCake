@@ -7,11 +7,6 @@ public class LobbyCanvas : MonoBehaviour {
 
     [SerializeField]
     private RoomLayoutGroup RoomLayoutGroup;
-    //private RoomLayoutGroup RoomLayoutGroup
-    //{
-    //    get { return _roomLayoutGroup; }
-    //}
-
 
     [SerializeField]
     private GameObject toEnable, toDisable;
@@ -24,7 +19,7 @@ public class LobbyCanvas : MonoBehaviour {
         RoomInfo[] rooms = PhotonNetwork.GetRoomList();
         RoomInfo thisRoom = null;
 
-        foreach (RoomInfo room in rooms)
+        foreach (RoomInfo room in rooms)//searching for the wanted room
         {
             if(room.Name == roomName)
             {
@@ -44,7 +39,7 @@ public class LobbyCanvas : MonoBehaviour {
         }
         else
         {
-            Destroy(sender);
+            Destroy(sender);//destroying the roomlisting button
             StartCoroutine(mainMenuScript.DisplayError("Room Already Full")); // telling the main menu to display the error message
         }
     }

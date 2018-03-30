@@ -8,12 +8,14 @@ public class ClickedOnFromKeyboard : MonoBehaviour
 
     private Button button;
 
-	void Awake () {
+	void Awake ()
+    {
         button = GetComponent<Button>();
     }
 	
-	// if the player presses Escape, it will be like pressing on the exit button
-	void Update () {
+	// if the player presses certein key, it will be like activating a specified button
+	void Update ()
+    {
         if (Input.GetKeyDown(onClickKey) && button.interactable && button.enabled)
         {
             button.onClick.Invoke();

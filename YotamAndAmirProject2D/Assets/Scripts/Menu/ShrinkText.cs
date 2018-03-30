@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class ShrinkText : MonoBehaviour {
+public class ShrinkText : MonoBehaviour
+{
     // This value + the min scale = max scale the obj will get
     // so if we set it to 1 our object will get to a max scale of: 1 + the min scale
     [Range(0, 2)]
@@ -28,7 +29,7 @@ public class ShrinkText : MonoBehaviour {
     {
         ScaleParam += ScalingSpeed;
 
-        float value = ScaleFuncBetter(ScaleParam);
+        float value = ScaleFunc(ScaleParam);
         objTransform.localScale = new Vector3(value, value, objTransform.localScale.z);
 
         if (ScaleParam  > 1.5 || ScaleParam  < 0.5)
@@ -37,13 +38,7 @@ public class ShrinkText : MonoBehaviour {
         }
     }
 
-    // f(n). when we enter a certian n (from 0 to 1), it will return a smoother using the function
-    /*private float ScaleFunc(float x)
-    {
-        return x * x * x * AddScale * (x * (6 * x  - 15) + 10) + minScale;
-    }*/
-
-    private float ScaleFuncBetter(float x) // uses Sin() instead of the other func
+    private float ScaleFunc(float x)
     {
         return HalfOfAddScale * (Mathf.Sin(Mathf.PI * x) + 1) + minScale;
     }

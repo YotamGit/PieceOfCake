@@ -55,4 +55,5 @@ MonoBehaviour:
   - GetCurrVictoryPos
   - DisableCancelButton
   - LoadScene
+  - SendCurrVictoryPos
   DisableAutoOpenWizard: 1

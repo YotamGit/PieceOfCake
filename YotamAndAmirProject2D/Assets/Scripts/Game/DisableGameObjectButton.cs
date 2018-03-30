@@ -22,16 +22,14 @@ public class DisableGameObjectButton : Photon.MonoBehaviour, IPunObservable
     public AudioClip clicked;
     public AudioClip released;
 
-    // Use this for initialization
     void Start()
     {
         buttonSpriteRend = gameObject.GetComponent<SpriteRenderer>();
         isPressed = false;
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {        
-    }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){}
+
     void OnTriggerStay2D(Collider2D col)
     {
         if (col.gameObject.tag.Substring(0, 4) == "Cube" || col.gameObject.tag == "Player1" | col.gameObject.tag == "Player2")
@@ -49,7 +47,7 @@ public class DisableGameObjectButton : Photon.MonoBehaviour, IPunObservable
                     SoundManager.instance.PlayEffect2(clicked);
                 }
                 isPressed = true;
-                PressOrReleasHandle(isPressed);
+                PressOrReleasHandle(isPressed);//disabling the object
                 buttonSpriteRend.sprite = turnedOn;
             }
         }
@@ -75,13 +73,13 @@ public class DisableGameObjectButton : Photon.MonoBehaviour, IPunObservable
 
                 }
                 isPressed = false;
-                PressOrReleasHandle(isPressed);
+                PressOrReleasHandle(isPressed);//enabling the object
                 buttonSpriteRend.sprite = turnedOff;
             }
         }
     }
 
-    private void PressOrReleasHandle(bool pressed) // pressed (to new pos) == true, back to first pos == false
+    private void PressOrReleasHandle(bool pressed) // pressed (to new state) == true, back to first state == false
     {
         for (int i = 0; i < gameObjects.Length; i++)
         {

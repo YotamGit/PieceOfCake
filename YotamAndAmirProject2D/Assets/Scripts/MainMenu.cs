@@ -22,17 +22,6 @@ public class MainMenu : MonoBehaviour
     public static MainMenu Instance;
 
     public LobbyCanvas LobbyCanvas;
-    //public LobbyCanvas LobbyCanvas
-    //{
-    //    get { return _lobbyCanvas; }
-    //}
-
-    [SerializeField]
-    private WaitingRoomCanvas WaitingRoomCanvas;
-    //public WaitingRoomCanvas WaitingRoomCanvas
-    //{
-    //    get { return _waitingRoomCanvas; }
-    //}
 
     public RoomLayoutGroup RoomLayoutGroup;
 
@@ -66,7 +55,6 @@ public class MainMenu : MonoBehaviour
 
         Resolution[] tempResolutions = Screen.resolutions;
         resolutions = new Resolution[tempResolutions.Length];
-        //resolutions = Screen.resolutions;
 
         resolutionDropdown.ClearOptions(); // clearing current res options in dropdown
 

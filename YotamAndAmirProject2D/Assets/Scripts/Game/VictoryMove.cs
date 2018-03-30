@@ -14,17 +14,20 @@ public class VictoryMove : MonoBehaviour {
     [SerializeField]
     private float smoothness, distance; // distance is to check if the victory is close enough to the next pos
 
+    PhotonView photonView;
+
     private void Start()
     {
+        photonView = PhotonView.Get(this);
+
         if (!PhotonNetwork.isMasterClient)
         {
-            PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("GetCurrVictoryPos", PhotonTargets.MasterClient);
         }
     }
 
-    // Update is called once per frame
-    void Update () {
+    private void Update ()
+    {
         if (goToNextPos)
         {
             transform.position = Vector3.Lerp(transform.position, positions[curPosIndex], Time.deltaTime * smoothness); // lerping to the next pos
@@ -53,7 +56,6 @@ public class VictoryMove : MonoBehaviour {
     [PunRPC]
     private void GetCurrVictoryPos()
     {
-        PhotonView photonView = PhotonView.Get(this);
         photonView.RPC("GetCurrVictoryPos", PhotonTargets.Others, curPosIndex);
     }
 

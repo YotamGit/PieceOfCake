@@ -6,22 +6,24 @@ using TMPro;
 
 public class CreateRoom : MonoBehaviour {
 
-    [SerializeField]//write comments
+    [SerializeField]
     private GameObject toEnable, toDisable, backButton;
 
     [SerializeField]
     private TextMeshProUGUI RoomName, changeAlpha, cancelText;
-    //private TextMeshProUGUI RoomName
-    //{
-    //    get { return _roomName; }
-    //}
 
     [SerializeField]
     private MainMenu mainMenuScript;
 
+    private Button button;
+
+    private void Start()
+    {
+        button = GetComponent<Button>();
+    }
     public void OnClick_CreateRoom()
     {
-        DisableSelf();
+        DisableSelf();//disabling create room button
 
         RoomOptions roomOptions = new RoomOptions { IsVisible = true, IsOpen = true, MaxPlayers = 2 };
         if (PhotonNetwork.CreateRoom(RoomName.text.ToUpper(), roomOptions, TypedLobby.Default))
@@ -30,12 +32,11 @@ public class CreateRoom : MonoBehaviour {
         }
     }
 
-    // enableing the create room (and back) button, and telling the player that this room name is taken (there will be a normal error too - dont mind it)
+    // enableing the create room (and back) button, and telling the player that this room name is taken 
     private void OnPhotonCreateRoomFailed(object[] codeAndMessage)
     {
         if (codeAndMessage[1].ToString() == "A game with the specified id already exist.")
         {
-            Button button = GetComponent<Button>();
             button.enabled = true;
 
             backButton.SetActive(true);
@@ -49,17 +50,15 @@ public class CreateRoom : MonoBehaviour {
         }
     }
     
-    private void DisableSelf()
+    private void DisableSelf()//disabling the join button and the back button
     {
         changeAlpha.faceColor = new Color(1, 1, 1, 0.4F);
-        Button button = GetComponent<Button>();
         button.enabled = false;
-        backButton.SetActive(false);
+        backButton.SetActive(false);//diactivating the backbutton
     }
 
     private void OnCreatedRoom()
     {
-        Button button = GetComponent<Button>();
         button.enabled = true;
 
         changeAlpha.faceColor = new Color(1, 1, 1, 1F);

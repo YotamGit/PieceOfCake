@@ -22,7 +22,7 @@ public class MovingText : MonoBehaviour
     {
         RotateParam += RotateSpeed;
 
-        objTransform.rotation = new Quaternion(objTransform.rotation.x, objTransform.rotation.y, RotateFuncBetter(RotateParam), objTransform.rotation.w);
+        objTransform.rotation = new Quaternion(objTransform.rotation.x, objTransform.rotation.y, RotateFunc(RotateParam), objTransform.rotation.w);
 
         if (RotateParam > 1.5 || RotateParam < 0.5)
         {
@@ -30,13 +30,8 @@ public class MovingText : MonoBehaviour
         }
     }
 
-    // returns a smooth value between -0.5 MaxRotate and 0.5 MaxRotate
-    /*private float RotateFunc(float x)
-    {
-        return x * x * x * HalfOfMaxRotate * (x * (6 * x - 15) + 10)  - 0.5f * HalfOfMaxRotate;
-    }*/
-
-    private float RotateFuncBetter(float x) // uses Sin() instead of the other func
+    // returns a smooth value
+    private float RotateFunc(float x) // uses Sin() instead of the other func
     {
         return Mathf.Sin(Mathf.PI*x)* HalfOfMaxRotate;
     }

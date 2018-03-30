@@ -8,29 +8,22 @@ public class PlayerLayoutGroup : MonoBehaviour
 {
     [SerializeField]
     private GameObject PlayerListingPrefab;
-    //private GameObject PlayerListingPrefab
-    //{
-    //    get { return _playerListingPrefab; }
-    //}
 
     private List<PlayerListing> PlayerListings = new List<PlayerListing>();
-    //private List<PlayerListing> PlayerListings
-    //{
-    //    get {return _playerListings; }
-    //}
+
 
     [SerializeField]
-    private GameObject toDisableWaitingScreen, toEnableRoomMenu;//toEnableLobby;
+    private GameObject toDisableWaitingScreen, toEnableRoomMenu;
 
     [SerializeField]
     private TextMeshProUGUI cancelButtonText;
     [SerializeField]
     private Button cancelButton;
 
-    private void Awake()
-    {
-        ChangeTextAlpha(true);
-    }
+    //private void Awake()
+    //{
+    //    ChangeTextAlpha(true);
+    //}
 
     // called by photon when a master client is switched
     private void OnMasterClientSwitched(PhotonPlayer newMasterClient)
@@ -100,13 +93,13 @@ public class PlayerLayoutGroup : MonoBehaviour
         }
         PlayerLeftRoom(photonPlayer);
 
-        GameObject playerListingObj = Instantiate(PlayerListingPrefab);
+        GameObject playerListingObj = Instantiate(PlayerListingPrefab);//creating a player button
         playerListingObj.transform.SetParent(transform, false);
 
         PlayerListing playerlisting = playerListingObj.GetComponent<PlayerListing>();
-        playerlisting.ApplyPhotonPlayer(photonPlayer);
+        playerlisting.ApplyPhotonPlayer(photonPlayer);//adding the player to photon
 
-        PlayerListings.Add(playerlisting);
+        PlayerListings.Add(playerlisting);//adding the script to the list
     }
 
     // finding the player in the playerListing List and removing him from the visable UI list
@@ -122,16 +115,6 @@ public class PlayerLayoutGroup : MonoBehaviour
         }
     }
 
-    //public void OnClickRoomState()
-    //{
-    //    if(PhotonNetwork.isMasterClient)
-    //    {
-    //        return;
-    //    }
-    //    PhotonNetwork.room.IsOpen = !PhotonNetwork.room.IsOpen;
-    //    PhotonNetwork.room.IsVisible = PhotonNetwork.room.IsOpen;
-    //}
-
     public void OnClickLeaveRoom()
     {
         foreach (PlayerListing tempPL in PlayerListings)
@@ -140,7 +123,8 @@ public class PlayerLayoutGroup : MonoBehaviour
         }
         PlayerListings.Clear();
         PhotonNetwork.LeaveRoom();
-        //disableing the cancel button
+
+        //disabling the cancel button
         ChangeTextAlpha(true);
         cancelButton.interactable = false;
     }
@@ -149,8 +133,8 @@ public class PlayerLayoutGroup : MonoBehaviour
     {
         if (toDisableWaitingScreen.activeInHierarchy && !toEnableRoomMenu.activeInHierarchy)
         {
-            toEnableRoomMenu.SetActive(true);
             toDisableWaitingScreen.SetActive(false);
+            toEnableRoomMenu.SetActive(true);            
         }
     }
 }

@@ -6,13 +6,9 @@ public class RoomListing : MonoBehaviour {
 
     [SerializeField]
     private TextMeshProUGUI RoomNameText;
-    //private TextMeshProUGUI RoomNameText
-    //{
-    //    get { return _roomNameText; }
-    //}
 
-    public string RoomName { get; private set; }
-    public bool Updated { get; set; }
+    public string RoomName;
+    public bool Updated;
 
     void Start()
     {
@@ -26,9 +22,8 @@ public class RoomListing : MonoBehaviour {
 
         LobbyCanvas lobbyCanvas = lobbyCanvasObj.GetComponent<LobbyCanvas>();
 
-        //Debug.Log("Room Name: " + RoomNameText.text);
         Button button = GetComponent<Button>();
-        button.onClick.AddListener(() => lobbyCanvas.OnClickJoinRoom(RoomNameText.text, gameObject));
+        button.onClick.AddListener(() => lobbyCanvas.OnClickJoinRoom(RoomNameText.text, gameObject));//adding event to the button
     }
 
     private void OnDestroy()
