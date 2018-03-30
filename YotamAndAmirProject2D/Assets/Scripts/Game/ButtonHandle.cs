@@ -22,36 +22,17 @@ public class ButtonHandle : Photon.MonoBehaviour , IPunObservable
     public AudioClip clicked;
     public AudioClip released;
 
-    // Use this for initialization
     void Start ()
     {
-        buttonSpriteRend = gameObject.GetComponent<SpriteRenderer>();
+        buttonSpriteRend = gameObject.GetComponent<SpriteRenderer>();//used to change the sprite of the button
         isPressed = false;
     }
-	
-	// Update is called once per frame
-	void Update () {
-    }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        //if (photonView.isMine)
-        //{
-        //    if (stream.isWriting)
-        //    {
-        //        // We own this player: send the others our data
-        //        stream.SendNext(isPressed);
-        //    }
-        //}
-        //else
-        //{
-        //    // Network player, receive data
-        //    isPressed = (bool)stream.ReceiveNext();
-        //}
-    }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){}//used for syncing
+
     void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.tag.Substring(0, 4) == "Cube" || col.gameObject.tag == "Player1" | col.gameObject.tag == "Player2")
+        if (col.gameObject.tag.Substring(0, 4) == "Cube" || col.gameObject.tag == "Player1" | col.gameObject.tag == "Player2")//activating the button
         {
             if (!isPressed)
             {
@@ -66,8 +47,8 @@ public class ButtonHandle : Photon.MonoBehaviour , IPunObservable
                     SoundManager.instance.PlayEffect2(clicked);
                 }
                 isPressed = true;
-                PressOrReleasHandle(isPressed);
-                buttonSpriteRend.sprite = turnedOn;
+                PressOrReleasHandle(isPressed);//opening the door
+                buttonSpriteRend.sprite = turnedOn;//changing the sprite
             }
         }
     }
@@ -75,7 +56,7 @@ public class ButtonHandle : Photon.MonoBehaviour , IPunObservable
  
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Cube" || col.gameObject.tag == "Player1" | col.gameObject.tag == "Player2")
+        if (col.gameObject.tag == "Cube" || col.gameObject.tag == "Player1" | col.gameObject.tag == "Player2")//deactivating the button
         {
             if (isPressed)
             {
@@ -92,13 +73,13 @@ public class ButtonHandle : Photon.MonoBehaviour , IPunObservable
 
                 }
                 isPressed = false;
-                PressOrReleasHandle(isPressed);
-                buttonSpriteRend.sprite = turnedOff;
+                PressOrReleasHandle(isPressed);//closing the door
+                buttonSpriteRend.sprite = turnedOff;//changing the button sprite
             }
         }
     }
     
-    private void PressOrReleasHandle(bool pressed) // pressed (to new pos) == true, back to first pos == false
+    private void PressOrReleasHandle(bool pressed) // pressed (to new state) == true, back to first state == false
     {
         for (int i = 0; i < doors.Length; i++)
         {

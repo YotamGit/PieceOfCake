@@ -4,23 +4,23 @@ using System.Collections.Generic;
 
 public class SoundManager : MonoBehaviour {
     [Header("Player1")]
-    public AudioSource efxSource1;//key channel Player1                   //Drag a reference to the audio source which will play the sound effects.
+    public AudioSource efxSource1;//key channel Player1
     public AudioSource moveEfxSource1;//move channel Player1
 
     [Space]
 
     [Header("Player2")]
-    public AudioSource efxSource2;//key channel Player2                  //Drag a reference to the audio source which will play the sound effects.
+    public AudioSource efxSource2;//key channel Player2
     public AudioSource moveEfxSource2;//move channel Player2
 
     [Header("General")]
     public AudioSource deathEfxSource;
-    public AudioSource musicSource;                 //Drag a reference to the audio source which will play the music.
+    public AudioSource musicSource;              
     
     public static SoundManager instance = null;     //Allows other scripts to call functions from SoundManager.   
     
-    public float lowPitchRange = .95f;              //The lowest a sound effect will be randomly pitched.
-    public float highPitchRange = 1.05f;            //The highest a sound effect will be randomly pitched.
+    public float lowPitchRange = .95f;
+    public float highPitchRange = 1.05f;
     
 
     void Awake()

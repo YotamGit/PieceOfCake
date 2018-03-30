@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class HoldButton : MonoBehaviour {
-    [HideInInspector]
-    public bool isPressed;
+public class HoldButton : MonoBehaviour
+{
+    //[HideInInspector]
+    private bool isPressed = false;
 
-    [HideInInspector]
-    public float current;
+    //[HideInInspector]
+    private float current;
     
     public Slider slider;
 
@@ -18,14 +19,11 @@ public class HoldButton : MonoBehaviour {
 
     [SerializeField]
     private bool toMenu;
-
-	// Use this for initialization
-	void Start () {
-        isPressed = false;
-    }
 	
-	// Update is called once per frame
-	void FixedUpdate ()
+    /*
+     advancing the value of the slider until it reaches the end and then loading the menu or exiting the application
+     */
+	private void FixedUpdate ()
     {
         if (isPressed)
         {
@@ -47,6 +45,9 @@ public class HoldButton : MonoBehaviour {
         }
 	}
 
+    /*
+     canceling the progression of the slider if the player pressed any of the keys specified below
+     */
     private void Update()
     {
         if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D)
@@ -66,7 +67,7 @@ public class HoldButton : MonoBehaviour {
         {
             PhotonNetwork.LeaveRoom();
         }
-        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex - 1);
+        PhotonNetwork.LoadLevel(0);//loading the main menu scene
     }
 
     public void OnPressed()

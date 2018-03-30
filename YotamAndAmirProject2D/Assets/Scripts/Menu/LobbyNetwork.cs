@@ -29,7 +29,7 @@ public class LobbyNetwork : MonoBehaviour
     private MainMenu mainMenuScript;
 
     [SerializeField]
-    private DCF_DemoScene_ManagerScript_CSharp dbManager;
+    private DBCManager dbManager;
 
     // Use this for initialization
     void Start () {

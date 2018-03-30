@@ -727,7 +727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b0d58cb7d87094fbd47922561141ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTag: 
+  target: {fileID: 0}
   smoothSpeed: 0.155
   offset: {x: 0, y: 0, z: -50}
   xMax: 0
@@ -882,7 +882,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0cee45ac46ca3c479fe0258113a9c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VictoryScreen: {fileID: 0}
   notGrabMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -910,6 +909,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerName: 
+  restartedSceneAlready: 0
+  duplicate: 1
 --- !u!114 &114672180292649684
 MonoBehaviour:
   m_ObjectHideFlags: 1

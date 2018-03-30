@@ -5,18 +5,13 @@ using UnityEngine;
 
 public class Player : Photon.PunBehaviour, IPunObservable
 {
-    //public Transform mask;
 
-    /*[SerializeField]
-    private GameObject Tutorial;*/
     public string PlayerMovement;
     public GameObject[] FlameLights;
 
     [Space]
 
     [Header("Key Bindings")]
-    //public KeyCode ShowTutorial;
-    //public KeyCode restartKey;
     public KeyCode jumpKey;
     public KeyCode boostDownKey;
 
@@ -57,49 +52,37 @@ public class Player : Photon.PunBehaviour, IPunObservable
     private Animator myAnimator;
 
     private bool facingRight;
+
     [SerializeField]
     private bool isGroundedVar;
 
     private bool clickingDown;
 
-    private DCF_DemoScene_ManagerScript_CSharp dataBaseScript;
+    private DBCManager dataBaseScript;
 
-    /*[Header("Stats")]
-    public bool damaged;
+    private bool firstPlayer = false;
+    private PhotonView photonView;
 
-    private bool otherPlayerDamaged;*/
-
-    //private bool TutorialIsShown = false;
-    private bool currentPlayer = false;
-
-    //private GameObject otherPlayer;
-
-    //private GameObject otherPlayer;
-
-    // Use this for initialization
     void Start()
     {
+        photonView = PhotonView.Get(this);
         Time.timeScale = 0f;
         SoundManager.instance.musicSource.Stop();
         SoundManager.instance.RandomizeSfx(BackGroundMusic);
-        //Tutorial.SetActive(false);
+
         rigidBody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         facingRight = true;
-        //otherPlayer = null;
-        if (gameObject.tag == "Player2")
-        {
-            currentPlayer = true;
-        }
+
         gameObject.SetActive(true);
         clickingDown = false;
-        //otherPlayer = null;
+
         if (gameObject.tag == "Player1")
         {
-            if(GameObject.FindGameObjectWithTag("Player2") != null)
+            firstPlayer = true;
+            if (GameObject.FindGameObjectWithTag("Player2") != null)
             {
                 Time.timeScale = 1f;
-                PhotonView photonView = PhotonView.Get(this);
                 photonView.RPC("DisableWaitingScreen", PhotonTargets.All);
             }
         }
@@ -108,14 +91,11 @@ public class Player : Photon.PunBehaviour, IPunObservable
             if (GameObject.FindGameObjectWithTag("Player1") != null)
             {
                 Time.timeScale = 1f;
-                PhotonView photonView = PhotonView.Get(this);
                 photonView.RPC("DisableWaitingScreen", PhotonTargets.All);
             }
         }
-        dataBaseScript = GameObject.FindGameObjectWithTag("DataBaseManager").GetComponent<DCF_DemoScene_ManagerScript_CSharp>();
-            /*damaged = false;
+        dataBaseScript = GameObject.FindGameObjectWithTag("DataBaseManager").GetComponent<DBCManager>();
 
-            otherPlayerDamaged = false;*/
     }
 
     [PunRPC]
@@ -128,49 +108,19 @@ public class Player : Photon.PunBehaviour, IPunObservable
             waitingScreen.SetActive(false);
         }
     }
-    // Update is called once per frame
-    /*void Update()
-    {
-        if (damaged)
-        {
-            if (!SoundManager.instance.deathEfxSource.isPlaying)
-            {
-                //telling the other player to run the ReturnToCheckPoint function
-                Debug.Log("Restart by: " + gameObject.tag);
-                PhotonView photonView = PhotonView.Get(this);
-                photonView.RPC("ReturnToCheckPoint", PhotonTargets.All);
-            }
-        }
-    }*/
 
-    // FixedUpdate is better for physics
     private void Update()
     {
-        /*if (!otherPlayer) // getting the other players gameobject after he connects
-        {
-            if(gameObject.tag == "Player1")
-            {
-                otherPlayer = GameObject.FindGameObjectWithTag("Player2");
-            }
-            else
-            {
-                otherPlayer = GameObject.FindGameObjectWithTag("Player1");
-            }
-        }*/
-        //if (!damaged)
-        //{
-            // checking if the object is mid air, and moving him according to the key he pressed
+        // checking if the object is mid air, and moving him according to the key he pressed
         isGroundedVar = IsGrounded();
-
-        float horizontal = Input.GetAxis(PlayerMovement);
 
         if (Time.timeScale == 1) // will not be called if time != normal time
         {
+            float horizontal = Input.GetAxis(PlayerMovement);
             HandleMovement(horizontal);
-            ///send location and velocity to playert
+            //send location and velocity to playert
             Flip(horizontal);
         }
-        //}
     }
 
     private void FixedUpdate()
@@ -192,9 +142,6 @@ public class Player : Photon.PunBehaviour, IPunObservable
 
             if (!abilityManager.Immune) // don't have dmg immune
             {
-                //Time.timeScale = 0f;
-                //damaged = true;
-                //gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
                 SoundManager.instance.moveEfxSource1.Stop();
                 SoundManager.instance.efxSource1.Stop();
 
@@ -203,24 +150,11 @@ public class Player : Photon.PunBehaviour, IPunObservable
 
                 SoundManager.instance.musicSource.Stop();
 
-                //SoundManager.instance.musicSource.clip = deathSound;
-                //SoundManager.instance.musicSource.volume = 0.5f;
-                //SoundManager.instance.efxSource.pitch = 1f;
-                //SoundManager.instance.PlayDeathEffect(DeathMusic[0]);
-                //SoundManager.instance.musicSource.loop = false;
-
-                //SoundManager.instance.PlayDeathEffect(DeathMusic[0]); // playing death effect
-
                 //telling the other player to run the ReturnToCheckPoint function
-                if(PhotonNetwork.isMasterClient && gameObject.tag == "Player1")
+                if ((PhotonNetwork.isMasterClient && gameObject.tag == "Player1") || (!PhotonNetwork.isMasterClient && gameObject.tag == "Player2")) 
                 {
                     dataBaseScript.AddDeathAndRestart();
                 }
-                else if(!PhotonNetwork.isMasterClient && gameObject.tag == "Player2")
-                {
-                    dataBaseScript.AddDeathAndRestart();
-                }
-                PhotonView photonView = PhotonView.Get(this);
                 photonView.RPC("ReturnToCheckPoint", PhotonTargets.All);
             }
             else // has dmg immune
@@ -229,21 +163,13 @@ public class Player : Photon.PunBehaviour, IPunObservable
                 abilityManager.Immune = false;
             }
         }
-        /*else if(col.gameObject.tag == "Dangerous" )//&& gameObject.GetComponent<AbilityManager>().Immune == true)
-        {
-            if(gameObject.GetComponent<AbilityManager>().Immune == true)
-            {
-                gameObject.GetComponent<AbilityManager>().PowerUps[3].SetActive(false); //PowerUps[1].SetActive(false);
-                gameObject.GetComponent<AbilityManager>().Immune = false;
-            }
-        }*/
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Bounce")
         {
-            if(!currentPlayer)
+            if(firstPlayer)
             {
                 SoundManager.instance.PlayEffect1(bounceSound);
             }
@@ -253,14 +179,6 @@ public class Player : Photon.PunBehaviour, IPunObservable
             }
         }
     }
-
-    /*void OnCollisionStay2D(Collision2D collision) // Doesn't work on the wall...
-    {
-        if(collision.gameObject.tag == "Friction")
-        {
-            isGroundedVar = true;
-        }
-    }*/
 
     private void Flip(float horizontal)
     {
@@ -277,24 +195,18 @@ public class Player : Photon.PunBehaviour, IPunObservable
     void ReturnToCheckPoint()
     {
         Debug.Log("loading scene again...");
-        //dataBaseScript
-        //PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex);
         PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex);
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void HandleMovement(float Horizontal)
     {
-        if (!currentPlayer)
+        if (firstPlayer)
         {
             if (Horizontal != 0 && !SoundManager.instance.moveEfxSource1.isPlaying)
             {
                 SoundManager.instance.PlayMove1(moveSound1);
             }
-            else if (rigidBody.velocity.y > 0 && rigidBody.velocity.y < 10)
-            {
-                //making sure to not cancel the jump sound
-            }
+            else if (rigidBody.velocity.y > 0 && rigidBody.velocity.y < 10){}//making sure to not cancel the jump sound
             else if (Horizontal == 0 && SoundManager.instance.moveEfxSource1.isPlaying)
             {
                 SoundManager.instance.moveEfxSource1.Stop();
@@ -306,10 +218,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
             {
                 SoundManager.instance.PlayMove2(moveSound1);
             }
-            else if (rigidBody.velocity.y > 0 && rigidBody.velocity.y < 10)
-            {
-                //making sure to not cancel the jump sound
-            }
+            else if (rigidBody.velocity.y > 0 && rigidBody.velocity.y < 10) {}//making sure to not cancel the jump sound
             else if (Horizontal == 0 && SoundManager.instance.moveEfxSource2.isPlaying)
             {
                 SoundManager.instance.moveEfxSource2.Stop();
@@ -334,9 +243,9 @@ public class Player : Photon.PunBehaviour, IPunObservable
         if (isGroundedVar)
         {
             isGroundedVar = false;
-            if (Input.GetKeyDown(jumpKey))//KeyCode.W))
+            if (Input.GetKeyDown(jumpKey))
             {
-                if (!currentPlayer)
+                if (firstPlayer)
                 {
                     SoundManager.instance.PlayMove1(moveSound1);
                 }
@@ -359,7 +268,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
             }
             else if (rigidBody.velocity.y < 1.5 && rigidBody.velocity.y > 0)
             {
-                if (!currentPlayer)
+                if (firstPlayer)
                 {
                     SoundManager.instance.moveEfxSource1.Stop();
                 }
@@ -375,9 +284,9 @@ public class Player : Photon.PunBehaviour, IPunObservable
             myAnimator.SetBool("boostDown", false);
             clickingDown = false;
             FlameLights[1].SetActive(false);
-            if (Input.GetKey(boostDownKey))//KeyCode.S))
+            if (Input.GetKey(boostDownKey))
             {
-                if (!currentPlayer)
+                if (firstPlayer)
                 {
                     if (!SoundManager.instance.moveEfxSource1.isPlaying)
                     {
@@ -392,12 +301,10 @@ public class Player : Photon.PunBehaviour, IPunObservable
                     }
                 }
                 clickingDown = true;
-                //rigidBody.AddForce(new Vector2(0, -jumpForce / 30));
                 myAnimator.SetBool("boostDown", true);
                 FlameLights[1].SetActive(true);
             }
         }
-
     }
 
     /*
@@ -423,30 +330,5 @@ public class Player : Photon.PunBehaviour, IPunObservable
         return false;
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (photonView.isMine)
-        {
-            /*if (stream.isWriting)
-            {
-                // We own this player: send the others our data
-                stream.SendNext(damaged);
-            }*/
-        }
-        else
-        {
-            /*// Network player, receive data
-            otherPlayerDamaged = (bool)stream.ReceiveNext();
-            //Debug.Log(damaged);
-            if (!otherPlayerDamaged)
-            {
-                Debug.Log("Recieved NOT Damaged");
-                //Time.timeScale = 1;
-            }
-            else
-            {
-                Debug.Log("Recieved Damaged!");
-            }*/
-        }
-    }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){}
 }

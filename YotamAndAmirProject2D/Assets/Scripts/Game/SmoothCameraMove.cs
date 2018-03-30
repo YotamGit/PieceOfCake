@@ -2,6 +2,7 @@
 
 public class SmoothCameraMove : MonoBehaviour
 {
+    [Header("Properties")]
     public Transform target;
 
     public float smoothSpeed;
@@ -13,16 +14,15 @@ public class SmoothCameraMove : MonoBehaviour
     public float yMax;
     public float yMin;
 
-    // Update is called once per frame
-    void FixedUpdate (){
+
+    void FixedUpdate ()
+    {
         if (target)
         {
             Vector3 desiredPos = target.position + offset;
-            Vector3 calmpedPos = new Vector3(Mathf.Clamp(transform.position.x, xMin, xMax), Mathf.Clamp(transform.position.y, yMin, yMax), transform.position.z);
-            Vector3 smoothedPos = Vector3.Lerp(calmpedPos, desiredPos, smoothSpeed);
+            Vector3 calmpedPos = new Vector3(Mathf.Clamp(transform.position.x, xMin, xMax), Mathf.Clamp(transform.position.y, yMin, yMax), transform.position.z);//limiting the camera movement
+            Vector3 smoothedPos = Vector3.Lerp(calmpedPos, desiredPos, smoothSpeed);//making the camera move smoothly
             transform.position = smoothedPos;
         }
-        
-        //target.LookAt(target); // ONLY FOR 3D!
     }
 }

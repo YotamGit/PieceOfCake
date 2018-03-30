@@ -8,7 +8,8 @@ public class LeverHandler : Photon.MonoBehaviour ,IPunObservable
     [SerializeField]
     private Sprite turnedOff, turnedOn;
 
-    [SerializeField] private bool isActivated = false;
+    [SerializeField]
+    private bool isActivated = false;
 
     public AudioClip LeverSound;
 
@@ -29,10 +30,7 @@ public class LeverHandler : Photon.MonoBehaviour ,IPunObservable
         doorCol = door.GetComponent<Collider2D>();
     }
 	
-	// Update is called once per frame
-	void Update (){
-    }
-
+    //implement as RPC
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (photonView.isMine)
