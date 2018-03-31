@@ -21,6 +21,7 @@ public class DisableGameObjectButton : Photon.MonoBehaviour, IPunObservable
     [Header("Audio")]
     public AudioClip clicked;
     public AudioClip released;
+    public AudioSource source;
 
     void Start()
     {
@@ -36,16 +37,9 @@ public class DisableGameObjectButton : Photon.MonoBehaviour, IPunObservable
         {
             if (!isPressed)
             {
-                if (col.gameObject.tag == "Player1")
-                {
-                    SoundManager.instance.efxSource1.volume = 0.7f;
-                    SoundManager.instance.PlayEffect1(clicked);
-                }
-                else
-                {
-                    SoundManager.instance.efxSource2.volume = 0.7f;
-                    SoundManager.instance.PlayEffect2(clicked);
-                }
+                source.volume = 0.7f;
+                SoundManager.instance.PlayEffect(source, clicked);
+
                 isPressed = true;
                 PressOrReleasHandle(isPressed);//disabling the object
                 buttonSpriteRend.sprite = turnedOn;
@@ -60,18 +54,9 @@ public class DisableGameObjectButton : Photon.MonoBehaviour, IPunObservable
         {
             if (isPressed)
             {
-                if (col.gameObject.tag == "Player1")
-                {
-                    SoundManager.instance.efxSource1.volume = 0.7f;
-                    SoundManager.instance.PlayEffect1(released);
+                source.volume = 0.7f;
+                SoundManager.instance.PlayEffect(source, released);
 
-                }
-                else
-                {
-                    SoundManager.instance.efxSource2.volume = 0.7f;
-                    SoundManager.instance.PlayEffect2(released);
-
-                }
                 isPressed = false;
                 PressOrReleasHandle(isPressed);//enabling the object
                 buttonSpriteRend.sprite = turnedOff;

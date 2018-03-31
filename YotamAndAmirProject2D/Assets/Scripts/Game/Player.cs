@@ -46,7 +46,9 @@ public class Player : Photon.PunBehaviour, IPunObservable
     public AudioClip moveSound1;
     public AudioClip moveSound2;
     public AudioClip bounceSound;
-
+    public AudioSource efxSource;
+    public AudioSource moveSource;
+    public AudioListener listener;
 
     private Rigidbody2D rigidBody;
     private Animator myAnimator;
@@ -60,8 +62,8 @@ public class Player : Photon.PunBehaviour, IPunObservable
 
     private DBCManager dataBaseScript;
 
-    private bool firstPlayer = false;
     private PhotonView photonView;
+
 
     void Start()
     {
@@ -79,9 +81,9 @@ public class Player : Photon.PunBehaviour, IPunObservable
 
         if (gameObject.tag == "Player1")
         {
-            firstPlayer = true;
             if (GameObject.FindGameObjectWithTag("Player2") != null)
             {
+                GameObject.FindGameObjectWithTag("Player2").GetComponent<AudioListener>().enabled = false;
                 Time.timeScale = 1f;
                 photonView.RPC("DisableWaitingScreen", PhotonTargets.All);
             }
@@ -90,6 +92,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
         {
             if (GameObject.FindGameObjectWithTag("Player1") != null)
             {
+                GameObject.FindGameObjectWithTag("Player1").GetComponent<AudioListener>().enabled = false;
                 Time.timeScale = 1f;
                 photonView.RPC("DisableWaitingScreen", PhotonTargets.All);
             }
@@ -142,12 +145,8 @@ public class Player : Photon.PunBehaviour, IPunObservable
 
             if (!abilityManager.Immune) // don't have dmg immune
             {
-                SoundManager.instance.moveEfxSource1.Stop();
-                SoundManager.instance.efxSource1.Stop();
-
-                SoundManager.instance.moveEfxSource2.Stop();
-                SoundManager.instance.efxSource2.Stop();
-
+                moveSource.Stop();
+                efxSource.Stop();
                 SoundManager.instance.musicSource.Stop();
 
                 //telling the other player to run the ReturnToCheckPoint function
@@ -169,14 +168,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
     {
         if (col.gameObject.tag == "Bounce")
         {
-            if(firstPlayer)
-            {
-                SoundManager.instance.PlayEffect1(bounceSound);
-            }
-            else
-            {
-                SoundManager.instance.PlayEffect2(bounceSound);
-            }
+            SoundManager.instance.PlayEffect(efxSource, bounceSound);
         }
     }
 
@@ -200,30 +192,16 @@ public class Player : Photon.PunBehaviour, IPunObservable
 
     private void HandleMovement(float Horizontal)
     {
-        if (firstPlayer)
+        if (Horizontal != 0 && !moveSource.isPlaying)
         {
-            if (Horizontal != 0 && !SoundManager.instance.moveEfxSource1.isPlaying)
-            {
-                SoundManager.instance.PlayMove1(moveSound1);
-            }
-            else if (rigidBody.velocity.y > 0 && rigidBody.velocity.y < 10){}//making sure to not cancel the jump sound
-            else if (Horizontal == 0 && SoundManager.instance.moveEfxSource1.isPlaying)
-            {
-                SoundManager.instance.moveEfxSource1.Stop();
-            }
+            SoundManager.instance.PlayMove(moveSource, moveSound1);
         }
-        else
+        else if (rigidBody.velocity.y > 0 && rigidBody.velocity.y < 10){}//making sure to not cancel the jump sound
+        else if (Horizontal == 0 && moveSource.isPlaying)
         {
-            if (Horizontal != 0 && !SoundManager.instance.moveEfxSource2.isPlaying)
-            {
-                SoundManager.instance.PlayMove2(moveSound1);
-            }
-            else if (rigidBody.velocity.y > 0 && rigidBody.velocity.y < 10) {}//making sure to not cancel the jump sound
-            else if (Horizontal == 0 && SoundManager.instance.moveEfxSource2.isPlaying)
-            {
-                SoundManager.instance.moveEfxSource2.Stop();
-            }
+            moveSource.Stop();
         }
+        
 
         rigidBody.velocity = new Vector2(Horizontal * movementSpeed, rigidBody.velocity.y); // adds speed to the right/left according to the player's input
         if (rigidBody.velocity.x > 0.01 || rigidBody.velocity.x < -0.01) 
@@ -245,14 +223,8 @@ public class Player : Photon.PunBehaviour, IPunObservable
             isGroundedVar = false;
             if (Input.GetKeyDown(jumpKey))
             {
-                if (firstPlayer)
-                {
-                    SoundManager.instance.PlayMove1(moveSound1);
-                }
-                else
-                {
-                    SoundManager.instance.PlayMove2(moveSound1);
-                }
+                SoundManager.instance.PlayMove(moveSource, moveSound1);
+
                 rigidBody.AddForce(new Vector2(0, jumpForce));
                 myAnimator.SetBool("jump", true);
                 FlameLights[2].SetActive(true);
@@ -268,14 +240,8 @@ public class Player : Photon.PunBehaviour, IPunObservable
             }
             else if (rigidBody.velocity.y < 1.5 && rigidBody.velocity.y > 0)
             {
-                if (firstPlayer)
-                {
-                    SoundManager.instance.moveEfxSource1.Stop();
-                }
-                else
-                {
-                    SoundManager.instance.moveEfxSource2.Stop();
-                }
+                moveSource.Stop();
+
                 myAnimator.SetBool("jump", false);
                 FlameLights[2].SetActive(false);
             }
@@ -284,22 +250,14 @@ public class Player : Photon.PunBehaviour, IPunObservable
             myAnimator.SetBool("boostDown", false);
             clickingDown = false;
             FlameLights[1].SetActive(false);
+
             if (Input.GetKey(boostDownKey))
             {
-                if (firstPlayer)
+                if (!moveSource.isPlaying)
                 {
-                    if (!SoundManager.instance.moveEfxSource1.isPlaying)
-                    {
-                        SoundManager.instance.PlayMove1(moveSound1);
-                    }
+                    SoundManager.instance.PlayMove(moveSource, moveSound1);
                 }
-                else
-                {
-                    if (!SoundManager.instance.moveEfxSource2.isPlaying)
-                    {
-                        SoundManager.instance.PlayMove2(moveSound1);
-                    }
-                }
+ 
                 clickingDown = true;
                 myAnimator.SetBool("boostDown", true);
                 FlameLights[1].SetActive(true);

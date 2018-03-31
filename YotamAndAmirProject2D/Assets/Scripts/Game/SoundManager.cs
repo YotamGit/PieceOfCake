@@ -2,26 +2,27 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SoundManager : MonoBehaviour {
-    [Header("Player1")]
-    public AudioSource efxSource1;//key channel Player1
-    public AudioSource moveEfxSource1;//move channel Player1
+public class SoundManager : MonoBehaviour
+{
+    //[Header("Player1")]
+    //public AudioSource efxSource;//key channel Player1
+    //public AudioSource moveEfxSource;//move channel Player1
 
     [Space]
 
-    [Header("Player2")]
-    public AudioSource efxSource2;//key channel Player2
-    public AudioSource moveEfxSource2;//move channel Player2
+    // [Header("Player2")]
+    //public AudioSource efxSource2;//key channel Player2
+    //public AudioSource moveEfxSource2;//move channel Player2
 
     [Header("General")]
-    public AudioSource deathEfxSource;
-    public AudioSource musicSource;              
-    
+    //public AudioSource deathEfxSource;
+    public AudioSource musicSource;
+
     public static SoundManager instance = null;     //Allows other scripts to call functions from SoundManager.   
-    
+
     public float lowPitchRange = .95f;
     public float highPitchRange = 1.05f;
-    
+
 
     void Awake()
     {
@@ -42,48 +43,22 @@ public class SoundManager : MonoBehaviour {
     }
 
     //Used to play single sound clips.
-    public void PlayEffect1(AudioClip clip)
+    public void PlayEffect(AudioSource source, AudioClip clip)
     {
         //Set the clip of our efxSource audio source to the clip passed in as a parameter.
-        efxSource1.clip = clip;
+        source.clip = clip;
 
         //Play the clip.
-        efxSource1.PlayDelayed(0);
+        source.PlayDelayed(0);
     }
 
-    public void PlayMove1(AudioClip clip)
+    public void PlayMove(AudioSource source, AudioClip clip)
     {
         //Set the clip of our efxSource audio source to the clip passed in as a parameter.
-        moveEfxSource1.clip = clip;
+        source.clip = clip;
 
         //Play the clip.
-        moveEfxSource1.PlayDelayed(0);
-    }
-
-    public void PlayEffect2(AudioClip clip)
-    {
-        //Set the clip of our efxSource audio source to the clip passed in as a parameter.
-        efxSource2.clip = clip;
-
-        //Play the clip.
-        efxSource2.PlayDelayed(0);
-    }
-
-    public void PlayMove2(AudioClip clip)
-    {
-        //Set the clip of our efxSource audio source to the clip passed in as a parameter.
-        moveEfxSource2.clip = clip;
-
-        //Play the clip.
-        moveEfxSource2.PlayDelayed(0);
-    }
-
-    public void PlayDeathEffect(AudioClip clip)
-    {
-        deathEfxSource.clip = clip;
-
-        //Play the clip.
-        deathEfxSource.PlayDelayed(0);
+        source.PlayDelayed(0);
     }
 
     //RandomizeSfx chooses randomly between various audio clips and slightly changes their pitch.

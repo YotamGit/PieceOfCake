@@ -21,6 +21,7 @@ public class ButtonHandle : Photon.MonoBehaviour , IPunObservable
     [Header("Audio")]
     public AudioClip clicked;
     public AudioClip released;
+    public AudioSource source;
 
     void Start ()
     {
@@ -35,17 +36,10 @@ public class ButtonHandle : Photon.MonoBehaviour , IPunObservable
         if (col.gameObject.tag.Substring(0, 4) == "Cube" || col.gameObject.tag == "Player1" | col.gameObject.tag == "Player2")//activating the button
         {
             if (!isPressed)
-            {
-                if(col.gameObject.tag == "Player1")
-                {
-                    SoundManager.instance.efxSource1.volume = 0.7f;
-                    SoundManager.instance.PlayEffect1(clicked);
-                }
-                else
-                {
-                    SoundManager.instance.efxSource2.volume = 0.7f;
-                    SoundManager.instance.PlayEffect2(clicked);
-                }
+            { 
+                source.volume = 0.7f;
+                SoundManager.instance.PlayEffect(source, clicked);
+
                 isPressed = true;
                 PressOrReleasHandle(isPressed);//opening the door
                 buttonSpriteRend.sprite = turnedOn;//changing the sprite
@@ -60,18 +54,9 @@ public class ButtonHandle : Photon.MonoBehaviour , IPunObservable
         {
             if (isPressed)
             {
-                if (col.gameObject.tag == "Player1")
-                {
-                    SoundManager.instance.efxSource1.volume = 0.7f;
-                    SoundManager.instance.PlayEffect1(released);
+                source.volume = 0.7f;
+                SoundManager.instance.PlayEffect(source,  released);
 
-                }
-                else
-                {
-                    SoundManager.instance.efxSource2.volume = 0.7f;
-                    SoundManager.instance.PlayEffect2(released);
-
-                }
                 isPressed = false;
                 PressOrReleasHandle(isPressed);//closing the door
                 buttonSpriteRend.sprite = turnedOff;//changing the button sprite

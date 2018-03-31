@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrabHandler : Photon.MonoBehaviour , IPunObservable
+public class GrabHandler : Photon.MonoBehaviour, IPunObservable
 {
     private GameObject VictoryScreen;//will hold the winning screen
     public LayerMask notGrabMask; // so the player will not drop the key/cube inside a collider
@@ -35,6 +35,9 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
     public AudioClip pickUpSound;
     public AudioClip doorSound;
     public AudioClip VictoryTheme;
+    public AudioSource efxSource;
+    public AudioSource moveSource;
+
 
     private PhotonView photonView;
 
@@ -75,11 +78,11 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
         // placing the held object in it's position if needed
         if (grabbedKey)
         {
-            if(heldKey)
+            if (heldKey)
             {
                 if (otherPlayerGrabHandler.grabbedKey && gameObject.tag == "Player2")
                 {
-                    if(otherPlayerGrabHandler.heldKey.tag == heldKey.tag)
+                    if (otherPlayerGrabHandler.heldKey.tag == heldKey.tag)
                     {
                         heldKey = null;
                         grabbedKey = false;
@@ -126,7 +129,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
     [PunRPC]
     private void GotObj(string objTag, string playerTag, bool objTybe) //objType is false => Key - objType is true => Cube
     {
-        if(gameObject.tag == playerTag)
+        if (gameObject.tag == playerTag)
         {
             BoxCollider2D tempCol = GameObject.FindGameObjectWithTag(objTag).GetComponent<BoxCollider2D>();
             if (objTybe) // Recieving the cube
@@ -177,11 +180,11 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
         }
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){}//the function is needed to synchronized the objects
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }//the function is needed to synchronized the objects
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Victory")
+        if (col.gameObject.tag == "Victory")
         {
             photonView.RPC("Victory", PhotonTargets.All);//activating the victory function
         }
@@ -189,18 +192,11 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
         {
             if (!grabbedKey && !grabbedCube)
             {
-                if (gameObject.tag == "Player1")//activating sound effects
-                {
-                    SoundManager.instance.efxSource1.pitch = 1.8f;
-                    SoundManager.instance.efxSource1.volume = 0.3f;
-                    SoundManager.instance.PlayEffect1(pickUpSound);
-                }
-                else
-                {
-                    SoundManager.instance.efxSource2.pitch = 1.8f;
-                    SoundManager.instance.efxSource2.volume = 0.3f;
-                    SoundManager.instance.PlayEffect2(pickUpSound);
-                }
+
+                efxSource.pitch = 1.8f;
+                efxSource.volume = 0.3f;
+                SoundManager.instance.PlayEffect(efxSource, pickUpSound);
+
                 photonView.RPC("GotObj", PhotonTargets.All, col.gameObject.tag, gameObject.tag, false);
             }
         }
@@ -210,7 +206,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
     void Victory()
     {
         GameObject.FindGameObjectWithTag("GameLogic").GetComponent<PhotonNetworkManager>().wonGame = true;
-        
+
         if (PhotonNetwork.inRoom)
         {
             PhotonNetwork.LeaveRoom();
@@ -225,16 +221,14 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
         }
 
         gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        SoundManager.instance.moveEfxSource1.Stop();
-        SoundManager.instance.efxSource1.Stop();
-        SoundManager.instance.moveEfxSource2.Stop();
-        SoundManager.instance.efxSource2.Stop();
+        efxSource.Stop();
+        moveSource.Stop();
         SoundManager.instance.musicSource.Stop();
 
         SoundManager.instance.musicSource.loop = false;
         SoundManager.instance.musicSource.clip = VictoryTheme;
         SoundManager.instance.musicSource.Play();
-        
+
         Time.timeScale = 1;
         Destroy(gameObject);
     }
@@ -245,16 +239,9 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
         {
             if (heldKey.gameObject.tag[3] == col.gameObject.tag[4]) // blue key + blue door collision
             {
-                if (gameObject.tag == "Player1")
-                {
-                    SoundManager.instance.efxSource1.volume = 0.2f;
-                    SoundManager.instance.PlayEffect1(doorSound);
-                }
-                else
-                {
-                    SoundManager.instance.efxSource2.volume = 0.2f;
-                    SoundManager.instance.PlayEffect2(doorSound);
-                }
+                efxSource.volume = 0.2f;
+                SoundManager.instance.PlayEffect(efxSource, doorSound);
+
                 CancelObject(col);//canceling the door
             }
         }
@@ -262,7 +249,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
         {
             return;
         }
-        else if ((col.gameObject.tag.Substring(0,4) == "Cube" && (Input.GetKey(pickUpKey))))//picking up a cube
+        else if ((col.gameObject.tag.Substring(0, 4) == "Cube" && (Input.GetKey(pickUpKey))))//picking up a cube
         {
             if (!grabbedCube && !grabbedKey)
             {
@@ -270,7 +257,7 @@ public class GrabHandler : Photon.MonoBehaviour , IPunObservable
             }
         }
     }
-    
+
     private void CancelObject(Collision2D col)
     {
         Destroy(heldKey.gameObject);//destroying thr key
