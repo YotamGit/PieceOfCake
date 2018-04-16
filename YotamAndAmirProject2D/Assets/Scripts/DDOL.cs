@@ -11,7 +11,6 @@ public class DDOL : MonoBehaviour
         {
             if (PhotonNetwork.connected)
             {
-                Debug.Log("Returned Connected");
                 disableOnReturn.SetActive(false);
                 enableOnReturn.SetActive(true);
             }

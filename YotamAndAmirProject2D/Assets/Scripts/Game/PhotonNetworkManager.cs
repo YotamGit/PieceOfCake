@@ -22,35 +22,69 @@ public class PhotonNetworkManager : MonoBehaviour
     [HideInInspector]
     public bool wonGame = false;
 
-    //private bool playerLeftRoom;
-
     public KeyCode MenuKey;
+
+    [SerializeField]
+    private GameObject WinningAloneScreen, WinningTogetherScreen, WinningNoneScreen, WinningWaitingScreen, WinningChoiceScreen; //will hold all the winning screens
+
     private GameObject waitingScreen;
-   
+
+    private GameObject mainPlayer; // the player you control
+
     private void Start()
     {
         waitingScreen = GameObject.FindGameObjectWithTag("WaitingText");
         waitingScreen.SetActive(true);
-
-        Transform tempPlayer;
+        
 
         lobbyCamera.SetActive(false);
         if (PhotonNetwork.isMasterClient)
         {
             Debug.Log("Creating player 1...");
-            tempPlayer = PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0).transform;
+            mainPlayer = PhotonNetwork.Instantiate(player1.name, spawnPoint1.position, spawnPoint1.rotation, 0);
         }
         else
         {
             Debug.Log("Creating player 2...");
-            tempPlayer = PhotonNetwork.Instantiate(player2.name, spawnPoint2.position, spawnPoint2.rotation, 0).transform;
+            mainPlayer = PhotonNetwork.Instantiate(player2.name, spawnPoint2.position, spawnPoint2.rotation, 0);
         }
         GameObject mainCameraObj = Instantiate(mainCamera); // Creating a camera
-        mainCameraObj.GetComponent<SmoothCameraMove>().target = tempPlayer.transform; // Assighning the player to the target
+        mainCameraObj.GetComponent<SmoothCameraMove>().target = mainPlayer.transform; // Assighning the player to the target
 
         Debug.Log("Player created");
     }
+    /*if (PhotonNetwork.isMasterClient && tag == "Player1" || !PhotonNetwork.isMasterClient && tag == "Player2") // if one of either main players
+        {
+            WinningAloneScreen = GameObject.FindGameObjectWithTag("WinningAlone");//getting the WinningAlone screen
+            if (WinningAloneScreen != null)
+            {
+                WinningAloneScreen.SetActive(false);
+            }
 
+            WinningTogetherScreen = GameObject.FindGameObjectWithTag("WinningTogether");//getting the WinningTogether screen
+            if (WinningTogetherScreen != null)
+            {
+                WinningTogetherScreen.SetActive(false);
+            }
+
+            WinningNoneScreen = GameObject.FindGameObjectWithTag("WinningNone");//getting the WinningNone screen
+            if (WinningNoneScreen != null)
+            {
+                WinningNoneScreen.SetActive(false);
+            }
+
+            WinningWaitingScreen = GameObject.FindGameObjectWithTag("WinningWaiting");//getting the WinningWaiting screen
+            if (WinningWaitingScreen != null)
+            {
+                WinningWaitingScreen.SetActive(false);
+            }
+
+            WinningWaitingScreen = GameObject.FindGameObjectWithTag("WinningChoice");//getting the WinningWaiting screen
+            if (WinningWaitingScreen != null)
+            {
+                WinningWaitingScreen.SetActive(false);
+            }
+        }*/
     private void Update()
     {
         // setting the instructions to the opposite of its current enable state when clicking on the M button
@@ -96,5 +130,63 @@ public class PhotonNetworkManager : MonoBehaviour
         TextMeshProUGUI text = waitingScreen.GetComponentInChildren<TextMeshProUGUI>();
         text.text = "Player One Dissconnected";
         PhotonNetwork.LeaveRoom();
+    }
+
+    public void DisplayWinningWaiting()
+    {
+        WinningWaitingScreen.SetActive(true);
+        Destroy(mainPlayer);
+    }
+
+    public void DisplayWinningChoice()
+    {
+        WinningChoiceScreen.SetActive(true);
+    }
+
+    public void WinningChoice(bool toShare)
+    {
+        PhotonView photonView = PhotonView.Get(this);
+        if (toShare)
+        {
+            photonView.RPC("ClickedShare", PhotonTargets.All);
+        }
+        else
+        {
+            photonView.RPC("ClickedDontShare", PhotonTargets.Others);
+            WinningAloneScreen.SetActive(true);
+
+            StartCoroutine(GameObject.FindGameObjectWithTag("DataBaseManager").GetComponent<DBCManager>().AddVictoryCount(0, 2));
+            // add score to self 2
+        }
+        WinningChoiceScreen.SetActive(false);
+    }
+
+    [PunRPC]
+    void ClickedShare()
+    {
+        WinningWaitingScreen.SetActive(false);
+
+        WinningTogetherScreen.SetActive(true);
+        Time.timeScale = 1;
+        if (PhotonNetwork.inRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+
+        StartCoroutine(GameObject.FindGameObjectWithTag("DataBaseManager").GetComponent<DBCManager>().AddVictoryCount(1, 1));
+        // add score to self 1
+    }
+
+    [PunRPC]
+    void ClickedDontShare()
+    {
+        WinningWaitingScreen.SetActive(false);
+
+        WinningNoneScreen.SetActive(true);
+        Time.timeScale = 1;
+        if (PhotonNetwork.inRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
     }
 }

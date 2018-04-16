@@ -2,9 +2,8 @@
 using System.Collections;
 using TMPro;
 using UnityEngine.UI;
-using DatabaseControl; // << Remember to add this reference to your scripts which use DatabaseControl
-using UnityEngine.SceneManagement;
-//ignore this comment
+using DatabaseControl; 
+
 public class DBCManager : MonoBehaviour {
 
     //All public variables bellow are assigned in the Inspector
@@ -210,6 +209,34 @@ public class DBCManager : MonoBehaviour {
             int Deaths = System.Convert.ToInt32(splitStr[2].Substring(7, splitStr[2].Length - 7)) + 1;
             string newDeath = "Deaths: " + Deaths.ToString();
             StartCoroutine(SetDataAndRestart(splitStr[0] + "\n" + splitStr[1] + "\n" + newDeath));
+        }
+    }
+    public IEnumerator AddVictoryCount(int cakesShared, int cakesEaten)
+    {
+        IEnumerator e = DCF.GetUserData(playerUsername, playerPassword); // << Send request to get the player's data string. Provides the username and password
+        while (e.MoveNext())
+        {
+            yield return e.Current;
+        }
+        string response = e.Current as string; // << The returned string from the request
+
+        if (response == "Error")
+        {
+            //There was another error. Automatically logs player out. This error message should never appear, but is here just in case.
+            PhotonNetwork.Disconnect();
+        }
+        else
+        {
+            string[] splitStr = response.Split('\n');
+            
+            int cakesEatenint = System.Convert.ToInt32(splitStr[0].Substring(13, splitStr[0].Length - 13)) + cakesEaten;
+            string newCakesEaten = "Cakes Eaten: " + cakesEatenint.ToString();
+
+            int cakesSharedint = System.Convert.ToInt32(splitStr[1].Substring(13, splitStr[1].Length - 13)) + cakesEaten;
+            string newCakesShared = "Cakes Shared: " + cakesSharedint.ToString();
+
+            Debug.Log("Setting: " + newCakesEaten + "\n" + newCakesShared + "\n" + splitStr[1]);
+            StartCoroutine(SetDataAndRestart(newCakesEaten + "\n" + newCakesShared + "\n" + splitStr[1]));
         }
     }
     IEnumerator SetData(string data)

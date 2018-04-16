@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GrabHandler : Photon.MonoBehaviour, IPunObservable
 {
-    private GameObject VictoryScreen;//will hold the winning screen
     public LayerMask notGrabMask; // so the player will not drop the key/cube inside a collider
     [Space]
     [Header("Key Bindings")]
@@ -38,16 +37,17 @@ public class GrabHandler : Photon.MonoBehaviour, IPunObservable
     public AudioSource efxSource;
     public AudioSource moveSource;
 
+    private PhotonNetworkManager gl;
 
     private PhotonView photonView;
 
     void Start()
     {
         photonView = PhotonView.Get(this);
-        VictoryScreen = GameObject.FindGameObjectWithTag("WinningText");//getting the wininng screen
-        if (VictoryScreen != null) // preventing accidents that occur when both of the grabHandlers try to get the screen
+        if (PhotonNetwork.isMasterClient && tag == "Player1" || !PhotonNetwork.isMasterClient && tag == "Player2") // if one of either main players
         {
-            VictoryScreen.SetActive(false);
+            gl = GameObject.FindGameObjectWithTag("GameLogic").GetComponent<PhotonNetworkManager>();
+            Debug.Log("Found GameLogic");
         }
     }
 
@@ -186,7 +186,11 @@ public class GrabHandler : Photon.MonoBehaviour, IPunObservable
     {
         if (col.gameObject.tag == "Victory")
         {
-            photonView.RPC("Victory", PhotonTargets.All);//activating the victory function
+            photonView.RPC("WaitVictory", PhotonTargets.Others);//telling the other player to wait 30s - exit if that happens
+            gl.DisplayWinningChoice();
+            Victory();
+            Destroy(gameObject);
+            //photonView.RPC("Victory", PhotonTargets.All);//activating the victory function
         }
         else if (col.gameObject.tag.Substring(0, 3) == "Key")
         {
@@ -203,24 +207,29 @@ public class GrabHandler : Photon.MonoBehaviour, IPunObservable
     }
 
     [PunRPC]
+    void WaitVictory()
+    {
+        if (gl)
+            gl.DisplayWinningWaiting();
+        else
+            GameObject.FindGameObjectWithTag("GameLogic").GetComponent<PhotonNetworkManager>().DisplayWinningWaiting();
+
+        Destroy(gameObject);
+    }
+    //TODO:
+    /*   30s timer for sharing choice,
+         while the other player is awaits
+         ...
+         change scores according to choice
+         ...
+         enable exit button
+    */
+    
     void Victory()
     {
-        GameObject.FindGameObjectWithTag("GameLogic").GetComponent<PhotonNetworkManager>().wonGame = true;
+        gl.wonGame = true;
 
-        if (PhotonNetwork.inRoom)
-        {
-            PhotonNetwork.LeaveRoom();
-        }
-        if (VictoryScreen != null) // telling the other player to enable the victoryScreen if we dont have it
-        {
-            VictoryScreen.SetActive(true);
-        }
-        else
-        {
-            otherPlayerGrabHandler.VictoryScreen.SetActive(true);
-        }
-
-        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        //gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         efxSource.Stop();
         moveSource.Stop();
         SoundManager.instance.musicSource.Stop();

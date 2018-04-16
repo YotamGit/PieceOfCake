@@ -56,4 +56,7 @@ MonoBehaviour:
   - DisableCancelButton
   - LoadScene
   - SendCurrVictoryPos
+  - WaitVictory
+  - ClickedDontShare
+  - ClickedShare
   DisableAutoOpenWizard: 1

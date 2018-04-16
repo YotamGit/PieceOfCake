@@ -41,6 +41,11 @@ TagManager:
   - WinningText
   - Wall
   - DataBaseManager
+  - WinningWaiting
+  - WinningTogether
+  - WinningAlone
+  - WinningNone
+  - WinningChoice
   layers:
   - Default
   - TransparentFX

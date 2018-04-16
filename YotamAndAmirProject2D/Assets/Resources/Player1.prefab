@@ -535,7 +535,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1984280513756392}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!82 &82190566321461028
 AudioSource:
   m_ObjectHideFlags: 1
@@ -954,6 +954,7 @@ MonoBehaviour:
   bounceSound: {fileID: 8300000, guid: 65425ccbc5a68c14b82893020a20bb47, type: 3}
   efxSource: {fileID: 82563453966198108}
   moveSource: {fileID: 82190566321461028}
+  listener: {fileID: 0}
   isGroundedVar: 0
 --- !u!114 &114243899895046000
 MonoBehaviour:
