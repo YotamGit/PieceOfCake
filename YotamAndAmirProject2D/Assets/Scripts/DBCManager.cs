@@ -235,8 +235,7 @@ public class DBCManager : MonoBehaviour {
             int cakesSharedint = System.Convert.ToInt32(splitStr[1].Substring(13, splitStr[1].Length - 13)) + cakesEaten;
             string newCakesShared = "Cakes Shared: " + cakesSharedint.ToString();
 
-            Debug.Log("Setting: " + newCakesEaten + "\n" + newCakesShared + "\n" + splitStr[1]);
-            StartCoroutine(SetDataAndRestart(newCakesEaten + "\n" + newCakesShared + "\n" + splitStr[1]));
+            StartCoroutine(SetDataAndRestart(newCakesEaten + "\n" + newCakesShared + "\n" + splitStr[2]));
         }
     }
     IEnumerator SetData(string data)

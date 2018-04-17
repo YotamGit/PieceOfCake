@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Player : Photon.PunBehaviour, IPunObservable
 {
-
     public string PlayerMovement;
     public GameObject[] FlameLights;
 
@@ -139,7 +138,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
     {
         //SoundManager.instance.efxSource.Stop();
         // Checking if the player got damaged. reseting his position if he did
-        if (col.gameObject.tag == "Dangerous")//&& gameObject.GetComponent<AbilityManager>().Immune == false)
+        if (col.gameObject.tag == "Dangerous" && ((PhotonNetwork.isMasterClient && tag == "Player1") || (!PhotonNetwork.isMasterClient && tag == "Player2")))//&& gameObject.GetComponent<AbilityManager>().Immune == false)
         {
             AbilityManager abilityManager = gameObject.GetComponent<AbilityManager>();
 
