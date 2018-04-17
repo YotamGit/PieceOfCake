@@ -59,4 +59,5 @@ MonoBehaviour:
   - WaitVictory
   - ClickedDontShare
   - ClickedShare
+  - StartWaitChoice
   DisableAutoOpenWizard: 1

@@ -184,12 +184,11 @@ public class GrabHandler : Photon.MonoBehaviour, IPunObservable
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Victory")
+        if (col.gameObject.tag == "Victory" && ((PhotonNetwork.isMasterClient && tag == "Player1") || (!PhotonNetwork.isMasterClient && tag == "Player2")))
         {
             photonView.RPC("WaitVictory", PhotonTargets.Others);//telling the other player to wait 30s - exit if that happens
             gl.DisplayWinningChoice();
             Victory();
-            Destroy(gameObject);
             //photonView.RPC("Victory", PhotonTargets.All);//activating the victory function
         }
         else if (col.gameObject.tag.Substring(0, 3) == "Key")

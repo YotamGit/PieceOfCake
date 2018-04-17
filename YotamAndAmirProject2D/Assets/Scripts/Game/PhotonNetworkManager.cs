@@ -136,11 +136,28 @@ public class PhotonNetworkManager : MonoBehaviour
     {
         WinningWaitingScreen.SetActive(true);
         Destroy(mainPlayer);
+        PhotonView photonView = PhotonView.Get(this);
+        photonView.RPC("StartWaitChoice", PhotonTargets.All);
     }
 
-    public void DisplayWinningChoice()
+    public void DisplayWinningChoice() // this happens for the player that got hte cake
     {
         WinningChoiceScreen.SetActive(true);
+        PhotonView photonView = PhotonView.Get(this);
+        photonView.RPC("StartWaitChoice", PhotonTargets.All);
+    }
+    
+    [PunRPC]
+    private void StartWaitChoice()
+    {
+        wonGame = true;
+        StartCoroutine(ChoiceAutoShare());
+    }
+
+    private IEnumerator ChoiceAutoShare()
+    {
+        yield return new WaitForSeconds(30f);
+        WinningChoice(true);
     }
 
     public void WinningChoice(bool toShare)
@@ -167,12 +184,12 @@ public class PhotonNetworkManager : MonoBehaviour
         WinningWaitingScreen.SetActive(false);
 
         WinningTogetherScreen.SetActive(true);
-        Time.timeScale = 1;
         if (PhotonNetwork.inRoom)
         {
             PhotonNetwork.LeaveRoom();
         }
 
+        Time.timeScale = 1;
         StartCoroutine(GameObject.FindGameObjectWithTag("DataBaseManager").GetComponent<DBCManager>().AddVictoryCount(1, 1));
         // add score to self 1
     }
@@ -183,10 +200,10 @@ public class PhotonNetworkManager : MonoBehaviour
         WinningWaitingScreen.SetActive(false);
 
         WinningNoneScreen.SetActive(true);
-        Time.timeScale = 1;
         if (PhotonNetwork.inRoom)
         {
             PhotonNetwork.LeaveRoom();
         }
+        Time.timeScale = 1;
     }
 }

@@ -232,7 +232,7 @@ public class DBCManager : MonoBehaviour {
             int cakesEatenint = System.Convert.ToInt32(splitStr[0].Substring(13, splitStr[0].Length - 13)) + cakesEaten;
             string newCakesEaten = "Cakes Eaten: " + cakesEatenint.ToString();
 
-            int cakesSharedint = System.Convert.ToInt32(splitStr[1].Substring(13, splitStr[1].Length - 13)) + cakesEaten;
+            int cakesSharedint = System.Convert.ToInt32(splitStr[1].Substring(13, splitStr[1].Length - 13)) + cakesShared;
             string newCakesShared = "Cakes Shared: " + cakesSharedint.ToString();
 
             StartCoroutine(SetDataAndRestart(newCakesEaten + "\n" + newCakesShared + "\n" + splitStr[2]));
