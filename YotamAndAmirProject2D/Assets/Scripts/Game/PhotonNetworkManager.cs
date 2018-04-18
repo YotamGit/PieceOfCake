@@ -20,7 +20,7 @@ public class PhotonNetworkManager : MonoBehaviour
     [SerializeField] private GameObject[] ObjectsInMenu;
 
     [HideInInspector]
-    public bool wonGame = false;
+    public bool wonGame = false, madeChoice = false;
 
     public KeyCode MenuKey;
 
@@ -157,11 +157,13 @@ public class PhotonNetworkManager : MonoBehaviour
     private IEnumerator ChoiceAutoShare()
     {
         yield return new WaitForSeconds(30f);
-        WinningChoice(true);
+        if(!madeChoice)
+            WinningChoice(true);
     }
 
     public void WinningChoice(bool toShare)
     {
+        madeChoice = true;
         PhotonView photonView = PhotonView.Get(this);
         if (toShare)
         {
