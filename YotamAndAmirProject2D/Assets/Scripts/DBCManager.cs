@@ -11,8 +11,6 @@ public class DBCManager : MonoBehaviour {
     //These are the GameObjects which are parents of groups of UI elements. The objects are enabled and disabled to show and hide the UI elements.
     public GameObject loginParent;
     public GameObject registerParent;
-    public GameObject loggedInParent;
-    public GameObject loadingParent;
 
     //These are all the InputFields which we need in order to get the entered usernames, passwords, etc
     public TMP_InputField Login_UsernameField;
@@ -20,15 +18,6 @@ public class DBCManager : MonoBehaviour {
     public TMP_InputField Register_UsernameField;
     public TMP_InputField Register_PasswordField;
     public TMP_InputField Register_ConfirmPasswordField;
-    public TMP_InputField LoggedIn_DataInputField;
-    public TMP_InputField LoggedIn_DataOutputField;
-
-    //These are the UI Texts which display errors
-    public TextMeshProUGUI Login_ErrorText;
-    public TextMeshProUGUI Register_ErrorText;
-
-    //This UI Text displays the username once logged in. It shows it in the form "Logged In As: " + username
-    public TextMeshProUGUI LoggedIn_DisplayUsernameText;
 
     //These store the username and password of the player when they have logged in
     public string playerUsername = "";
@@ -49,25 +38,25 @@ public class DBCManager : MonoBehaviour {
     //Called at the very start of the game
     void Awake()
     {
-        ResetAllUIElements();
+        //ResetAllUIElements();
         DontDestroyOnLoad(this);
     }
 
     //Called by Button Pressed Methods to Reset UI Fields
-    void ResetAllUIElements()
+    /*void ResetAllUIElements()
     {
         //This resets all of the UI elements. It clears all the strings in the input fields and any errors being displayed
-        /*Login_UsernameField.text = "";
+        Login_UsernameField.text = "";
         Login_PasswordField.text = "";
         Register_UsernameField.text = "";
         Register_PasswordField.text = "";
-        Register_ConfirmPasswordField.text = "";*/
-        /*LoggedIn_DataInputField.text = "";
+        Register_ConfirmPasswordField.text = "";
+        LoggedIn_DataInputField.text = "";
         LoggedIn_DataOutputField.text = "";
         Login_ErrorText.text = "";
         Register_ErrorText.text = "";
-        LoggedIn_DisplayUsernameText.text = "";*/
-    }
+        LoggedIn_DisplayUsernameText.text = "";
+    }*/
 
     //Called by Button Pressed Methods. These use DatabaseControl namespace to communicate with server.
     IEnumerator LoginUser()
@@ -379,7 +368,7 @@ public class DBCManager : MonoBehaviour {
     public void Login_RegisterButtonPressed ()
     {
         //Called when the player hits register on the Login UI, so switches to the Register UI
-        ResetAllUIElements();
+        //ResetAllUIElements();
         loginParent.gameObject.SetActive(false);
         registerParent.gameObject.SetActive(true);
     }
@@ -460,17 +449,17 @@ public class DBCManager : MonoBehaviour {
     public void Register_BackButtonPressed ()
     {
         //Called when the player presses the 'Back' button on the register UI. Switches back to the Login UI
-        ResetAllUIElements();
+        //ResetAllUIElements();
         loginParent.gameObject.SetActive(true);
         registerParent.gameObject.SetActive(false);
     }
-    public void LoggedIn_SaveDataButtonPressed ()
+    /*public void LoggedIn_SaveDataButtonPressed ()
     {
         //Called when the player hits 'Set Data' to change the data string on their account. Switches UI to 'Loading...' and starts coroutine to set the players data string on the server
         loadingParent.gameObject.SetActive(true);
         loggedInParent.gameObject.SetActive(false);
         StartCoroutine(SetData(LoggedIn_DataInputField.text));
-    }
+    }*/
     public void LoggedIn_LoadDataButtonPressed ()
     {
         //Called when the player hits 'Get Data' to retrieve the data string on their account. Switches UI to 'Loading...' and starts coroutine to get the players data string from the server
@@ -482,10 +471,10 @@ public class DBCManager : MonoBehaviour {
     {
         //Called when the player hits the 'Logout' button. Switches back to Login UI and forgets the player's username and password.
         //Note: Database Control doesn't use sessions, so no request to the server is needed here to end a session.
-        ResetAllUIElements();
+        //ResetAllUIElements();
         playerUsername = "";
         playerPassword = "";
         loginParent.gameObject.SetActive(true);
-        loggedInParent.gameObject.SetActive(false);
+        //loggedInParent.gameObject.SetActive(false);
     }
 }

@@ -67,7 +67,7 @@ public class HoldButton : MonoBehaviour
         {
             PhotonNetwork.LeaveRoom();
         }
-        PhotonNetwork.LoadLevel(0);//loading the main menu scene
+        SceneManager.LoadScene(0);//loading the main menu scene
     }
 
     public void OnPressed()

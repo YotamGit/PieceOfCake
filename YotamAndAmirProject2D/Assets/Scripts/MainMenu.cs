@@ -99,14 +99,14 @@ public class MainMenu : MonoBehaviour
     }
     
     // This func disables the cancel button, and after the master clients sees that the other canceld too it loads the scene
-    public void PlayGame()
+    public void PlayGame(int sceneIndex)
     {
         PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("DisableCancelButton", PhotonTargets.All);
+        photonView.RPC("DisableCancelButton", PhotonTargets.All, sceneIndex);
     }
 
     [PunRPC]
-    private void DisableCancelButton()
+    private void DisableCancelButton(int sceneIndex)
     {
         if (PhotonNetwork.room.PlayerCount == 2)
         {
@@ -116,17 +116,17 @@ public class MainMenu : MonoBehaviour
             if (!PhotonNetwork.isMasterClient) // telling the master client that he can load the scene
             {
                 PhotonView photonView = PhotonView.Get(this);
-                photonView.RPC("LoadScene", PhotonTargets.MasterClient);
+                photonView.RPC("LoadScene", PhotonTargets.MasterClient, sceneIndex);
             }
         }
     }
 
     [PunRPC]
-    private void LoadScene()
+    private void LoadScene(int sceneIndex)
     {
         if (PhotonNetwork.room.PlayerCount == 2)
         {
-            PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1); // loading the Game scene
+            PhotonNetwork.LoadLevel(sceneIndex); // loading the Game scene
         }
         else
         {

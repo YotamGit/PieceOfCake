@@ -47,7 +47,6 @@ public class GrabHandler : Photon.MonoBehaviour, IPunObservable
         if (PhotonNetwork.isMasterClient && tag == "Player1" || !PhotonNetwork.isMasterClient && tag == "Player2") // if one of either main players
         {
             gl = GameObject.FindGameObjectWithTag("GameLogic").GetComponent<PhotonNetworkManager>();
-            Debug.Log("Found GameLogic");
         }
     }
 

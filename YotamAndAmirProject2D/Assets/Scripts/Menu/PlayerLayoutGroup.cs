@@ -13,7 +13,7 @@ public class PlayerLayoutGroup : MonoBehaviour
 
 
     [SerializeField]
-    private GameObject toDisableWaitingScreen, toEnableRoomMenu;
+    private GameObject toDisableWaitingScreen, toEnableRoomMenu, levelSelectScreen;
 
     [SerializeField]
     private TextMeshProUGUI cancelButtonText;
@@ -81,6 +81,8 @@ public class PlayerLayoutGroup : MonoBehaviour
         if (PhotonNetwork.isMasterClient)
         {
             PlayButton.SetActive(false);
+            levelSelectScreen.SetActive(false);
+            toDisableWaitingScreen.SetActive(true);
         }
         PlayerLeftRoom(photonPlayer);
     }

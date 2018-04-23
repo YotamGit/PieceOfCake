@@ -53,38 +53,7 @@ public class PhotonNetworkManager : MonoBehaviour
 
         Debug.Log("Player created");
     }
-    /*if (PhotonNetwork.isMasterClient && tag == "Player1" || !PhotonNetwork.isMasterClient && tag == "Player2") // if one of either main players
-        {
-            WinningAloneScreen = GameObject.FindGameObjectWithTag("WinningAlone");//getting the WinningAlone screen
-            if (WinningAloneScreen != null)
-            {
-                WinningAloneScreen.SetActive(false);
-            }
 
-            WinningTogetherScreen = GameObject.FindGameObjectWithTag("WinningTogether");//getting the WinningTogether screen
-            if (WinningTogetherScreen != null)
-            {
-                WinningTogetherScreen.SetActive(false);
-            }
-
-            WinningNoneScreen = GameObject.FindGameObjectWithTag("WinningNone");//getting the WinningNone screen
-            if (WinningNoneScreen != null)
-            {
-                WinningNoneScreen.SetActive(false);
-            }
-
-            WinningWaitingScreen = GameObject.FindGameObjectWithTag("WinningWaiting");//getting the WinningWaiting screen
-            if (WinningWaitingScreen != null)
-            {
-                WinningWaitingScreen.SetActive(false);
-            }
-
-            WinningWaitingScreen = GameObject.FindGameObjectWithTag("WinningChoice");//getting the WinningWaiting screen
-            if (WinningWaitingScreen != null)
-            {
-                WinningWaitingScreen.SetActive(false);
-            }
-        }*/
     private void Update()
     {
         // setting the instructions to the opposite of its current enable state when clicking on the M button
