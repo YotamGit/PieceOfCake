@@ -3,7 +3,7 @@
 public class DDOL : MonoBehaviour
 {
     [SerializeField]
-    private GameObject disableOnReturn, enableOnReturn, connectingScreen, MainMenu;
+    private GameObject connectingScreen, MainMenu;
 
     private void Awake()
     {
@@ -11,8 +11,8 @@ public class DDOL : MonoBehaviour
         {
             if (PhotonNetwork.connected)
             {
-                disableOnReturn.SetActive(false);
-                enableOnReturn.SetActive(true);
+                connectingScreen.SetActive(false);
+                MainMenu.SetActive(true);
             }
             Destroy(gameObject);
         }
