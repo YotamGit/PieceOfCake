@@ -10,15 +10,24 @@ public class PlayerNetwork : MonoBehaviour
     [HideInInspector]
     public string PlayerName;
     
+    [HideInInspector]
     public bool restartedSceneAlready;
 
-    private bool duplicate = true;
+    [SerializeField]
+    private GameObject connectingScreen, ReturnConnectedScreen;
 
-    public void InstantiateSelf()//connecting to the server
+    private void Awake()
     {
+        if (GameObject.FindGameObjectsWithTag("DDOL").Length > 1) // this happens when you return to the same scene and it duplicate PlayerNetworks
+        {
+            if (PhotonNetwork.connected)
+            {
+                connectingScreen.SetActive(false);
+                ReturnConnectedScreen.SetActive(true);
+            }
+            Destroy(gameObject);
+        }
         instance = this;
-
-        duplicate = false; // this will stop if we know that we're not the second playernetwork
 
         restartedSceneAlready = false;
 
@@ -26,27 +35,26 @@ public class PlayerNetwork : MonoBehaviour
         PhotonNetwork.ConnectUsingSettings("game");
         PhotonNetwork.automaticallySyncScene = true;
         PhotonNetwork.autoJoinLobby = false;
+
+        DontDestroyOnLoad(this);
     }
 
     /*reconnecting the player if disconnected and the playernetwork is not a duplicate*/
     private void FixedUpdate()
     {
-        if (!duplicate)
+        if (!PhotonNetwork.connected && !PhotonNetwork.connecting)
         {
-            if (!PhotonNetwork.connected && !PhotonNetwork.connecting)
+            if (!restartedSceneAlready)// || SceneManager.GetActiveScene().buildIndex != 0)
             {
-                if (!restartedSceneAlready)// || SceneManager.GetActiveScene().buildIndex != 0)
+                if (Time.timeScale == 0)
                 {
-                    if(Time.timeScale == 0)
-                    {
-                        Time.timeScale = 1;
-                    }
-                    Debug.Log("Loading connection scene...");
-                    restartedSceneAlready = true;
-                    SceneManager.LoadScene(0);
+                    Time.timeScale = 1;
                 }
-                PhotonNetwork.ConnectUsingSettings("game");
+                Debug.Log("Loading connection scene...");
+                restartedSceneAlready = true;
+                SceneManager.LoadScene(0);
             }
+            PhotonNetwork.ConnectUsingSettings("game");
         }
     }
 

@@ -16,7 +16,7 @@ public class DDOL : MonoBehaviour
             }
             Destroy(gameObject);
         }
-        transform.GetChild(0).GetComponent<PlayerNetwork>().InstantiateSelf(); //telling the PlayerNetwork that he is not a duplicate
+        //transform.GetChild(0).GetComponent<PlayerNetwork>().InstantiateSelf(); //telling the PlayerNetwork that he is not a duplicate
         DontDestroyOnLoad(this);
     }
 }
