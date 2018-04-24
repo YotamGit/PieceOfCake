@@ -21,8 +21,24 @@ public class CreateRoom : MonoBehaviour {
     {
         button = GetComponent<Button>();
     }
+
+    private bool RoomNameCheck(string roomName)
+    {
+        if(roomName.Length < 4)
+        {
+            return false;
+        }
+        return true;
+    }
+
     public void OnClick_CreateRoom()
     {
+        if (!RoomNameCheck(RoomName.text.ToUpper()))
+        {
+            StartCoroutine(mainMenuScript.DisplayError("Room Name Is Invalid"));
+            return;
+        }
+
         DisableSelf();//disabling create room button
 
         RoomOptions roomOptions = new RoomOptions { IsVisible = true, IsOpen = true, MaxPlayers = 2 };
