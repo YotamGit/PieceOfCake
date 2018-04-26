@@ -214,14 +214,6 @@ public class GrabHandler : Photon.MonoBehaviour, IPunObservable
 
         Destroy(gameObject);
     }
-    //TODO:
-    /*   30s timer for sharing choice,
-         while the other player is awaits
-         ...
-         change scores according to choice
-         ...
-         enable exit button
-    */
     
     void Victory()
     {

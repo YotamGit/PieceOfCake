@@ -61,12 +61,16 @@ public class HoldButton : MonoBehaviour
         }
     }
 
+    //leaving the room and loading the main menu after you left
     public void LoadSceneAndLeaveRoom()
     {
         if (PhotonNetwork.inRoom)
         {
             PhotonNetwork.LeaveRoom();
         }
+    }
+    private void OnLeftRoom() // this function is called by photon when you leave the room
+    {
         SceneManager.LoadScene(0);//loading the main menu scene
     }
 
