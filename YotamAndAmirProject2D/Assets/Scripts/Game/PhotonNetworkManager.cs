@@ -50,6 +50,7 @@ public class PhotonNetworkManager : MonoBehaviour
         }
         GameObject mainCameraObj = Instantiate(mainCamera); // Creating a camera
         mainCameraObj.GetComponent<SmoothCameraMove>().target = mainPlayer.transform; // Assighning the player to the target
+        mainCameraObj.transform.position = mainPlayer.transform.position;
 
         Debug.Log("Player created");
     }
