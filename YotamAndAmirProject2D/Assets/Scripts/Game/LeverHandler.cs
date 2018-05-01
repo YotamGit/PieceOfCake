@@ -27,8 +27,11 @@ public class LeverHandler : Photon.MonoBehaviour, IPunObservable
     void Start()
     {
         leverSpriteRend = gameObject.GetComponent<SpriteRenderer>();
-        doorMaterial = door.GetComponent<Renderer>().material;
-        doorCol = door.GetComponent<Collider2D>();
+        if (door)
+        {
+            doorMaterial = door.GetComponent<Renderer>().material;
+            doorCol = door.GetComponent<Collider2D>();
+        }
     }
 
     //implement as RPC
@@ -53,11 +56,15 @@ public class LeverHandler : Photon.MonoBehaviour, IPunObservable
                 {
                     leverSpriteRend.sprite = turnedOn;
                 }
-                if (doorMaterial.color.a != 0.4f)
+
+                if (door)
                 {
-                    doorMaterial.color = new Color(1, 1, 1, 0.4F);
+                    if (doorMaterial.color.a != 0.4f)
+                    {
+                        doorMaterial.color = new Color(1, 1, 1, 0.4F);
+                    }
+                    doorCol.enabled = false;
                 }
-                doorCol.enabled = false;
             }
             else
             {
@@ -65,11 +72,15 @@ public class LeverHandler : Photon.MonoBehaviour, IPunObservable
                 {
                     leverSpriteRend.sprite = turnedOff;
                 }
-                if (doorMaterial.color.a != 1f)
+
+                if (door)
                 {
-                    doorMaterial.color = new Color(1, 1, 1, 1F);
+                    if (doorMaterial.color.a != 1f)
+                    {
+                        doorMaterial.color = new Color(1, 1, 1, 1F);
+                    }
+                    doorCol.enabled = true;
                 }
-                doorCol.enabled = true;
             }
         }
     }
@@ -85,8 +96,11 @@ public class LeverHandler : Photon.MonoBehaviour, IPunObservable
 
                 isActivated = true;
                 leverSpriteRend.sprite = turnedOn;
-                doorMaterial.color = new Color(1, 1, 1, 0.4F);
-                doorCol.enabled = false;
+                if (door)
+                {
+                    doorMaterial.color = new Color(1, 1, 1, 0.4F);
+                    doorCol.enabled = false;
+                }
             }
             else
             {
@@ -95,8 +109,11 @@ public class LeverHandler : Photon.MonoBehaviour, IPunObservable
 
                 isActivated = false;
                 leverSpriteRend.sprite = turnedOff;
-                doorMaterial.color = new Color(1, 1, 1, 1F);
-                doorCol.enabled = true;
+                if (door)
+                {
+                    doorMaterial.color = new Color(1, 1, 1, 1F);
+                    doorCol.enabled = true;
+                }
             }
         }
     }
