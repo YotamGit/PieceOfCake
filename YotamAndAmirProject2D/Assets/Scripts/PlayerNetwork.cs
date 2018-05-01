@@ -30,12 +30,13 @@ public class PlayerNetwork : MonoBehaviour
         instance = this;
 
         restartedSceneAlready = false;
-
-        Debug.Log("Connecting to server...");
-        PhotonNetwork.ConnectUsingSettings("game");
-        PhotonNetwork.automaticallySyncScene = true;
-        PhotonNetwork.autoJoinLobby = false;
-
+        if (!PhotonNetwork.connected && !PhotonNetwork.connecting)
+        {
+            Debug.Log("Connecting to server...");
+            PhotonNetwork.ConnectUsingSettings("game");
+            PhotonNetwork.automaticallySyncScene = true;
+            PhotonNetwork.autoJoinLobby = false;
+        }
         DontDestroyOnLoad(this);
     }
 

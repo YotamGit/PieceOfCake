@@ -20,7 +20,7 @@ public class SmoothCameraMove : MonoBehaviour
         if (target)
         {
             Vector3 desiredPos = target.position + offset;
-            Vector3 calmpedPos = new Vector3(Mathf.Clamp(transform.position.x, xMin, xMax), Mathf.Clamp(transform.position.y, yMin, yMax), transform.position.z);//limiting the camera movement
+            Vector3 calmpedPos = new Vector3(Mathf.Clamp(transform.position.x, xMin, xMax), Mathf.Clamp(transform.position.y, yMin, yMax), -12);//limiting the camera movement
             Vector3 smoothedPos = Vector3.Lerp(calmpedPos, desiredPos, smoothSpeed);//making the camera move smoothly
             transform.position = smoothedPos;
         }

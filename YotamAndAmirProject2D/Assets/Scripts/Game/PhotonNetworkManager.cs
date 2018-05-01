@@ -50,7 +50,11 @@ public class PhotonNetworkManager : MonoBehaviour
         }
         GameObject mainCameraObj = Instantiate(mainCamera); // Creating a camera
         mainCameraObj.GetComponent<SmoothCameraMove>().target = mainPlayer.transform; // Assighning the player to the target
-        mainCameraObj.transform.position = mainPlayer.transform.position;
+        mainCameraObj.transform.position = new Vector3(mainPlayer.transform.position.x, mainPlayer.transform.position.y, -12);
+        if(SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            mainCameraObj.GetComponent<SmoothCameraMove>().yMax = 122;
+        }
 
         Debug.Log("Player created");
     }

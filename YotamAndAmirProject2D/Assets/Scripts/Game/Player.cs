@@ -63,6 +63,8 @@ public class Player : Photon.PunBehaviour, IPunObservable
 
     private PhotonView photonView;
 
+    private PhotonNetworkManager PNManagerScript;
+
 
     void Start()
     {
@@ -98,6 +100,14 @@ public class Player : Photon.PunBehaviour, IPunObservable
         }
         dataBaseScript = GameObject.FindGameObjectWithTag("DataBaseManager").GetComponent<DBCManager>();
 
+        PNManagerScript = GameObject.FindGameObjectWithTag("GameLogic").GetComponent<PhotonNetworkManager>();
+
+        GameObject[] tempOtherPlayers = GameObject.FindGameObjectsWithTag(gameObject.tag); // deleting all the other spare players
+        foreach (GameObject tempotherPlayer in tempOtherPlayers)
+        {
+            if(tempotherPlayer != gameObject)
+                Destroy(tempotherPlayer);
+        }
     }
 
     [PunRPC]
@@ -154,6 +164,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
                     dataBaseScript.AddDeathAndRestart();
                 }
                 photonView.RPC("ReturnToCheckPoint", PhotonTargets.All);
+                //ReturnToCheckPoint();
             }
             else // has dmg immune
             {
@@ -183,7 +194,7 @@ public class Player : Photon.PunBehaviour, IPunObservable
     }
     
     [PunRPC]
-    void ReturnToCheckPoint()
+    private void ReturnToCheckPoint()
     {
         Debug.Log("loading scene again...");
         PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().buildIndex);

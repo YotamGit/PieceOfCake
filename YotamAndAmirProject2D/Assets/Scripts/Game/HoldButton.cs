@@ -25,7 +25,41 @@ public class HoldButton : MonoBehaviour
      */
 	private void FixedUpdate ()
     {
-        if (isPressed)
+        /*if (isPressed)
+        {
+            current += speed;
+            slider.value = current;
+
+            if (current >= 1)
+            {
+                if (toMenu) // telling all the players in the room to leave the room and return to the lobby
+                {
+                    LoadSceneAndLeaveRoom();
+                }
+                else
+                {
+                    Application.Quit();
+                    Debug.Log("Quiting...");
+                }
+            }
+        }*/
+	}
+
+    /*
+     canceling the progression of the slider if the player pressed any of the keys specified below
+     */
+    private void Update()
+    {
+        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D)
+            || Input.GetKey(KeyCode.Alpha1) || Input.GetKey(KeyCode.Alpha2) || Input.GetKey(KeyCode.Alpha3)
+            || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Escape)) || Time.timeScale == 0)
+        {
+            // setting the values of the exit buttons to 0
+            current = 0;
+            slider.value = 0;
+            isPressed = false;
+        }
+        else if (isPressed)
         {
             current += speed;
             slider.value = current;
@@ -43,23 +77,9 @@ public class HoldButton : MonoBehaviour
                 }
             }
         }
-	}
-
-    /*
-     canceling the progression of the slider if the player pressed any of the keys specified below
-     */
-    private void Update()
-    {
-        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D)
-            || Input.GetKey(KeyCode.Alpha1) || Input.GetKey(KeyCode.Alpha2) || Input.GetKey(KeyCode.Alpha3)
-            || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Escape)) || Time.timeScale == 0)
-        {
-            // setting the values of the exit buttons to 0
-            current = 0;
-            slider.value = 0;
-            isPressed = false;
-        }
     }
+
+    private bool PressedOnLeaveRoomButton = false;
 
     //leaving the room and loading the main menu after you left
     public void LoadSceneAndLeaveRoom()
@@ -68,10 +88,15 @@ public class HoldButton : MonoBehaviour
         {
             PhotonNetwork.LeaveRoom();
         }
+        if(!PhotonNetwork.inRoom)
+            SceneManager.LoadScene(0);//loading the main menu scene
+        PressedOnLeaveRoomButton = true;
     }
+
     private void OnLeftRoom() // this function is called by photon when you leave the room
     {
-        SceneManager.LoadScene(0);//loading the main menu scene
+        if(PressedOnLeaveRoomButton)
+            SceneManager.LoadScene(0);//loading the main menu scene
     }
 
     public void OnPressed()
