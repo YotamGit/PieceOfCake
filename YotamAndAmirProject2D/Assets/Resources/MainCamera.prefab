@@ -113,8 +113,8 @@ MonoBehaviour:
   target: {fileID: 0}
   smoothSpeed: 0.175
   offset: {x: 0, y: 0, z: -50}
-  xMax: 53
-  xMin: 11
+  xMax: 52.5
+  xMin: 11.5
   yMax: 100
   yMin: 6
 --- !u!124 &124680853624772696
