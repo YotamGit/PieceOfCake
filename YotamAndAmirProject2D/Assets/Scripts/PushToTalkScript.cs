@@ -13,8 +13,10 @@ public class PushToTalkScript : MonoBehaviour
 
     private void Start()
     {
-        
-        if(rec.IsTransmitting)
+        rec.gameObject.SetActive(false);
+        rec.gameObject.SetActive(true);
+
+        if (rec.IsTransmitting)
         { 
             rec.Transmit = false;
         }
