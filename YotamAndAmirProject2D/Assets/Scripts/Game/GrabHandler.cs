@@ -208,10 +208,13 @@ public class GrabHandler : Photon.MonoBehaviour, IPunObservable
     void WaitVictory()
     {
         if (gl)
+        {
             gl.DisplayWinningWaiting();
+        }
         else
+        {
             GameObject.FindGameObjectWithTag("GameLogic").GetComponent<PhotonNetworkManager>().DisplayWinningWaiting();
-
+        }
         Destroy(gameObject);
     }
     

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 
 public class FPSDisplay : Photon.MonoBehaviour
@@ -9,9 +10,12 @@ public class FPSDisplay : Photon.MonoBehaviour
     private float deltaTime = 0.0f;
     private bool Toggle;
 
+
     [SerializeField] private KeyCode toggleButton;
     [SerializeField] private TextMeshProUGUI Text;
     [SerializeField] private GameObject TextObj;
+
+    public Image micIndicator;
 
     private void Start()
     {
@@ -21,6 +25,7 @@ public class FPSDisplay : Photon.MonoBehaviour
 
     private void Update()
     {
+
         deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
         if (Input.GetKeyDown(toggleButton))
         {
@@ -36,6 +41,15 @@ public class FPSDisplay : Photon.MonoBehaviour
         else if(!Toggle && TextObj.activeInHierarchy)
         {
             TextObj.SetActive(false);
+        }
+
+        if (Input.GetKey(KeyCode.V))
+        {
+            micIndicator.color = new Color(1, 0, 0, 0.5f);
+        }
+        else
+        {
+            micIndicator.color = new Color(1, 0.5f, 0.5f, 0.5f);
         }
     }
 

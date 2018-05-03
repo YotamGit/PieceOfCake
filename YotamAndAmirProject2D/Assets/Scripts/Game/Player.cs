@@ -70,8 +70,8 @@ public class Player : Photon.PunBehaviour, IPunObservable
     {
         photonView = PhotonView.Get(this);
         Time.timeScale = 0f;
-        SoundManager.instance.musicSource.Stop();
-        SoundManager.instance.RandomizeSfx(BackGroundMusic);
+        //SoundManager.instance.musicSource.Stop();
+        //SoundManager.instance.RandomizeSfx(BackGroundMusic);
 
         rigidBody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();

@@ -9,29 +9,23 @@ public class PushToTalkScript : MonoBehaviour
     [SerializeField]
     private PhotonVoiceRecorder rec;
 
-    //public bool push = false;
+    //[SerializeField]
+    //private Image indicator;
 
-    private void Start()
-    {
-        rec.gameObject.SetActive(false);
-        rec.gameObject.SetActive(true);
 
-        if (rec.IsTransmitting)
-        { 
-            rec.Transmit = false;
-        }
-    }
     private void Update()
     {
-        Debug.Log(rec.IsTransmitting);
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+        //Debug.Log(rec.IsTransmitting);
+        rec.Transmit = Input.GetKey(KeyCode.V);
+       
+        /*if(Input.GetKeyDown(KeyCode.LeftShift))
         {
             rec.Transmit = true;
         }
         else if(Input.GetKeyUp(KeyCode.LeftShift))
         {
             rec.Transmit = false;
-        }
+        }*/
     }
 
 }

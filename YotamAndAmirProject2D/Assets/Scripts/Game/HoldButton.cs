@@ -25,31 +25,7 @@ public class HoldButton : MonoBehaviour
      */
 	private void FixedUpdate ()
     {
-        /*if (isPressed)
-        {
-            current += speed;
-            slider.value = current;
 
-            if (current >= 1)
-            {
-                if (toMenu) // telling all the players in the room to leave the room and return to the lobby
-                {
-                    LoadSceneAndLeaveRoom();
-                }
-                else
-                {
-                    Application.Quit();
-                    Debug.Log("Quiting...");
-                }
-            }
-        }*/
-	}
-
-    /*
-     canceling the progression of the slider if the player pressed any of the keys specified below
-     */
-    private void Update()
-    {
         if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D)
             || Input.GetKey(KeyCode.Alpha1) || Input.GetKey(KeyCode.Alpha2) || Input.GetKey(KeyCode.Alpha3)
             || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Escape)) || Time.timeScale == 0)
@@ -78,6 +54,11 @@ public class HoldButton : MonoBehaviour
             }
         }
     }
+
+    /*
+     canceling the progression of the slider if the player pressed any of the keys specified below
+     */
+  
 
     private bool PressedOnLeaveRoomButton = false;
 
