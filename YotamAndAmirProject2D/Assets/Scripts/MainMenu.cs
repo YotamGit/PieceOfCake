@@ -38,6 +38,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private GameObject mainMenu, optionsScreen, chooseingScreen;
 
+
     private void Awake()
     {
         Time.timeScale = 1;

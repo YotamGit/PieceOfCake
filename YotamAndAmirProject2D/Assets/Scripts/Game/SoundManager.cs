@@ -42,6 +42,11 @@ public class SoundManager : MonoBehaviour
         //DontDestroyOnLoad(gameObject);
     }
 
+    public void MuteMusic(bool toggle)
+    {
+        musicSource.mute = toggle;
+    }
+
     //Used to play single sound clips.
     public void PlayEffect(AudioSource source, AudioClip clip)
     {
