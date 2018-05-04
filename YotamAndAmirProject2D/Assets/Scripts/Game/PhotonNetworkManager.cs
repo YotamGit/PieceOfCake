@@ -130,9 +130,15 @@ public class PhotonNetworkManager : MonoBehaviour
 
     private IEnumerator ChoiceAutoShare()
     {
-        yield return new WaitForSeconds(30f);
-        if(!madeChoice)
+        for (int i = 0; i < 30; i++)
+        {
+            //update timer here
+            yield return new WaitForSeconds(1);
+        }
+        if (!madeChoice)
+        {
             WinningChoice(true);
+        }
     }
 
     public void WinningChoice(bool toShare)
@@ -142,6 +148,7 @@ public class PhotonNetworkManager : MonoBehaviour
         if (toShare)
         {
             photonView.RPC("ClickedShare", PhotonTargets.All);
+            StartCoroutine(GameObject.FindGameObjectWithTag("DataBaseManager").GetComponent<DBCManager>().AddVictoryCount(1, 1));
         }
         else
         {
@@ -155,7 +162,7 @@ public class PhotonNetworkManager : MonoBehaviour
     }
 
     [PunRPC]
-    void ClickedShare()
+    void RecievedShared()
     {
         WinningWaitingScreen.SetActive(false);
 
@@ -166,9 +173,29 @@ public class PhotonNetworkManager : MonoBehaviour
         }
 
         Time.timeScale = 1;
-        StartCoroutine(GameObject.FindGameObjectWithTag("DataBaseManager").GetComponent<DBCManager>().AddVictoryCount(1, 1));
         // add score to self 1
     }
+
+    [PunRPC]
+    void ClickedShare()
+    {
+        PhotonView photonView = PhotonView.Get(this);
+        photonView.RPC("RecievedShared", PhotonTargets.All);
+
+        StartCoroutine(GameObject.FindGameObjectWithTag("DataBaseManager").GetComponent<DBCManager>().AddVictoryCount(1, 1));
+        /*WinningWaitingScreen.SetActive(false);
+
+        WinningTogetherScreen.SetActive(true);
+        if (PhotonNetwork.inRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+
+        Time.timeScale = 1;
+        StartCoroutine(GameObject.FindGameObjectWithTag("DataBaseManager").GetComponent<DBCManager>().AddVictoryCount(1, 1));
+        // add score to self 1*/
+    }
+
 
     [PunRPC]
     void ClickedDontShare()

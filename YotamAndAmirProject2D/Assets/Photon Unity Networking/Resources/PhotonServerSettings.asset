@@ -47,4 +47,5 @@ MonoBehaviour:
   - ReturnToCheckPoint
   - StartWaitChoice
   - WaitVictory
+  - RecievedShared
   DisableAutoOpenWizard: 1

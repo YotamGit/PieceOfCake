@@ -213,11 +213,21 @@ public class GrabHandler : Photon.MonoBehaviour, IPunObservable
         }
         else
         {
+            efxSource.Stop();
+            moveSource.Stop();
+            SoundManager.instance.musicSource.Stop();
+
+            SoundManager.instance.musicSource.loop = false;
+            SoundManager.instance.musicSource.clip = VictoryTheme;
+            SoundManager.instance.musicSource.Play();
+
+            Time.timeScale = 1;
+
             GameObject.FindGameObjectWithTag("GameLogic").GetComponent<PhotonNetworkManager>().DisplayWinningWaiting();
         }
         Destroy(gameObject);
     }
-    
+
     void Victory()
     {
         gl.wonGame = true;
