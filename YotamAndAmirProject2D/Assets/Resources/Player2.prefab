@@ -230,17 +230,16 @@ GameObject:
   - component: {fileID: 114322931283578758}
   - component: {fileID: 95493225944123024}
   - component: {fileID: 114320242164509098}
-  - component: {fileID: 114432680137260502}
   - component: {fileID: 114783425601059302}
   - component: {fileID: 114072625584155418}
   - component: {fileID: 114243899895046000}
   - component: {fileID: 114033306007552644}
   - component: {fileID: 81953202203641354}
+  - component: {fileID: 82623566471269648}
   - component: {fileID: 82634565257764344}
   - component: {fileID: 82636179111683366}
   - component: {fileID: 114255574383399578}
   - component: {fileID: 114615543891316188}
-  - component: {fileID: 82623566471269648}
   - component: {fileID: 114888202502982162}
   m_Layer: 0
   m_Name: Player2
@@ -1176,21 +1175,6 @@ MonoBehaviour:
   VictoryTheme: {fileID: 8300000, guid: a7ad015585cc8d24b9ef650345784d1b, type: 3}
   efxSource: {fileID: 82634565257764344}
   moveSource: {fileID: 82636179111683366}
---- !u!114 &114432680137260502
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1984280513756392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25d0effe1e56f8a46b45b23e3b30f87c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerName: 
-  restartedSceneAlready: 0
-  connectingScreen: {fileID: 0}
-  ReturnConnectedScreen: {fileID: 0}
 --- !u!114 &114615543891316188
 MonoBehaviour:
   m_ObjectHideFlags: 1

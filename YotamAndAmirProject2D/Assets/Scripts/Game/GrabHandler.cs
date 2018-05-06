@@ -144,6 +144,7 @@ public class GrabHandler : Photon.MonoBehaviour, IPunObservable
                 heldKey = tempCol;
                 heldObjRigidbody = heldKey.GetComponent<Rigidbody2D>();
                 heldKey.enabled = false;
+                SoundManager.instance.PlayEffect(efxSource, pickUpSound);
             }
         }
     }
@@ -195,10 +196,9 @@ public class GrabHandler : Photon.MonoBehaviour, IPunObservable
             if (!grabbedKey && !grabbedCube)
             {
 
-                efxSource.pitch = 1.8f;
-                efxSource.volume = 0.3f;
-                SoundManager.instance.PlayEffect(efxSource, pickUpSound);
-
+                //efxSource.pitch = 1.8f;
+                //efxSource.volume = 0.3f;
+                //SoundManager.instance.PlayEffect(efxSource, pickUpSound);
                 photonView.RPC("GotObj", PhotonTargets.All, col.gameObject.tag, gameObject.tag, false);
             }
         }
