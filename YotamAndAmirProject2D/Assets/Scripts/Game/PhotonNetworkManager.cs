@@ -128,17 +128,21 @@ public class PhotonNetworkManager : MonoBehaviour
         StartCoroutine(ChoiceAutoShare());
     }
 
+    [SerializeField]
+    private TextMeshProUGUI waitingTimeTextMain, waitingTimeTextSecond; //first is for the player that got he cake, and other for the player waiting
+
     private IEnumerator ChoiceAutoShare()
     {
-        for (int i = 0; i < 30; i++)
+        for (int i = 1; i < 30 && !madeChoice; i++)
         {
-            //update timer here
             yield return new WaitForSeconds(1);
+
+            waitingTimeTextMain.text = "Auto share in "+ (30 - i) +" seconds";
+            waitingTimeTextSecond.text = "Auto share in " + (30 - i) + " seconds";
         }
+
         if (!madeChoice)
-        {
             WinningChoice(true);
-        }
     }
 
     public void WinningChoice(bool toShare)
